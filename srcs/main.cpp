@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/05/31 14:11:36 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/05/31 19:23:38 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	int					socketfd; //holds the fd of the socket
 	struct sockaddr_in	address;  //holds data about the socket binding
 	int 				addresslen = sizeof(address);
-	std::string			message = "Test message"; //message to display in the web browser
+	std::string			message = "Resistance is futile"; //message to display in the web browser
 
 	if (argc > 1)
 		message = argv[1];
