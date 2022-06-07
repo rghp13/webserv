@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Answer.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/07 20:41:17 by dimitriscr       ###   ########.fr       */
+/*   Created: 2022/06/07 19:46:27 by dimitriscr        #+#    #+#             */
+/*   Updated: 2022/06/07 20:19:01 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/webserv.hpp"
+#include "Answer.hpp"
 
-int main(int argc, char **argv)
+Answer::Answer()
 {
-	//initialization:
-	// -check config file
-	// -load config file
-	// -get a list of all prots that nned websockets
+	RequestErrored = false;
+	ErrorCode = 0;
+	ReturnedContent = "";
+}
 
-	//loop
-	// -start websockets on each of the ports
+Answer::Answer(int newErrorCode)
+{
+	RequestErrored = true;
+	ErrorCode = newErrorCode;
+	ReturnedContent = "";
+}
 
-	//cleanup
-	return (0);
+Answer::Answer(std::string newContent)
+{
+	RequestErrored = false;
+	ErrorCode = 0;
+	ReturnedContent = newContent;
+}
+
+Answer::~Answer()
+{
 }

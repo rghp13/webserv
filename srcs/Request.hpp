@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Request.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/07 20:41:17 by dimitriscr       ###   ########.fr       */
+/*   Created: 2022/06/07 19:10:15 by dimitriscr        #+#    #+#             */
+/*   Updated: 2022/06/07 19:38:12 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/webserv.hpp"
+#ifndef REQUEST_HPP
+ #define REQUEST_HPP
+#include <string>
 
-int main(int argc, char **argv)
+class Request
 {
-	//initialization:
-	// -check config file
-	// -load config file
-	// -get a list of all prots that nned websockets
+private:
 
-	//loop
-	// -start websockets on each of the ports
+public:
+	int			port;
+	std::string	domain;
+	std::string	pageRequested;
+	Request();
+	Request(int newport, std::string newdomain, std::string newpage);
+	Request(int newport, std::string newdomain);
+	bool	isPageADirectory( void ) const;
+	~Request();
+};
 
-	//cleanup
-	return (0);
-}
+#endif
