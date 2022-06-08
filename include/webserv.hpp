@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/05/31 19:25:28 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/08 23:16:53 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,11 @@
 
 #define PORT 80
 //research FD_SET, FD_CLR, FD_ISSET, FD_ZERO 
+
+typedef	struct	s_socket_info
+{
+	std::string		host;
+	unsigned int	port;
+}				t_socket_info;
+
 #endif
