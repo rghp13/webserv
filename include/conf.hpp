@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:21:40 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/08 22:57:56 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:51:04 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ private:
 
 public:
 	conf();
+	conf(conf const &src);
 	~conf();
+	conf	&operator=(conf const &src);
 };
 
 

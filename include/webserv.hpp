@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/08 23:16:53 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/09 14:51:03 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 #include <arpa/inet.h>//htons htonl ntohs ntohl
 #include <poll.h>//poll
 
+#include "conf.hpp"
 #define PORT 80
 //research FD_SET, FD_CLR, FD_ISSET, FD_ZERO 
 
@@ -38,4 +39,5 @@ typedef	struct	s_socket_info
 	unsigned int	port;
 }				t_socket_info;
 
+int	init(std::vector<conf> Vconf);
 #endif
