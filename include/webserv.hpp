@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/08 23:16:53 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/09 17:27:33 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <stdlib.h>//apparently exit requires stdlib.h
 #include <unistd.h> //read, write, close, etc...
 #include <fcntl.h>
+#include <exception>
 
 #include <netinet/in.h> //variable types that can hold ip addresses
 #include <sys/types.h>

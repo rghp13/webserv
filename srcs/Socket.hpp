@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 03:59:50 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/09 04:54:51 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/09 19:46:47 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ public:
 	Socket();
 	Socket(const Socket& src);
 	Socket(std::string host, int port);
-	int		bind( void );
-	bool	has_available_connection( void ) const;
+	bool		bind_socket( void );
+	int		getFD( void ) const;
 	int		accept_connection( void );
 	~Socket();
 };
