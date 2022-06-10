@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 03:59:50 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/09 19:46:47 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/10 01:40:38 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ public:
 	Socket();
 	Socket(const Socket& src);
 	Socket(std::string host, int port);
-	bool		bind_socket( void );
+	bool	bind_socket( void );
+	bool	start_listening(int maxQueueSize);
 	int		getFD( void ) const;
 	int		accept_connection( void );
 	~Socket();

@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 04:01:04 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/09 20:38:48 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/10 02:12:30 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@ Socket::Socket()
 		throw std::runtime_error("Could not create socket");
 	if (setsockopt(_socketfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)))
 		throw std::runtime_error("Can't change socket options");
-	_socketinfo.sin_family = AF_INET;
-	_socketinfo.sin_addr.s_addr = INADDR_ANY;
-	if (_host != "*")
-		_socketinfo.sin_addr.s_addr = inet_addr(_host.c_str());
-	_socketinfo.sin_port = htons(_port);
 }
 
 Socket::Socket(const Socket& src)
@@ -39,11 +34,6 @@ Socket::Socket(const Socket& src)
 		throw std::runtime_error("Could not create socket");
 	if (setsockopt(_socketfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)))
 		throw std::runtime_error("Can't change socket options");
-	_socketinfo.sin_family = AF_INET;
-	_socketinfo.sin_addr.s_addr = INADDR_ANY;
-	if (_host != "*")
-		_socketinfo.sin_addr.s_addr = inet_addr(_host.c_str());
-	_socketinfo.sin_port = htons(_port);
 }
 
 Socket::Socket(std::string host, int port)
@@ -56,18 +46,28 @@ Socket::Socket(std::string host, int port)
 		throw std::runtime_error("Could not create socket");
 	if (setsockopt(_socketfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)))
 		throw std::runtime_error("Can't change socket options");
+}
+
+bool	Socket::bind_socket( void )
+{
 	_socketinfo.sin_family = AF_INET;
 	_socketinfo.sin_addr.s_addr = INADDR_ANY;
 	if (_host != "*")
 		_socketinfo.sin_addr.s_addr = inet_addr(_host.c_str());
 	_socketinfo.sin_port = htons(_port);
-}
-
-bool	Socket::bind_socket( void )
-{
 	if (bind(_socketfd, (struct sockaddr*)&_socketinfo, sizeof(_socketinfo)) < 0) 
 	{
 		throw std::runtime_error("Couldn't bind socket, port maybe in use");
+		return (false);
+	}
+	return (true);
+}
+
+bool	Socket::start_listening(int maxQueueSize)
+{
+	if (listen(_socketfd, maxQueueSize) < 0) 
+	{
+		throw std::runtime_error("Socket couldn't start listening");
 		return (false);
 	}
 	return (true);
@@ -94,5 +94,6 @@ int	Socket::accept_connection( void )
 
 Socket::~Socket()
 {
+	std::cout << "socket shutdown" << _socketfd << std::endl;
 	shutdown(_socketfd, SHUT_RDWR);
 }

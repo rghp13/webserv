@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/09 23:51:30 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/10 02:13:57 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ typedef	struct	s_socket_info
 	unsigned int	port;
 }				t_socket_info;
 
-int	init_sockets(std::vector<t_socket_info> &socketInfos, std::vector<Socket> &SocketRefLists);
+int	init_sockets(std::vector<t_socket_info> &socketInfos, std::vector<Socket*> &SocketRefLists);
 
 #endif
