@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/08 23:16:53 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/10 02:19:53 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #include <stdlib.h>//apparently exit requires stdlib.h
 #include <unistd.h> //read, write, close, etc...
 #include <fcntl.h>
+#include <exception>
+#include <vector>
 
 #include <netinet/in.h> //variable types that can hold ip addresses
 #include <sys/types.h>
@@ -29,13 +31,21 @@
 #include <arpa/inet.h>//htons htonl ntohs ntohl
 #include <poll.h>//poll
 
-#define PORT 80
+#include "../srcs/Socket.hpp"
+#include "../srcs/Request.hpp"
+#include "../srcs/Answer.hpp"
+
+#define MAXQUEUESIZE 3
 //research FD_SET, FD_CLR, FD_ISSET, FD_ZERO 
+
+class Socket;
 
 typedef	struct	s_socket_info
 {
 	std::string		host;
 	unsigned int	port;
 }				t_socket_info;
+
+int	init_sockets(std::vector<t_socket_info> &socketInfos, std::vector<Socket*> &SocketRefLists);
 
 #endif

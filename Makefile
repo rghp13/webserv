@@ -6,7 +6,7 @@
 #    By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 11:39:56 by dimitriscr        #+#    #+#              #
-#    Updated: 2022/05/31 11:45:18 by dimitriscr       ###   ########.fr        #
+#    Updated: 2022/06/09 23:44:36 by dimitriscr       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,11 @@ CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 RM = rm -rf
 
-SRCS = srcs/main.cpp
+SRCS =	srcs/Request.cpp \
+		srcs/Answer.cpp \
+		srcs/Socket.cpp \
+		srcs/init_sockets.cpp \
+		srcs/main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
