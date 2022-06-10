@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/10 02:16:29 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/10 02:24:36 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 	//start websockets on each of the ports
 	num_sockets = init_sockets(socketInitInfo, socketList);
 	if (num_sockets == -1)
-		exit(-1);
+		exit(-1); //needs to become cleanup when that function exists
 
 	//loop
 	//	-use epoll to monitor all sockets until one has a connection
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 		sleep(100);
 	}
 	//cleanup
-	//destroy all of the sockets
+	//	-destroy all of the sockets
 	(void)argc;
 	(void)argv;
 	return (0);
