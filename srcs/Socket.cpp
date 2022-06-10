@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 04:01:04 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/10 02:25:20 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/10 16:58:35 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,5 @@ int	Socket::accept_connection( void )
 Socket::~Socket()
 {
 	shutdown(_socketfd, SHUT_RDWR);
+	close(_socketfd);
 }
