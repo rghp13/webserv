@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/09 14:51:03 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/10 20:32:39 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
  #define WEBSERV_HPP
 
 #include <string> //string functions
-#include <fstream>//unsure, might remove
+#include <fstream>
 #include <iostream>
 
 #include <stdlib.h>//apparently exit requires stdlib.h
@@ -40,4 +40,5 @@ typedef	struct	s_socket_info
 }				t_socket_info;
 
 int	init(std::vector<conf> Vconf);
+bool boot_check(int argc, char **argv, std::ifstream &argfile);
 #endif
