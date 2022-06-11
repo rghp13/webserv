@@ -6,12 +6,11 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 22:29:07 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/10 02:25:00 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/11 02:47:03 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/webserv.hpp"
-#include "Socket.hpp"
 
 int	init_sockets(std::vector<t_socket_info> &socketInfos, std::vector<Socket*> &socketList)
 {

@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/11 00:11:40 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/11 02:46:50 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@
 #include <arpa/inet.h>//htons htonl ntohs ntohl
 #include <poll.h>//poll
 
-#include "../srcs/Socket.hpp"
-#include "../srcs/Request.hpp"
-#include "../srcs/Answer.hpp"
+#include "Socket.hpp"
+#include "Request.hpp"
+#include "Answer.hpp"
 
 #define MAXQUEUESIZE 3
 //research FD_SET, FD_CLR, FD_ISSET, FD_ZERO 
