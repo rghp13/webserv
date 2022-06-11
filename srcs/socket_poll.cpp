@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 18:16:41 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/10 19:26:03 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/11 00:23:47 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	reset_socket_poll_list(struct pollfd *socketPoll, int sockNumber)
 {
 	for (int i = 0; i < sockNumber; i++)
 	{
+		socketPoll[i].events = POLLIN;
 		socketPoll[i].revents = 0;
 	}
 }

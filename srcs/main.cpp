@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/10 18:44:07 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/11 00:13:10 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,7 @@ int main(int argc, char **argv)
 	{
 		reset_socket_poll_list(socketPoll, num_sockets);
 		poll(socketPoll, num_sockets, -1); //poll socket list, -1 means infinite timeout, can be set to a positive value for a timeout in ms
-		std::cout << "poll over" << std::endl;
-		for (int i = 0; i < num_sockets; i++)
-		{
-			if (socketPoll[i].revents != 0)
-				std::cout <<"Socket " << socketPoll[i].fd << " received a connection" << std::endl;
-		}
-		sleep(10);
+		connection_loop(socketList, socketPoll, num_sockets);
 	}
 
 	//cleanup

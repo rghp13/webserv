@@ -6,7 +6,7 @@
 #    By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 11:39:56 by dimitriscr        #+#    #+#              #
-#    Updated: 2022/06/10 18:28:07 by dimitriscr       ###   ########.fr        #
+#    Updated: 2022/06/11 00:11:31 by dimitriscr       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS =	srcs/Request.cpp \
 		srcs/Socket.cpp \
 		srcs/init_sockets.cpp \
 		srcs/socket_poll.cpp \
+		srcs/create_connection.cpp \
 		srcs/main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
