@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+         #
+#    By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 11:39:56 by dimitriscr        #+#    #+#              #
-#    Updated: 2022/06/10 21:22:03 by rponsonn         ###   ########.fr        #
+#    Updated: 2022/06/11 02:36:19 by dimitriscr       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,9 +32,13 @@ CYAN = \033[36m
 
 PATH_SRC				=		./srcs
 PATH_HEAD				=		./includes
-SRC_NAME				=		main.cpp \
+SRC_NAME				=		Socket.cpp \
+								Request.cpp \
+								Answer.cpp \
 								init_sockets.cpp \
-								Socket.cpp
+								socket_poll.cpp \
+								create_connection.cpp \
+								main.cpp
 
 NAME					=		webserv
 OBJ_NAME				=		$(SRC_NAME:.cpp=.o)

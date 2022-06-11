@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 19:19:02 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/11 02:31:43 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/11 02:36:58 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ bool	connection_loop(std::vector<Socket*> socketList, struct pollfd *socketPoll,
 			{
 				if (socketList[j]->getFD() == socketPoll[i].fd)
 				{
-					std::cout << "handling socket" << socketList[j]->getFD() << std::endl;
 					handle_connection(socketList[j]);
 					break;
 				}
