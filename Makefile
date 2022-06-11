@@ -3,20 +3,20 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+         #
+#    By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 11:39:56 by dimitriscr        #+#    #+#              #
-#    Updated: 2022/05/31 11:45:18 by dimitriscr       ###   ########.fr        #
+#    Updated: 2022/06/11 16:33:39 by rponsonn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = webserv
 
 CC = c++
-CFLAGS = -Wall -Werror -Wextra -std=c++98
+CFLAGS = -std=c++98 #-Wall -Werror -Wextra 
 RM = rm -rf
 
-SRCS = srcs/main.cpp
+SRCS = srcs/main.cpp srcs/init.cpp srcs/conf.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

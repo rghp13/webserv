@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/10 20:56:52 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/11 17:01:00 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 		return (1);
 	//initialization:
 	std::vector<conf> Vconf;
-	init(Vconf);
+	init(Vconf, argfile);
 	// -check config file
 	// -load config file
 	// -get a list of all prots that nned websockets

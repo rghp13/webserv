@@ -6,16 +6,11 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 22:40:14 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/10 21:00:43 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/11 20:40:09 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/webserv.hpp"
-
-int	init(std::vector<conf> &Vconf, std::string file)
-{
-	
-}
 
 bool boot_check(int argc, char **argv, std::ifstream &argfile)//return true if something is wrong with args
 {
@@ -47,5 +42,18 @@ bool boot_check(int argc, char **argv, std::ifstream &argfile)//return true if s
 		else
 			std::cout << "couldn't find default file\n";
 	}
+	return (0);
+}
+
+int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to variable and fill out object
+{
+	std::string	line;
+	conf		temp;
+	while (!file.eof())
+	{
+		std::getline(file, line);
+		
+	}
+	file.close();
 	return (0);
 }
