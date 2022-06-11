@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/10 02:19:53 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/11 00:11:40 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ typedef	struct	s_socket_info
 	unsigned int	port;
 }				t_socket_info;
 
-int	init_sockets(std::vector<t_socket_info> &socketInfos, std::vector<Socket*> &SocketRefLists);
+int		init_sockets(std::vector<t_socket_info> &socketInfos, std::vector<Socket*> &SocketRefLists);
+void	add_sockets_to_poll_list(std::vector<Socket*> socketList, struct pollfd	*socketPoll, int sockNumber);
+void	reset_socket_poll_list(struct pollfd *socketPoll, int sockNumber);
+bool	connection_loop(std::vector<Socket*> socketList, struct pollfd *socketPoll, int sockNumber);
 
 #endif
