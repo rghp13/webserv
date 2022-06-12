@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:21:40 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/11 21:36:46 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/12 22:44:19 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 # define CONF_HPP
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "webserv.hpp"
 //if passed request is for a folder instead of a file return index.html
 class conf
 {
 private:
-	t_socket_info				_Socket;//recommmended between 1024-65535
+	std::string					_Host;
+	unsigned int				_Port;//recommmended between 1024-65535
 	std::string					_ServerName;//hostname or ip address
 	std::vector<std::string>	_ServerAlias;//separate multiple entries with spaces
 	std::string					_ServerRoot;//the root of our webserv install
@@ -31,7 +33,8 @@ public:
 	conf(conf const &src);
 	~conf();
 	conf	&operator=(conf const &src);
-	void	set_socket(std::string &input);
+	int		set_socket(std::string &input);
+	void	clear(void);
 };
 
 

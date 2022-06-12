@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/11 17:01:46 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/12 23:18:58 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@
 #define PORT 80
 //research FD_SET, FD_CLR, FD_ISSET, FD_ZERO 
 
-typedef	struct	s_socket_info
+struct	s_socket_info
 {
 	std::string		host;
 	unsigned int	port;
-}				t_socket_info;
+};
 
-int	init(std::vector<conf> &Vconf, std::ifstream &file);
-bool boot_check(int argc, char **argv, std::ifstream &argfile);
+int		init(std::vector<conf> &Vconf, std::ifstream &file);
+bool	boot_check(int argc, char **argv, std::ifstream &argfile);
+void	RemoveWordString(std::string &line, const std::string &word);
 #endif

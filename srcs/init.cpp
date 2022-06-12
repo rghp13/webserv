@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 22:40:14 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/11 20:40:09 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/12 22:44:08 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,28 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 {
 	std::string	line;
 	conf		temp;
+	int			flag = 0;
 	while (!file.eof())
 	{
 		std::getline(file, line);
-		
+		if ((std::find(line.begin(), line.begin() + 6, "listen")) == line.begin())
+		{
+			if (flag++)
+			{
+				Vconf.push_back(temp);
+				temp.clear();
+			}
+			temp.set_socket(line);
+		}
 	}
 	file.close();
 	return (0);
+}
+
+void	RemoveWordString(std::string &line, const std::string &word)
+{
+	size_t i;
+	i = line.find(word);
+	if (i != std::string::npos)
+		line.erase(i, word.length());
 }
