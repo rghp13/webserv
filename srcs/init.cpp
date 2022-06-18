@@ -62,6 +62,14 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 			}
 			temp.set_socket(line);
 		}
+		else if ((std::find(line.begin(), line.begin() + 10, "ServerName")) == line.begin())
+			temp.set_name(line);
+		else if ((std::find(line.begin(), line.begin() + 11, "ServerAlias")) == line.begin())
+			temp.set_alias(line);
+		else if ((std::find(line.begin(), line.begin() + 12, "DocumentRoot")) == line.begin())
+			temp.set_docroot(line);
+		else if ((std::find(line.begin(), line.begin() + 6, "Method")) == line.begin())
+			temp.set_method(line);
 	}
 	file.close();
 	return (0);

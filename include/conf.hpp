@@ -34,6 +34,10 @@ public:
 	~conf();
 	conf	&operator=(conf const &src);
 	int		set_socket(std::string &input);
+	int		set_name(std::string &line);
+	int		set_alias(std::string &line);
+	int		set_docroot(std::string &line);
+	int		set_method(std::string &line);
 	void	clear(void);
 };
 

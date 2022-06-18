@@ -52,6 +52,40 @@ int	conf::set_socket(std::string &input)
 	_Port = std::atoi(token.c_str());
 	return (0);
 }
+int	conf::set_name(std::string &line)
+{
+	std::string	delimiter = " ";
+	std::string	token;
+	size_t		i = 0;
+	RemoveWordString(line, " ");
+	RemoveWordString(line, "\t");
+	if ((i = line.find(delimiter)) == std::string::npos)
+		return (1);
+	token = line.substr(i + 1);
+	_ServerName = token;
+	return (0);
+}
+int	conf::set_alias(std::string &line)
+{
+	std::string	delimiter = " ";
+	std::string	token;
+	size_t		i = 0;
+	RemoveWordString(line, " ");
+	RemoveWordString(line, "\t");
+	if ((i = line.find(delimiter)) == std::string::npos)//rework this to be in a loop
+		return (1);
+	token = line.substr(i + 1);
+	_ServerName = token;
+	return (0);
+}
+int	conf::set_docroot(std::string &line)
+{
+	;
+}
+int	conf::set_method(std::string &line)
+{
+	;
+}
 void	conf::clear(void)
 {
 	_Host.clear();
