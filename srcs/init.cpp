@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 22:40:14 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/12 22:44:08 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/24 16:23:33 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 	while (!file.eof())
 	{
 		std::getline(file, line);
-		if ((std::find(line.begin(), line.begin() + 6, "listen")) == line.begin())
+		if (line.find("Listen", 0, 6) == 0)
 		{
 			if (flag++)
 			{
@@ -62,13 +62,13 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 			}
 			temp.set_socket(line);
 		}
-		else if ((std::find(line.begin(), line.begin() + 10, "ServerName")) == line.begin())
+		else if (line.find("ServerName", 0, 10) == 0)
 			temp.set_name(line);
-		else if ((std::find(line.begin(), line.begin() + 11, "ServerAlias")) == line.begin())
+		else if (line.find("ServerAlias", 0, 11) == 0)
 			temp.set_alias(line);
-		else if ((std::find(line.begin(), line.begin() + 12, "DocumentRoot")) == line.begin())
+		else if (line.find("DocumentRoot", 0, 12) == 0)
 			temp.set_docroot(line);
-		else if ((std::find(line.begin(), line.begin() + 6, "Method")) == line.begin())
+		else if (line.find("Method", 0, 6) == 0)
 			temp.set_method(line);
 	}
 	file.close();

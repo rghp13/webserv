@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/12 23:18:58 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:43:04 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 #include "conf.hpp"
 #define PORT 80
 //research FD_SET, FD_CLR, FD_ISSET, FD_ZERO 
-
+class conf;
 struct	s_socket_info
 {
 	std::string		host;
