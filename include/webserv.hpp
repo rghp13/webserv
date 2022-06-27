@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/23 19:43:04 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/27 21:31:44 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef	struct	s_socket_info
 {
 	std::string		host;
 	unsigned int	port;
-};
+}				t_socket_info;
 
 int		init(std::vector<conf> &Vconf, std::ifstream &file);
 bool	boot_check(int argc, char **argv, std::ifstream &argfile);

@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/11 00:13:10 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/27 22:42:42 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,17 @@ int main(int argc, char **argv)
 	std::vector<t_socket_info>	socketInitInfo; //array used to create the sockets on the correct port and host
 	std::vector<Socket*>		socketList; 	//array storing pointers to memory allocated socket classes
 	int							num_sockets;	//the number of sockets initialized
+	std::ifstream				argfile;		//conf file i'll be parsing from
+	std::vector<conf> Vconf;
 
 	//initialization:
-	std::vector<conf> Vconf;
+	// -check config file
+	if (boot_check(argc, argv, argfile))
+		return (1);
+	// -load config file
 	init(Vconf, argfile);
 	for (std::vector<conf>::iterator i = Vconf.begin(); i != Vconf.end(); i++)
 		i->print();
-	// -check config file
-	// -load config file
 	// -get a list of all prots that nned websockets
 	//===========temp init=============
 	t_socket_info	tempinit;
