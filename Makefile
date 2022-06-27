@@ -6,34 +6,62 @@
 #    By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 11:39:56 by dimitriscr        #+#    #+#              #
-#    Updated: 2022/06/27 16:31:26 by rponsonn         ###   ########.fr        #
+#    Updated: 2022/06/11 02:36:19 by dimitriscr       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = webserv
+define HEADER
+██╗    ██╗███████╗██████╗ ███████╗███████╗██████╗ ██╗   ██╗
+██║    ██║██╔════╝██╔══██╗██╔════╝██╔════╝██╔══██╗██║   ██║
+██║ █╗ ██║█████╗  ██████╔╝███████╗█████╗  ██████╔╝██║   ██║
+██║███╗██║██╔══╝  ██╔══██╗╚════██║██╔══╝  ██╔══██╗╚██╗ ██╔╝
+╚███╔███╔╝███████╗██████╔╝███████║███████╗██║  ██║ ╚████╔╝ 
+ ╚══╝╚══╝ ╚══════╝╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  
+                                                           
+endef
+export HEADER
 
-CC = c++
-CFLAGS = -std=c++98 -g #-Wall -Werror -Wextra 
-RM = rm -rf
+NC = \033[0m
+RED = \033[0;91m
+ORANGE = \033[93m
+GREEN = \033[32m
+PURPLE = \033[0;95m
+BLUE = \033[0;34m
+BOLD = \033[1m
+CYAN = \033[36m
 
-SRCS = srcs/main.cpp srcs/init.cpp srcs/conf.cpp
+PATH_SRC				=		./srcs
+PATH_HEAD				=		./includes
+SRC_NAME				=		Socket.cpp \
+								Request.cpp \
+								Answer.cpp \
+								init_sockets.cpp \
+								socket_poll.cpp \
+								create_connection.cpp \
+								main.cpp
 
-OBJS = $(SRCS:.cpp=.o)
-
+NAME					=		webserv
+OBJ_NAME				=		$(SRC_NAME:.cpp=.o)
+CC						=		c++
+RM						=		rm -f
+CFLAGS					=		-Wall -Werror -Wextra -std=c++98
+SRC						=		$(addprefix $(PATH_SRC)/,$(SRC_NAME))
+OBJ						=		$(addprefix $(PATH_SRC)/,$(OBJ_NAME))
 .cpp.o:
-			$(CC) $(CFLAGS) -c $< -o ${<:.cpp=.o}
-
-all:		$(NAME)
-
-$(NAME):	$(OBJS)
-			$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+								@${CC} ${CFLAG} -I${PATH_HEAD} -c $< -o ${<:.cpp=.o}
+								@printf "${GREEN}[ OK ] ${<:.s=.o}${NC}                \r"
+${NAME}:						${OBJ}
+								@printf "${GREEN}[DONE]${NC}\n"
+								@${CC} $^ -o $@ ${CFLAG}
+								@printf "${CYAN}[COMPILATION COMPLETE]${NC}\n"
+								@printf "${PURPLE}$$HEADER${NC}\n"
+all:							${NAME}
 
 clean:
-			$(RM) $(OBJS)
-
-fclean:		clean
-			$(RM) $(NAME)
-
-re:			fclean all
-
-.PHONY: all clean fclean re
+								@${RM} ${OBJ}
+								@printf "\n${GREEN}[ OK ]${NC}${RED} *.o files DELETED${NC}\n"
+fclean:							clean
+								@${RM} ${NAME}
+								@printf "${GREEN}[ OK ]${NC}${RED} ${NAME} DELETED${NC}\n"
+re:								fclean ${NAME}
+.PHONY:							all clean fclean re
