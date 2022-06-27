@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/11 02:46:50 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/23 19:43:04 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
  #define WEBSERV_HPP
 
 #include <string> //string functions
-#include <fstream>//unsure, might remove
+#include <fstream>
 #include <iostream>
 
 #include <stdlib.h>//apparently exit requires stdlib.h
@@ -31,6 +31,9 @@
 #include <arpa/inet.h>//htons htonl ntohs ntohl
 #include <poll.h>//poll
 
+#include "conf.hpp"
+#define PORT 80
+class conf;
 #include "Socket.hpp"
 #include "Request.hpp"
 #include "Answer.hpp"
@@ -44,8 +47,11 @@ typedef	struct	s_socket_info
 {
 	std::string		host;
 	unsigned int	port;
-}				t_socket_info;
+};
 
+int		init(std::vector<conf> &Vconf, std::ifstream &file);
+bool	boot_check(int argc, char **argv, std::ifstream &argfile);
+void	RemoveWordString(std::string &line, const std::string &word);
 int		init_sockets(std::vector<t_socket_info> &socketInfos, std::vector<Socket*> &SocketRefLists);
 void	add_sockets_to_poll_list(std::vector<Socket*> socketList, struct pollfd	*socketPoll, int sockNumber);
 void	reset_socket_poll_list(struct pollfd *socketPoll, int sockNumber);

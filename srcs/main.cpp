@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
 /*   Updated: 2022/06/11 00:13:10 by dimitriscr       ###   ########.fr       */
@@ -20,6 +20,10 @@ int main(int argc, char **argv)
 	int							num_sockets;	//the number of sockets initialized
 
 	//initialization:
+	std::vector<conf> Vconf;
+	init(Vconf, argfile);
+	for (std::vector<conf>::iterator i = Vconf.begin(); i != Vconf.end(); i++)
+		i->print();
 	// -check config file
 	// -load config file
 	// -get a list of all prots that nned websockets
