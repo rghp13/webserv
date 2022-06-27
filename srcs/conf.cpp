@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/25 23:12:41 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/27 19:28:21 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,15 @@ int	conf::set_socket(std::string &input)
 	std::string	token;
 	size_t		i = 0;
 	RemoveWordString(input, "Listen");
+	RemoveWordString(input, " ");
 	if ((i = input.find(delimiter)) == std::string::npos)
 		return (1);
 	token = input.substr(0, i);
 	_Host = token;
 	token = input.substr(i + 1);
 	_Port = std::atoi(token.c_str());
+	if (_Host.size() == 0 || token.size() == 0)
+		return (1);
 	return (0);
 }
 int	conf::set_name(std::string &line)
@@ -123,4 +126,23 @@ void	conf::clear(void)
 	_ServerRoot.clear();
 	_DocumentRoot.clear();
 	_Method = 0;
+}
+void	conf::print(void)
+{
+	std::cout << "Host address is: " << _Host << std::endl;
+	std::cout << "Socket number: " << _Port << std::endl;
+	std::cout << "Server Name: " << _ServerName << std::endl;
+	std::cout << "Alias list: ";
+	for (std::vector<std::string>::iterator i=_ServerAlias.begin(); i != _ServerAlias.end(); i++)
+		std::cout << *i << " ";
+	std::cout << std::endl;
+	std::cout << "Docroot: " << _DocumentRoot << std::endl;
+	std::cout << "Methods: ";
+	if (_Method & GET)
+		std::cout << "GET ";
+	if (_Method & POST)
+		std::cout << "POST ";
+	if (_Method & DELETE)
+		std::cout << "DELETE ";
+	std::cout << std::endl;
 }

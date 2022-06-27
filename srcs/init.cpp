@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 22:40:14 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/24 16:23:33 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/27 18:22:00 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 	std::string	line;
 	conf		temp;
 	int			flag = 0;
+	int			error = 0;
 	while (!file.eof())
 	{
 		std::getline(file, line);
@@ -60,18 +61,24 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 				Vconf.push_back(temp);
 				temp.clear();
 			}
-			temp.set_socket(line);
+			error |= temp.set_socket(line);
 		}
 		else if (line.find("ServerName", 0, 10) == 0)
-			temp.set_name(line);
+			error |= temp.set_name(line);
 		else if (line.find("ServerAlias", 0, 11) == 0)
-			temp.set_alias(line);
+			error |= temp.set_alias(line);
 		else if (line.find("DocumentRoot", 0, 12) == 0)
-			temp.set_docroot(line);
+			error |= temp.set_docroot(line);
 		else if (line.find("Method", 0, 6) == 0)
-			temp.set_method(line);
+			error |= temp.set_method(line);
 	}
 	file.close();
+	if (error)
+	{
+		std::cout << "An error was found\n";
+		return (1);
+	}
+	Vconf.push_back(temp);
 	return (0);
 }
 

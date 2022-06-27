@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:21:40 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/24 16:31:47 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/26 17:34:42 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ public:
 	int		set_alias(std::string &line);
 	int		set_docroot(std::string &line);
 	int		set_method(std::string &line);
+	void	print(void);
 	void	clear(void);
 };
 
