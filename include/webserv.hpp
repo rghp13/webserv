@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/23 19:43:04 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/28 16:27:05 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef	struct	s_socket_info
 {
 	std::string		host;
 	unsigned int	port;
-};
+}				t_socket_info;
 
 int		init(std::vector<conf> &Vconf, std::ifstream &file);
 bool	boot_check(int argc, char **argv, std::ifstream &argfile);
@@ -56,5 +56,7 @@ int		init_sockets(std::vector<t_socket_info> &socketInfos, std::vector<Socket*> 
 void	add_sockets_to_poll_list(std::vector<Socket*> socketList, struct pollfd	*socketPoll, int sockNumber);
 void	reset_socket_poll_list(struct pollfd *socketPoll, int sockNumber);
 bool	connection_loop(std::vector<Socket*> socketList, struct pollfd *socketPoll, int sockNumber);
+int		fill_socket_vector(std::vector<t_socket_info> &socketInitInfo, std::vector<conf> &Vconf);
+bool	check_duplicate_socket(std::vector<t_socket_info> &socketInitInfo);
 
 #endif

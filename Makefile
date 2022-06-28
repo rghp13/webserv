@@ -6,7 +6,7 @@
 #    By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 11:39:56 by dimitriscr        #+#    #+#              #
-#    Updated: 2022/06/11 02:36:19 by dimitriscr       ###   ########.fr        #
+#    Updated: 2022/06/27 21:30:42 by rponsonn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,8 @@ SRC_NAME				=		Socket.cpp \
 								init_sockets.cpp \
 								socket_poll.cpp \
 								create_connection.cpp \
+								conf.cpp \
+								init.cpp \
 								main.cpp
 
 NAME					=		webserv

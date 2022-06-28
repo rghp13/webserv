@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/27 19:28:21 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/28 17:43:49 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,4 +145,12 @@ void	conf::print(void)
 	if (_Method & DELETE)
 		std::cout << "DELETE ";
 	std::cout << std::endl;
+}
+std::string	conf::get_Host(void)const
+{
+	return (_Host);
+}
+unsigned int conf::get_Port(void)const
+{
+	return(_Port);
 }
