@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 22:40:14 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/27 18:22:00 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/28 18:02:35 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,34 @@ void	RemoveWordString(std::string &line, const std::string &word)
 	i = line.find(word);
 	if (i != std::string::npos)
 		line.erase(i, word.length());
+}
+
+int	fill_socket_vector(std::vector<t_socket_info> &socketInitInfo, std::vector<conf> &Vconf)
+{
+	for (std::vector<conf>::iterator i = Vconf.begin(); i != Vconf.end(); i++)
+	{
+		{
+			t_socket_info	temp;
+			temp.host = i->get_Host();
+			temp.port = i->get_Port();
+			std::cout << "Object created with Host: " << temp.host << " and port#: " << temp.port << std::endl;
+			socketInitInfo.push_back(temp);
+		}
+	}
+	return (0);
+}
+bool	check_duplicate_socket(std::vector<t_socket_info> &socketInitInfo)
+{
+	for (std::vector<t_socket_info>::iterator first = socketInitInfo.begin(); first != socketInitInfo.end(); first++)
+	{
+		for (std::vector<t_socket_info>::iterator second = first + 1; second != socketInitInfo.end(); second++)
+		{
+			if (first->host == second->host && first->port == second->port)
+			{
+				std::cerr << "Duplicate Entry found, Aborting\n";
+				return (true);
+			}
+		}
+	}
+	return (false);
 }

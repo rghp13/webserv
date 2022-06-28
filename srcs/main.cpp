@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/27 22:42:42 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/28 17:50:12 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int main(int argc, char **argv)
 	init(Vconf, argfile);
 	for (std::vector<conf>::iterator i = Vconf.begin(); i != Vconf.end(); i++)
 		i->print();
-	// -get a list of all prots that nned websockets
+	// -get a list of all prots that need websockets
+	fill_socket_vector(socketInitInfo, Vconf);
+	if (check_duplicate_socket(socketInitInfo))
+		return (1);
 	//===========temp init=============
 	t_socket_info	tempinit;
 	tempinit.host = "*";
