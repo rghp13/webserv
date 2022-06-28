@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/28 17:50:12 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/28 18:53:35 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int main(int argc, char **argv)
 	if (boot_check(argc, argv, argfile))
 		return (1);
 	// -load config file
-	init(Vconf, argfile);
+	if (init(Vconf, argfile))
+		return (1);
 	for (std::vector<conf>::iterator i = Vconf.begin(); i != Vconf.end(); i++)
 		i->print();
 	// -get a list of all prots that need websockets
@@ -69,7 +70,5 @@ int main(int argc, char **argv)
 
 	//cleanup
 	//	-destroy all of the sockets
-	(void)argc;
-	(void)argv;
 	return (0);
 }
