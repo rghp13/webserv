@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 22:40:14 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/28 18:02:35 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/28 18:52:53 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 	std::string	line;
 	conf		temp;
 	int			flag = 0;
+	int			isempty = 1;
 	int			error = 0;
 	while (!file.eof())
 	{
@@ -71,9 +72,12 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 			error |= temp.set_docroot(line);
 		else if (line.find("Method", 0, 6) == 0)
 			error |= temp.set_method(line);
+		else
+			continue ;
+		isempty = 0;
 	}
 	file.close();
-	if (error)
+	if (error || isempty)
 	{
 		std::cout << "An error was found\n";
 		return (1);
