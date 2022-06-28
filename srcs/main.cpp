@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/28 18:53:35 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/28 20:06:01 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,6 @@ int main(int argc, char **argv)
 	fill_socket_vector(socketInitInfo, Vconf);
 	if (check_duplicate_socket(socketInitInfo))
 		return (1);
-	//===========temp init=============
-	t_socket_info	tempinit;
-	tempinit.host = "*";
-	tempinit.port = 8081;
-	socketInitInfo.push_back(tempinit);
-	tempinit.host = "*";
-	tempinit.port = 8082;
-	socketInitInfo.push_back(tempinit);
-	tempinit.host = "127.0.0.1";
-	tempinit.port = 8083;
-	socketInitInfo.push_back(tempinit);
-	//================================
 
 	//start websockets on each of the ports
 	num_sockets = init_sockets(socketInitInfo, socketList); //takes the list of host and port to make sockets on and the list to store created sockets
