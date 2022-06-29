@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:46:27 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/29 15:24:49 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/29 23:27:10 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,5 @@ Answer	&Answer::operator=(Answer const &src)
 	RequestErrored = src.RequestErrored;
 	ErrorCode = src.ErrorCode;
 	ReturnedContent = src.ReturnedContent;
+	return (*this);
 }

@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/29 18:58:59 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/30 00:52:57 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ Answer	process_request(Request &src, std::vector<conf> &Vconf)
 {
 	std::vector<conf>::iterator iter;
 	Answer						ret;
-
+	std::string					path;
 	iter = strict_scan(Vconf, src);
 	if (iter == Vconf.end())
 	{
@@ -58,5 +58,11 @@ Answer	process_request(Request &src, std::vector<conf> &Vconf)
 		if (iter == Vconf.end())
 			return (Answer(404));
 	}
-
+	if (src.isPageADirectory())
+	{
+		if (!iter->get_listing())
+			return (Answer(404));
+		std::cout << "Make sure we have a function for directory listing" << std::endl;
+	}
+	path = iter->get_ServerRoot() + src.pageRequested;
 }

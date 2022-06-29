@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/29 00:31:13 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/29 23:30:59 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ Request::Request()
 	pageRequested = "";
 }
 
-Request::Request(int newport, std::string newhost, std::string newdomain, std::string newpage)
+Request::Request(unsigned int newport, std::string newhost, std::string newdomain, std::string newpage)
 {
 	port = newport;
 	host = newhost;
@@ -28,7 +28,7 @@ Request::Request(int newport, std::string newhost, std::string newdomain, std::s
 	pageRequested = newpage;
 }
 
-Request::Request(int newport, std::string newhost, std::string newdomain)
+Request::Request(unsigned int newport, std::string newhost, std::string newdomain)
 {
 	port = newport;
 	host = newhost;
