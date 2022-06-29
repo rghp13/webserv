@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/28 17:43:49 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/29 17:25:11 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,4 +153,17 @@ std::string	conf::get_Host(void)const
 unsigned int conf::get_Port(void)const
 {
 	return(_Port);
+}
+std::string	conf::get_ServerName(void)const
+{
+	return (_ServerName);
+}
+bool	conf::Alias_compare(std::string &src)
+{
+	for (std::vector<std::string>::iterator i = _ServerAlias.begin(); i != _ServerAlias.end(); i++)
+	{
+		if (*i == src)
+			return (true);
+	}
+	return (false);
 }
