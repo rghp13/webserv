@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/28 17:43:49 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/30 16:50:07 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ conf::conf()
 {
 	_Port = 0;
 	_Method = 0;
+	_ListingEnabled = false;
 }
 conf::conf(conf const &src)
 {
@@ -31,13 +32,14 @@ conf	&conf::operator=(conf const &src)
 {
 	if (this == &src)
 		return (*this);
-	this->_DocumentRoot = src._DocumentRoot;
-	this->_Method = src._Method;
-	this->_Host = src._Host;
-	this->_Port = src._Port;
-	this->_ServerAlias = src._ServerAlias;
-	this->_ServerName = src._ServerName;
-	this->_ServerRoot = src._ServerRoot;
+	_DocumentRoot = src._DocumentRoot;
+	_Method = src._Method;
+	_Host = src._Host;
+	_Port = src._Port;
+	_ServerAlias = src._ServerAlias;
+	_ServerName = src._ServerName;
+	_ServerRoot = src._ServerRoot;
+	_ListingEnabled = src._ListingEnabled;
 	return (*this);
 }
 int	conf::set_socket(std::string &input)
@@ -117,6 +119,22 @@ int	conf::set_method(std::string &line)
 		return (0);
 	return (1);
 }
+int	conf::set_listing(std::string &line)
+{
+	std::string			token;
+	std::stringstream	ss(line);
+
+	std::getline(ss, token, ' ');
+	if (!(std::getline(ss, token, ' ')))
+		return (1);
+	if (token == "true")
+		_ListingEnabled = true;
+	return (0);
+}
+bool	conf::get_listing(void)const
+{
+	return (_ListingEnabled);
+}
 void	conf::clear(void)
 {
 	_Host.clear();
@@ -126,6 +144,7 @@ void	conf::clear(void)
 	_ServerRoot.clear();
 	_DocumentRoot.clear();
 	_Method = 0;
+	_ListingEnabled = false;
 }
 void	conf::print(void)
 {
@@ -153,4 +172,21 @@ std::string	conf::get_Host(void)const
 unsigned int conf::get_Port(void)const
 {
 	return(_Port);
+}
+std::string	conf::get_ServerName(void)const
+{
+	return (_ServerName);
+}
+std::string	conf::get_ServerRoot(void)const
+{
+	return (_ServerRoot);
+}
+bool	conf::Alias_compare(std::string &src)
+{
+	for (std::vector<std::string>::iterator i = _ServerAlias.begin(); i != _ServerAlias.end(); i++)
+	{
+		if (*i == src)
+			return (true);
+	}
+	return (false);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Answer.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:46:27 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/11 02:45:57 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/29 23:27:10 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,11 @@ Answer::Answer(std::string newContent)
 
 Answer::~Answer()
 {
+}
+Answer	&Answer::operator=(Answer const &src)
+{
+	RequestErrored = src.RequestErrored;
+	ErrorCode = src.ErrorCode;
+	ReturnedContent = src.ReturnedContent;
+	return (*this);
 }

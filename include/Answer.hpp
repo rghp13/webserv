@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Answer.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:45:24 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/07 20:15:59 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/06/29 15:20:09 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ public:
 	Answer(int newErrorCode);
 	Answer(std::string newContent);
 	~Answer();
+	Answer	&operator=(Answer const &src);
 };
 
 #endif

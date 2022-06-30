@@ -6,7 +6,7 @@
 #    By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 11:39:56 by dimitriscr        #+#    #+#              #
-#    Updated: 2022/06/27 21:30:42 by rponsonn         ###   ########.fr        #
+#    Updated: 2022/06/29 15:56:40 by rponsonn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,13 +40,14 @@ SRC_NAME				=		Socket.cpp \
 								create_connection.cpp \
 								conf.cpp \
 								init.cpp \
+								process_request.cpp \
 								main.cpp
 
 NAME					=		webserv
 OBJ_NAME				=		$(SRC_NAME:.cpp=.o)
 CC						=		c++
 RM						=		rm -f
-CFLAGS					=		-Wall -Werror -Wextra -std=c++98
+CFLAG					=		-Wall -Werror -Wextra -std=c++98
 SRC						=		$(addprefix $(PATH_SRC)/,$(SRC_NAME))
 OBJ						=		$(addprefix $(PATH_SRC)/,$(OBJ_NAME))
 .cpp.o:
