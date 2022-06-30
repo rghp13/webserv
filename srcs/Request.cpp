@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/29 23:30:59 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/30 21:40:25 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,10 @@ bool	Request::isPageADirectory( void ) const
 
 Request::~Request()
 {
+}
+void	Request::htmlize(void)
+{
+	std::string html = ".html";
+	if (pageRequested.find(html.c_str(), pageRequested.size() - html.size(), html.size()) == std::string::npos)
+		pageRequested += html;
 }

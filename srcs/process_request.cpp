@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/30 00:52:57 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/30 22:41:15 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &s
 Answer	process_request(Request &src, std::vector<conf> &Vconf)
 {
 	std::vector<conf>::iterator iter;
+	std::ifstream				file;
 	Answer						ret;
 	std::string					path;
+	std::string					buffer;
 	iter = strict_scan(Vconf, src);
 	if (iter == Vconf.end())
 	{
@@ -62,7 +64,24 @@ Answer	process_request(Request &src, std::vector<conf> &Vconf)
 	{
 		if (!iter->get_listing())
 			return (Answer(404));
-		std::cout << "Make sure we have a function for directory listing" << std::endl;
+		std::cout << "Make sure we have a function for directory listing\n Serving a 404 until we add that functionality" << std::endl;
+		path = iter->get_ServerRoot() + src.pageRequested + "index.html";
+		if (access(path.c_str(), R_OK))
+			return (Answer(404));
 	}
-	path = iter->get_ServerRoot() + src.pageRequested;
+	else
+	{
+		src.htmlize();
+		path = iter->get_ServerRoot() + src.pageRequested;
+		if (access(path.c_str(), R_OK))
+			return (Answer(404));
+	}
+	file.open(path.c_str());
+	while (std::getline(file, buffer))
+	{
+		ret.ReturnedContent += buffer;
+		ret.ReturnedContent += "\n"; 
+	}
+	file.close();
+	return (ret);
 }

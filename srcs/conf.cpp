@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/30 00:52:37 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/06/30 16:50:07 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,8 @@ int	conf::set_listing(std::string &line)
 	std::getline(ss, token, ' ');
 	if (!(std::getline(ss, token, ' ')))
 		return (1);
-	_DocumentRoot = token;
+	if (token == "true")
+		_ListingEnabled = true;
 	return (0);
 }
 bool	conf::get_listing(void)const
