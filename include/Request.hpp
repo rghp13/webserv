@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:10:15 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/30 19:53:46 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/04 22:18:10 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,20 @@
  #define REQUEST_HPP
 #include <string>
 #include <algorithm>
+#include "webserv.hpp"
 
 class Request
 {
 private:
-
 public:
-	unsigned int	port;
-	std::string		host;
-	std::string		domain;
-	std::string		pageRequested;
+	unsigned int					_port;
+	std::string						_host;
+	std::string						_domain;
+	std::string						_Method;
+	std::string						_Path;
+	std::string						_Version;
+	std::vector<t_header_argument>	_Arguments;
+	std::string						_Body;
 	Request();
 	Request(unsigned int newport, std::string newhost, std::string newdomain, std::string newpage);
 	Request(unsigned int newport, std::string newhost, std::string newdomain);

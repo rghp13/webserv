@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/29 15:13:46 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/04 22:18:40 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 
 #include "conf.hpp"
 #define PORT 80
+#define HTTP_VERS "HTTP/1.1"
 class conf;
 #include "Socket.hpp"
 #include "Request.hpp"
@@ -49,6 +50,12 @@ typedef	struct	s_socket_info
 	unsigned int	port;
 }				t_socket_info;
 
+typedef	struct s_header_argument
+{
+	std::string		key;
+	std::string		value;
+}				t_header_argument;
+
 int		init(std::vector<conf> &Vconf, std::ifstream &file);
 bool	boot_check(int argc, char **argv, std::ifstream &argfile);
 void	RemoveWordString(std::string &line, const std::string &word);
@@ -58,6 +65,6 @@ void	reset_socket_poll_list(struct pollfd *socketPoll, int sockNumber);
 bool	connection_loop(std::vector<Socket*> socketList, struct pollfd *socketPoll, int sockNumber);
 int		fill_socket_vector(std::vector<t_socket_info> &socketInitInfo, std::vector<conf> &Vconf);
 bool	check_duplicate_socket(std::vector<t_socket_info> &socketInitInfo);
-Answer	process_request(Request &src, std::vector<conf> &Vconf);
+//Answer	process_request(Request &src, std::vector<conf> &Vconf);
 
 #endif
