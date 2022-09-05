@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Answer.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:46:27 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/04 22:15:03 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/05 18:27:38 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ Answer::Answer()
 	_StatusCode = 200;
 	_StatusMessage = "OK";
 	//place any arguments that are always the same here
+	//Server
 	_Body = "";
 }
 
@@ -35,11 +36,20 @@ Answer	&Answer::operator=(Answer const &src)
 	return (*this);
 }
 
-bool	Answer::AddArgument(t_header_argument newArg)
+void	Answer::AddArgument(t_header_argument newArg)
 {
-	//Function that will add an argument to the vector if it doesn't
-	//exist and replace it if it does
-	return (true);
+	//check if key is already in
+	std::vector<t_header_argument>::iterator it = _Arguments.begin();
+	while (it != _Arguments.end())
+	{
+		if (newArg.key == it->key)
+		{
+			it->value = newArg.value;
+			return;
+		}
+		it++;
+	}
+	_Arguments.push_back(newArg);
 }
 
 std::string	Answer::MakeString( void ) const

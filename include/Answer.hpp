@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Answer.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:45:24 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/04 22:18:13 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/05 18:27:43 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ public:
 	std::string						_Body;
 	Answer();
 	Answer	&operator=(Answer const &src);
-	bool			AddArgument (t_header_argument newArg);
-	std::string		MakeString( void ) const;
-	int				SetBodyLen( void );
+	void			AddArgument (t_header_argument newArg);//adds variables in a key/pair way
+	std::string		MakeString( void ) const;//stringify everything in this object
+	int				SetBodyLen( void );//runs strlen within _body and stores data in arguments
 	~Answer();
 };
 
