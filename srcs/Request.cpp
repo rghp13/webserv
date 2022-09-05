@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/30 21:40:25 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/04 22:16:59 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,31 @@
 
 Request::Request()
 {
-	port = 0;
-	host = "*";
-	domain = "";
-	pageRequested = "";
+	_port = 0;
+	_host = "*";
+	_domain = "";
+	_Path = "";
 }
 
 Request::Request(unsigned int newport, std::string newhost, std::string newdomain, std::string newpage)
 {
-	port = newport;
-	host = newhost;
-	domain = newdomain;
-	pageRequested = newpage;
+	_port = newport;
+	_host = newhost;
+	_domain = newdomain;
+	_Path = newpage;
 }
 
 Request::Request(unsigned int newport, std::string newhost, std::string newdomain)
 {
-	port = newport;
-	host = newhost;
-	domain = newdomain;
-	pageRequested = "/";
+	_port = newport;
+	_host = newhost;
+	_domain = newdomain;
+	_Path = "/";
 }
 
 bool	Request::isPageADirectory( void ) const
 {
-	return (pageRequested.at(pageRequested.length() - 1) == '/');
+	return (_Path.at(_Path.length() - 1) == '/');
 }
 
 Request::~Request()
@@ -47,6 +47,6 @@ Request::~Request()
 void	Request::htmlize(void)
 {
 	std::string html = ".html";
-	if (pageRequested.find(html.c_str(), pageRequested.size() - html.size(), html.size()) == std::string::npos)
-		pageRequested += html;
+	if (_Path.find(html.c_str(), _Path.size() - html.size(), html.size()) == std::string::npos)
+		_Path += html;
 }
