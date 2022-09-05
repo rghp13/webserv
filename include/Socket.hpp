@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Socket.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 03:59:50 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/10 01:40:38 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/05 17:19:19 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ class Socket
 private:
 	int					_port;
 	std::string			_host;
+	int					_status;
 	int					_socketfd;
 	struct sockaddr_in	_socketinfo;
 	int					_socketinfolen;
@@ -30,6 +31,7 @@ public:
 	bool	start_listening(int maxQueueSize);
 	int		getFD( void ) const;
 	int		accept_connection( void );
+	void	close_connection( void );
 	~Socket();
 };
 

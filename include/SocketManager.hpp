@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 21:59:33 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/05 15:29:40 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/05 18:08:18 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 class SocketManager
 {
 private:
-    std::vector<Socket>		_SocketList;
-	//list of opened connections
+    std::vector<Socket*>		_SocketList;
+	std::vector<Connection*>	_ActiveConnectionList;
+	int							_PollListSize;
+	struct pollfd				*_PollList;
+
+	void	fillPollList( void );
 public:
     SocketManager();
     SocketManager(std::vector<t_socket_info> socketInitInfo);
     SocketManager(const SocketManager& srcSocketManager);
+	int		cycle(int timeout);
     ~SocketManager();
 };
-
