@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Socket.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 03:59:50 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/05 17:19:19 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/06 11:57:07 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ public:
 	Socket();
 	Socket(const Socket& src);
 	Socket(std::string host, int port);
-	bool	bind_socket( void );
-	bool	start_listening(int maxQueueSize);
-	int		getFD( void ) const;
-	int		accept_connection( void );
-	void	close_connection( void );
+	bool			bind_socket( void );
+	bool			start_listening(int maxQueueSize);
+	int				getFD( void ) const;
+	t_socket_info	getPortHost( void ) const;
+	int				accept_connection( void );
+	void			close_connection( void );
 	~Socket();
 };
 

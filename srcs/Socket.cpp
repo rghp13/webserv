@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Socket.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 04:01:04 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/05 17:22:53 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/06 12:04:26 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,15 @@ bool	Socket::start_listening(int maxQueueSize)
 	}
 	_status = 2;
 	return (true);
+}
+
+t_socket_info	Socket::getPortHost( void ) const
+{
+	t_socket_info	retinfo;
+
+	retinfo.host = this->_host;
+	retinfo.port = this->_port;
+	return (retinfo);
 }
 
 int	Socket::getFD( void ) const

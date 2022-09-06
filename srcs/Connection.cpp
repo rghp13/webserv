@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Connection.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/05 16:35:08 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/06 13:00:01 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ Connection::Connection()
 	_LastActivity = time(NULL);
 }
 
-Connection::Connection(int NewFD)
+Connection::Connection(int NewFD, t_socket_info sockinfo)
 {
 	_FD = NewFD;
+	_port = sockinfo.port;
+	_host = sockinfo.host;
 	_KeepAlive = true;
 	_LastActivity = time(NULL);
 }
@@ -29,6 +31,8 @@ Connection::Connection(int NewFD)
 Connection::Connection(const Connection& src)
 {
 	_FD = src._FD;
+	_port = src._port;
+	_host = src._host;
 	_KeepAlive = src._KeepAlive;
 	_LastActivity = src._LastActivity;
 }
@@ -38,8 +42,20 @@ int		Connection::GetConnectionFD( void ) const
 	return (_FD);
 }
 
+int		Connection::GetPort( void ) const
+{
+	return (_port);
+}
+
+std::string	Connection::GetHost( void ) const
+{
+	return (_host);
+}
+
 bool	Connection::ShouldDestroy ( void ) const
 {
+	if (_KeepAlive == false)
+		return (true);
 	if (difftime(time(NULL), _LastActivity) > 10.0f)
 		return (true);
 	return (false);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SocketManager.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 21:59:33 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/05 18:08:18 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/06 11:25:29 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ private:
 	struct pollfd				*_PollList;
 
 	void	fillPollList( void );
+    void    createNewConnections( void );
+    void    handleRequests( void );
+    void    cleanConnections( void );
 public:
     SocketManager();
     SocketManager(std::vector<t_socket_info> socketInitInfo);
