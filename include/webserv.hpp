@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/06 14:52:36 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/06 14:12:53 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,13 @@
 #define PORT 80
 #define HTTP_VERS "HTTP/1.1"
 class conf;
-class Connection;
-class Socket;
+#include "Socket.hpp"
+#include "Request.hpp"
+#include "Answer.hpp"
+#include <sstream>
+
+#define SSTR( x ) static_cast< std::ostringstream & >( \
+		( std::ostringstream() << std::dec << x ) ).str()
 
 #define MAXQUEUESIZE 3
 //research FD_SET, FD_CLR, FD_ISSET, FD_ZERO 

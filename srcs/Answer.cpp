@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Answer.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:46:27 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/04 22:15:03 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/06 16:37:16 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,21 @@ Answer::Answer()
 	_StatusCode = 200;
 	_StatusMessage = "OK";
 	//place any arguments that are always the same here
+	//Server
 	_Body = "";
 }
+Answer::Answer(int erno)
+{
+	_HTTPVersion = HTTP_VERS;
+	_StatusCode = erno;
+	_Body = "";
+	if (erno == 404)
+	{
+		_StatusMessage = "Not Found";
+		_Body = "<div id=\"main\"><div class=\"fof\"><h1>Error 404</h1></div></div>";
+	}
 
+}
 Answer::~Answer()
 {
 }
@@ -35,23 +47,48 @@ Answer	&Answer::operator=(Answer const &src)
 	return (*this);
 }
 
-bool	Answer::AddArgument(t_header_argument newArg)
+void	Answer::AddArgument(t_header_argument newArg)
 {
-	//Function that will add an argument to the vector if it doesn't
-	//exist and replace it if it does
-	return (true);
+	//if key already exists will overwrite value
+	std::vector<t_header_argument>::iterator it = _Arguments.begin();
+	while (it != _Arguments.end())
+	{
+		if (newArg.key == it->key)
+		{
+			it->value = newArg.value;
+			return;
+		}
+		it++;
+	}
+	_Arguments.push_back(newArg);
 }
 
-std::string	Answer::MakeString( void ) const
+std::string	Answer::MakeString( void )
 {
 	//function that will create a fully "stringify" version of
 	//the answer ready to be sent to the client
-	return ("");
+	std::string ret;
+	ret += _HTTPVersion + " ";
+	ret += SSTR(_StatusCode);
+	ret += " " + _StatusMessage + "\n";
+	
+	for(std::vector<t_header_argument>::iterator i = _Arguments.begin(); i != _Arguments.end(); i++)
+	{
+		ret += i->key + " ";
+		ret += i->value + "\n";
+	}
+	ret += "\n" + _Body;
+	SetBodyLen();
+	return (ret);
 }
 
 int		Answer::SetBodyLen( void )
 {
 	//Adds or replaces the Content-Length argument to match the
 	//size of the body (also returns it in case it is needed)
-	return (0);
+	t_header_argument ret;
+	ret.value = SSTR(_Body.length());
+	ret.key = "Content-Length:";
+	AddArgument(ret);
+	return (_Body.length());
 }
