@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/06 14:12:53 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/06 16:48:10 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@
 #define PORT 80
 #define HTTP_VERS "HTTP/1.1"
 class conf;
-#include "Socket.hpp"
-#include "Request.hpp"
-#include "Answer.hpp"
+class Socket;
+class Connection;
 #include <sstream>
 
 #define SSTR( x ) static_cast< std::ostringstream & >( \
