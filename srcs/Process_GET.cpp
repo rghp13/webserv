@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_request.cpp                                :+:      :+:    :+:   */
+/*   Process_GET.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/06 16:39:59 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/06 16:57:20 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &s
 	return (i);
 }
 
-Answer	process_request(Request &src, std::vector<conf> &Vconf)//think this over
+Answer	process_get(Request &src, std::vector<conf> &Vconf)//think this over
 {
 	std::vector<conf>::iterator iter;
 	std::ifstream				file;
@@ -74,7 +74,7 @@ Answer	process_request(Request &src, std::vector<conf> &Vconf)//think this over
 		src.htmlize();
 		path = iter->get_ServerRoot() + src._Path;
 		if (access(path.c_str(), R_OK))
-			return (Answer(404));
+			return (Answer(403));//probably triggers if permission issue
 	}
 	file.open(path.c_str());
 	while (std::getline(file, buffer))

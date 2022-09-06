@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/05 18:15:45 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/06 16:53:37 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ Request::Request(unsigned int newport, std::string newhost, std::string header)
 		std::getline(subs, tmp.value, ' ');
 		AddArgument(tmp);
 	}
-	if (find_key("Content-Length"))
+	if (find_key("Content-Length:"))
 		std::getline(ss, _Body);
 }
 Request::Request(Request const &src)

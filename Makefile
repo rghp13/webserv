@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+         #
+#    By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 11:39:56 by dimitriscr        #+#    #+#              #
-#    Updated: 2022/09/06 14:52:00 by dscriabi         ###   ########.fr        #
+#    Updated: 2022/09/06 17:16:58 by rponsonn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,12 +32,15 @@ CYAN = \033[36m
 
 PATH_SRC				=		./srcs
 PATH_HEAD				=		./includes
-SRC_NAME				=		Socket.cpp \
-								Connection.cpp \
+SRC_NAME				=		Answer.cpp \
 								conf.cpp \
+								Connection.cpp \
 								init.cpp \
+								main.cpp \
+								Process_GET.cpp \
+								Request.cpp \
+								Socket.cpp \
 								SocketManager.cpp \
-								main.cpp
 #Request.cpp Answer.cpp
 
 NAME					=		webserv
