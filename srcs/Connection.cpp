@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Connection.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/06 13:00:01 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/06 16:25:52 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,19 +84,22 @@ std::string	Connection::GetNewestClientRequest( void )
 	while (readret == 1024)
 	{
 		readret = read(_FD, buffer, 1024);
+		if (readret <= 0)
+			_KeepAlive = false;
 		retstr.append(buffer);
 	}
 	return (retstr);
 }
 
-bool		Connection::SendAnswer(std::string Answer)
+bool		Connection::SendAnswer(std::string answerstr)
 {
 	//send an answer to the client, return success status and update _LastActivity
-	send(_FD, Answer.c_str(), Answer.length(), 0);
+	send(_FD, answerstr.c_str(), answerstr.length(), 0);
 	_LastActivity = time(NULL);
 	return (true);
 }
 
 Connection::~Connection()
 {
+	close (_FD);
 }

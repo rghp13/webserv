@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Connection.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:29:55 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/06 12:13:34 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/06 15:52:33 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ public:
 	bool		GetKeepAlive( void ) const;
 	bool		SetKeepAlive( bool newval );
 	std::string	GetNewestClientRequest( void );
-	bool		SendAnswer(std::string Answer);
+	bool		SendAnswer(std::string answerstr);
 	~Connection();
 
 };
