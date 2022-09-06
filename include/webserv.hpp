@@ -46,8 +46,6 @@ class conf;
 #define MAXQUEUESIZE 3
 //research FD_SET, FD_CLR, FD_ISSET, FD_ZERO 
 
-class Socket;
-
 typedef	struct	s_socket_info
 {
 	std::string		host;
@@ -59,6 +57,12 @@ typedef	struct s_header_argument
 	std::string		key;
 	std::string		value;
 }				t_header_argument;
+
+#include "Socket.hpp"
+#include "Request.hpp"
+#include "Answer.hpp"
+#include "Connection.hpp"
+#include "SocketManager.hpp"
 
 int		init(std::vector<conf> &Vconf, std::ifstream &file);
 bool	boot_check(int argc, char **argv, std::ifstream &argfile);
