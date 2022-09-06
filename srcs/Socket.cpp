@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 04:01:04 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/06/11 02:46:22 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/06 12:04:26 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ Socket::Socket()
 		throw std::runtime_error("Could not create socket");
 	if (setsockopt(_socketfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)))
 		throw std::runtime_error("Can't change socket options");
+	_status = 0;
 }
 
 Socket::Socket(const Socket& src)
@@ -34,6 +35,7 @@ Socket::Socket(const Socket& src)
 		throw std::runtime_error("Could not create socket");
 	if (setsockopt(_socketfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)))
 		throw std::runtime_error("Can't change socket options");
+	_status = 0;
 }
 
 Socket::Socket(std::string host, int port)
@@ -46,6 +48,7 @@ Socket::Socket(std::string host, int port)
 		throw std::runtime_error("Could not create socket");
 	if (setsockopt(_socketfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)))
 		throw std::runtime_error("Can't change socket options");
+	_status = 0;
 }
 
 bool	Socket::bind_socket( void )
@@ -57,9 +60,10 @@ bool	Socket::bind_socket( void )
 	_socketinfo.sin_port = htons(_port);
 	if (bind(_socketfd, (struct sockaddr*)&_socketinfo, sizeof(_socketinfo)) < 0) 
 	{
-		throw std::runtime_error("Couldn't bind socket, port maybe in use");
+		throw std::runtime_error("Couldn't bind socket, port may be in use");
 		return (false);
 	}
+	_status = 1;
 	return (true);
 }
 
@@ -70,7 +74,17 @@ bool	Socket::start_listening(int maxQueueSize)
 		throw std::runtime_error("Socket couldn't start listening");
 		return (false);
 	}
+	_status = 2;
 	return (true);
+}
+
+t_socket_info	Socket::getPortHost( void ) const
+{
+	t_socket_info	retinfo;
+
+	retinfo.host = this->_host;
+	retinfo.port = this->_port;
+	return (retinfo);
 }
 
 int	Socket::getFD( void ) const
@@ -92,8 +106,17 @@ int	Socket::accept_connection( void )
 	return (new_connection);
 }
 
+void	Socket::close_connection( void )
+{
+	if (_status != -1)
+	{
+		shutdown(_socketfd, SHUT_RDWR);
+		close(_socketfd);
+	}
+	_status = -1;
+}
+
 Socket::~Socket()
 {
-	shutdown(_socketfd, SHUT_RDWR);
-	close(_socketfd);
+	this->close_connection();
 }
