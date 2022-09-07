@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:10:15 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/05 18:25:30 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/07 14:00:37 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ public:
 	std::string						_Version;
 	std::vector<t_header_argument>	_Arguments;
 	std::string						_Body;
+	bool							_malformed;
 	Request();
 	Request(unsigned int newport, std::string newhost, std::string header);
 	Request(Request const &src);

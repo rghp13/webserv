@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:45:24 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/06 15:54:41 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/06 17:52:23 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ public:
 	std::string						_HTTPVersion;
 	int								_StatusCode;
 	std::string						_StatusMessage;
-	std::vector<t_header_argument>	_Arguments;
+	std::vector<t_header_argument>	_Arguments;//in the future we will have to add some
 	std::string						_Body;
 	Answer();
 	Answer(int erno);
