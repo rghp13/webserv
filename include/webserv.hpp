@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 14:54:37 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:04:49 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 class conf;
 class Socket;
 class Connection;
+class Answer;
+class Request;
 #include <sstream>
 
 #define SSTR( x ) static_cast< std::ostringstream & >( \
@@ -76,6 +78,7 @@ void	reset_socket_poll_list(struct pollfd *socketPoll, int sockNumber);
 bool	connection_loop(std::vector<Socket*> socketList, struct pollfd *socketPoll, int sockNumber);
 int		fill_socket_vector(std::vector<t_socket_info> &socketInitInfo, std::vector<conf> &Vconf);
 bool	check_duplicate_socket(std::vector<t_socket_info> &socketInitInfo);
+Answer	fork_request(Request request, std::vector<conf> Vconf);
 Answer	process_get(Request &src, std::vector<conf> &Vconf);
 //Answer	process_delete(Request &src, std::vector<conf> &Vconf);
 

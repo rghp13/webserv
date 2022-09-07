@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 15:01:58 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:09:09 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	SocketManager::createNewConnections( void )
 
 void	SocketManager::handleRequests(std::vector<conf> Vconf)
 {
+	Answer	tempanswer;
 	//for each socket that has data, read, pass to rponson's code and send answers
 	for (int i = _SocketList.size(); i < _PollListSize; i++)
 	{
@@ -98,8 +99,10 @@ void	SocketManager::handleRequests(std::vector<conf> Vconf)
 			{
 				if (_ActiveConnectionList[j]->GetConnectionFD() == _PollList[i].fd)
 				{
-					std::cout << _ActiveConnectionList[j]->GetNewestClientRequest() << std::endl;
-					_ActiveConnectionList[j]->SendAnswer("HTTP/1.1 200 OK\nDate: Thu, 19 Feb 2009 12:27:04 GMT\nServer: Apache/2.2.3\nLast-Modified: Wed, 18 Jun 2003 16:05:58 GMT\nETag: \"56d-9989200-1132c580\"\nContent-Type: text/html\nContent-Length: 75\nAccept-Ranges: bytes\nConnection: close\n\n<html><div id=\"main\"><div class=\"fof\"><h1>Error 404</h1></div></div></html>"); //test line
+					//std::cout << _ActiveConnectionList[j]->GetNewestClientRequest() << std::endl;
+					//_ActiveConnectionList[j]->SendAnswer("HTTP/1.1 200 OK\nDate: Thu, 19 Feb 2009 12:27:04 GMT\nServer: Apache/2.2.3\nLast-Modified: Wed, 18 Jun 2003 16:05:58 GMT\nETag: \"56d-9989200-1132c580\"\nContent-Type: text/html\nContent-Length: 75\nAccept-Ranges: bytes\nConnection: close\n\n<html><div id=\"main\"><div class=\"fof\"><h1>Error 404</h1></div></div></html>"); //test line
+					tempanswer = fork_request(Request(_ActiveConnectionList[j]->GetPort(), _ActiveConnectionList[j]->GetHost(), _ActiveConnectionList[j]->GetNewestClientRequest()), Vconf);
+					_ActiveConnectionList[j]->SendAnswer(tempanswer.MakeString());
 					break;
 				}
 			}
