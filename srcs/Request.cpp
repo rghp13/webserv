@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/06 17:51:17 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/07 14:00:32 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ Request::Request()
 	_host = "*";
 	_domain = "";
 	_Path = "";
+	_malformed = false;
 }
 
 Request::Request(unsigned int newport, std::string newhost, std::string header)//add a test to see if it's valid
 {
 	_port = newport;
 	_host = newhost;
+	_malformed = false;
 	//parse the header here
 	std::stringstream ss(header);
 	std::string token;
@@ -41,6 +43,8 @@ Request::Request(unsigned int newport, std::string newhost, std::string header)/
 		std::stringstream subs(token);
 		t_header_argument tmp;
 		std::getline(subs, tmp.key, ' ');
+		if (tmp.key.find(':')== std::string::npos)
+			_malformed = true;//malformed
 		std::getline(subs, tmp.value, ' ');//check if these are valid
 		AddArgument(tmp);
 	}
