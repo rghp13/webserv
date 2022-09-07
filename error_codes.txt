@@ -21,6 +21,9 @@ The server can not find the requested resource.
 405 Method Not Allowed:		//You?
 The request method is known by the server but is not supported by the target resource.
 
+408 Request Timeout:		//Me
+Sent when closing a keep-alive connection by timeout
+
 411 Length Required:		//You
 Server rejected the request because the Content-Length header field is not defined and the server requires it.
 

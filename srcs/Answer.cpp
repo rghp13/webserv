@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:46:27 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 14:11:29 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:03:20 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,18 @@ void	Answer::SetStatus(int code, std::string message)
 {
 	_StatusCode = code;
 	_StatusMessage = message;
+	if (code != 200)
+		this->GenerateErrorBody();
+}
+
+void	Answer::GenerateErrorBody( void )
+{
+	_Body = "<div id=\"main\"><div class=\"fof\"><h1>Error ";
+	_Body += SSTR(_StatusCode);
+	_Body += " ";
+	_Body += _StatusMessage;
+	_Body += "</h1></div></div>";
+	this->SetBodyLen();
 }
 
 void	Answer::AddArgument(t_header_argument newArg)

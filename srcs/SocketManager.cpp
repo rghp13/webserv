@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 15:09:09 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:02:34 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,9 @@ void	SocketManager::handleRequests(std::vector<conf> Vconf)
 			{
 				if (_ActiveConnectionList[j]->GetConnectionFD() == _PollList[i].fd)
 				{
-					//std::cout << _ActiveConnectionList[j]->GetNewestClientRequest() << std::endl;
-					//_ActiveConnectionList[j]->SendAnswer("HTTP/1.1 200 OK\nDate: Thu, 19 Feb 2009 12:27:04 GMT\nServer: Apache/2.2.3\nLast-Modified: Wed, 18 Jun 2003 16:05:58 GMT\nETag: \"56d-9989200-1132c580\"\nContent-Type: text/html\nContent-Length: 75\nAccept-Ranges: bytes\nConnection: close\n\n<html><div id=\"main\"><div class=\"fof\"><h1>Error 404</h1></div></div></html>"); //test line
+					// (void)Vconf;
+					// std::cout << _ActiveConnectionList[j]->GetNewestClientRequest() << std::endl;
+					// _ActiveConnectionList[j]->SendAnswer("HTTP/1.1 200 OK\r\nDate: Thu, 19 Feb 2009 12:27:04 GMT\r\nServer: Apache/2.2.3\r\nLast-Modified: Wed, 18 Jun 2003 16:05:58 GMT\r\nETag: \"56d-9989200-1132c580\"\r\nContent-Type: text/html\r\nContent-Length: 75\r\nAccept-Ranges: bytes\r\nConnection: Keep-Alive\r\n\r\n<html><div id=\"main\"><div class=\"fof\"><h1>Among us?</h1></div></div></html>"); //test line
 					tempanswer = fork_request(Request(_ActiveConnectionList[j]->GetPort(), _ActiveConnectionList[j]->GetHost(), _ActiveConnectionList[j]->GetNewestClientRequest()), Vconf);
 					_ActiveConnectionList[j]->SendAnswer(tempanswer.MakeString());
 					break;
@@ -118,6 +119,9 @@ void	SocketManager::cleanConnections( void )
 	{
 		if (_ActiveConnectionList[i]->ShouldDestroy())
 		{
+			Answer	temp;
+			temp.SetStatus(HTTP_ERR_408);
+			_ActiveConnectionList[i]->SendAnswer(temp.MakeString());
 			delete _ActiveConnectionList[i];
 			_ActiveConnectionList.erase(_ActiveConnectionList.begin() + i);
 			break;

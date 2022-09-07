@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 15:04:49 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:44:21 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 #define PORT 80
 #define HTTP_VERS "HTTP/1.1"
 #define HTTP_ERR_400 400, "Bad Request"
+#define	HTTP_ERR_408 408, "Request Timeout"
 #define HTTP_ERR_414 414, "URI Too Long"
 #define HTTP_ERR_501 501, "Not Implemented"
 #define HTTP_ERR_505 505, "HTTP Version Not Supported"
