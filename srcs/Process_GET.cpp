@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/06 16:57:20 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/06 17:46:05 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,14 @@ std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &s
 	return (i);
 }
 
-Answer	process_get(Request &src, std::vector<conf> &Vconf)//think this over
+Answer	process_get(Request &src, std::vector<conf> &Vconf)//need to talk about arguments
 {
 	std::vector<conf>::iterator iter;
 	std::ifstream				file;
 	Answer						ret;
 	std::string					path;
 	std::string					buffer;
+
 	iter = strict_scan(Vconf, src);
 	if (iter == Vconf.end())
 	{

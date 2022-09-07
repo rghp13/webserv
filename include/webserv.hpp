@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/06 16:48:10 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/07 14:01:46 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	reset_socket_poll_list(struct pollfd *socketPoll, int sockNumber);
 bool	connection_loop(std::vector<Socket*> socketList, struct pollfd *socketPoll, int sockNumber);
 int		fill_socket_vector(std::vector<t_socket_info> &socketInitInfo, std::vector<conf> &Vconf);
 bool	check_duplicate_socket(std::vector<t_socket_info> &socketInitInfo);
-//Answer	process_request(Request &src, std::vector<conf> &Vconf);
+Answer	process_get(Request &src, std::vector<conf> &Vconf);
+//Answer	process_delete(Request &src, std::vector<conf> &Vconf);
 
 #endif
