@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Answer.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:46:27 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/06 16:37:16 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/07 14:11:29 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ Answer	&Answer::operator=(Answer const &src)
 	_Arguments = src._Arguments;
 	_Body = src._Body;
 	return (*this);
+}
+
+void	Answer::SetStatus(int code, std::string message)
+{
+	_StatusCode = code;
+	_StatusMessage = message;
 }
 
 void	Answer::AddArgument(t_header_argument newArg)

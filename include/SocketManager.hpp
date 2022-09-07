@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 21:59:33 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/06 14:53:35 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:01:37 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ private:
 
 	void	fillPollList( void );
     void    createNewConnections( void );
-    void    handleRequests( void );
+    void    handleRequests(std::vector<conf> Vconf);
     void    cleanConnections( void );
 public:
     SocketManager();
     SocketManager(std::vector<t_socket_info> socketInitInfo);
     SocketManager(const SocketManager& srcSocketManager);
-	int		cycle(int timeout);
+	int		cycle(int timeout, std::vector<conf> Vconf);
     ~SocketManager();
 };
 

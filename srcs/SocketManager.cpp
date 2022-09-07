@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/06 16:23:05 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:01:58 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	SocketManager::createNewConnections( void )
 
 }
 
-void	SocketManager::handleRequests( void )
+void	SocketManager::handleRequests(std::vector<conf> Vconf)
 {
 	//for each socket that has data, read, pass to rponson's code and send answers
 	for (int i = _SocketList.size(); i < _PollListSize; i++)
@@ -122,7 +122,7 @@ void	SocketManager::cleanConnections( void )
 	}
 }
 
-int		SocketManager::cycle(int timeout)
+int		SocketManager::cycle(int timeout, std::vector<conf> Vconf)
 {
 	//main function of the manager
 	//	-add all sockets and connections to the poll list
@@ -136,7 +136,7 @@ int		SocketManager::cycle(int timeout)
 		this->createNewConnections();
 		//	-handle connections that can be read from (ignoring the ones created previously to give clients time to send requests)
 		std::cout << "Handling Established Connections..." << std::endl;
-		this->handleRequests();
+		this->handleRequests(Vconf);
 	}
 	//	-close connections older than their timeout and cleanup
 	std::cout << "Closing Expired Connections..." << std::endl;
