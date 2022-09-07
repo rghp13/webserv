@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 14:01:46 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:04:49 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,15 @@
 #include "conf.hpp"
 #define PORT 80
 #define HTTP_VERS "HTTP/1.1"
+#define HTTP_ERR_400 400, "Bad Request"
+#define HTTP_ERR_414 414, "URI Too Long"
+#define HTTP_ERR_501 501, "Not Implemented"
+#define HTTP_ERR_505 505, "HTTP Version Not Supported"
 class conf;
 class Socket;
 class Connection;
+class Answer;
+class Request;
 #include <sstream>
 
 #define SSTR( x ) static_cast< std::ostringstream & >( \
@@ -72,6 +78,7 @@ void	reset_socket_poll_list(struct pollfd *socketPoll, int sockNumber);
 bool	connection_loop(std::vector<Socket*> socketList, struct pollfd *socketPoll, int sockNumber);
 int		fill_socket_vector(std::vector<t_socket_info> &socketInitInfo, std::vector<conf> &Vconf);
 bool	check_duplicate_socket(std::vector<t_socket_info> &socketInitInfo);
+Answer	fork_request(Request request, std::vector<conf> Vconf);
 Answer	process_get(Request &src, std::vector<conf> &Vconf);
 //Answer	process_delete(Request &src, std::vector<conf> &Vconf);
 
