@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 14:01:46 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:28:42 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <string> //string functions
 #include <fstream>
 #include <iostream>
+#include <algorithm>
+#include <stdlib.h>
 
 #include <stdlib.h>//apparently exit requires stdlib.h
 #include <unistd.h> //read, write, close, etc...
@@ -72,7 +74,9 @@ void	reset_socket_poll_list(struct pollfd *socketPoll, int sockNumber);
 bool	connection_loop(std::vector<Socket*> socketList, struct pollfd *socketPoll, int sockNumber);
 int		fill_socket_vector(std::vector<t_socket_info> &socketInitInfo, std::vector<conf> &Vconf);
 bool	check_duplicate_socket(std::vector<t_socket_info> &socketInitInfo);
-Answer	process_get(Request &src, std::vector<conf> &Vconf);
 //Answer	process_delete(Request &src, std::vector<conf> &Vconf);
-
+//Process_get.cpp
+Answer	process_get(Request &src, std::vector<conf> &Vconf);
+std::vector<conf>::iterator	strict_scan(std::vector<conf> &Vconf, Request &src);
+std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &src);
 #endif

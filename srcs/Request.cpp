@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 14:00:32 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:02:43 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ Request::Request(unsigned int newport, std::string newhost, std::string header)/
 	_host = newhost;
 	_malformed = false;
 	//parse the header here
+	header.erase(std::remove(header.begin(), header.end(), '\r'), header.end());
 	std::stringstream ss(header);
 	std::string token;
 	std::getline(ss, token, '\n');
