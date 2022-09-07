@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:45:24 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 14:10:33 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:59:04 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ public:
 	Answer(int erno);
 	Answer	&operator=(Answer const &src);
 	void			SetStatus(int code, std::string message);//set the error code and message in a single function call
+	void			GenerateErrorBody( void );
 	void			AddArgument (t_header_argument newArg);//adds variables in a key/pair way
 	std::string		MakeString( void );//stringify everything in this object
 	int				SetBodyLen( void );//runs strlen within _body and stores data in arguments
