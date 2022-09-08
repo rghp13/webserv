@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 17:02:34 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:44:24 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	SocketManager::handleRequests(std::vector<conf> Vconf)
 					// std::cout << _ActiveConnectionList[j]->GetNewestClientRequest() << std::endl;
 					// _ActiveConnectionList[j]->SendAnswer("HTTP/1.1 200 OK\r\nDate: Thu, 19 Feb 2009 12:27:04 GMT\r\nServer: Apache/2.2.3\r\nLast-Modified: Wed, 18 Jun 2003 16:05:58 GMT\r\nETag: \"56d-9989200-1132c580\"\r\nContent-Type: text/html\r\nContent-Length: 75\r\nAccept-Ranges: bytes\r\nConnection: Keep-Alive\r\n\r\n<html><div id=\"main\"><div class=\"fof\"><h1>Among us?</h1></div></div></html>"); //test line
 					tempanswer = fork_request(Request(_ActiveConnectionList[j]->GetPort(), _ActiveConnectionList[j]->GetHost(), _ActiveConnectionList[j]->GetNewestClientRequest()), Vconf);
+					//std::cout << tempanswer.MakeString() << std::endl << std::endl;
 					_ActiveConnectionList[j]->SendAnswer(tempanswer.MakeString());
 					break;
 				}
