@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 17:02:43 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/08 17:20:07 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ Request::Request(unsigned int newport, std::string newhost, std::string header)/
 	std::getline(ss, token, '\n');
 	{
 		std::stringstream subs(token);
-		std::getline(subs, _Method, ' ');//
+		std::getline(subs, _Method, ' ');//Think about how to handle a simple newline entry
 		std::getline(subs, _Path, ' ');//
 		std::getline(subs, _Version, ' ');//
 	}
