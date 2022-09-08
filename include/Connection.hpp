@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:29:55 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/06 15:52:33 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/08 16:55:55 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ public:
 	bool		ShouldDestroy( void ) const;
 	bool		GetKeepAlive( void ) const;
 	bool		SetKeepAlive( bool newval );
+	bool		IsRequestFull( std::string request ) const;
 	std::string	GetNewestClientRequest( void );
 	bool		SendAnswer(std::string answerstr);
 	~Connection();

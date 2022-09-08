@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/08 14:44:24 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/08 15:53:23 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	SocketManager::createNewConnections( void )
 			}
 		}
 	}
-
 }
 
 void	SocketManager::handleRequests(std::vector<conf> Vconf)
@@ -103,7 +102,6 @@ void	SocketManager::handleRequests(std::vector<conf> Vconf)
 					// std::cout << _ActiveConnectionList[j]->GetNewestClientRequest() << std::endl;
 					// _ActiveConnectionList[j]->SendAnswer("HTTP/1.1 200 OK\r\nDate: Thu, 19 Feb 2009 12:27:04 GMT\r\nServer: Apache/2.2.3\r\nLast-Modified: Wed, 18 Jun 2003 16:05:58 GMT\r\nETag: \"56d-9989200-1132c580\"\r\nContent-Type: text/html\r\nContent-Length: 75\r\nAccept-Ranges: bytes\r\nConnection: Keep-Alive\r\n\r\n<html><div id=\"main\"><div class=\"fof\"><h1>Among us?</h1></div></div></html>"); //test line
 					tempanswer = fork_request(Request(_ActiveConnectionList[j]->GetPort(), _ActiveConnectionList[j]->GetHost(), _ActiveConnectionList[j]->GetNewestClientRequest()), Vconf);
-					//std::cout << tempanswer.MakeString() << std::endl << std::endl;
 					_ActiveConnectionList[j]->SendAnswer(tempanswer.MakeString());
 					break;
 				}
@@ -115,17 +113,22 @@ void	SocketManager::handleRequests(std::vector<conf> Vconf)
 
 void	SocketManager::cleanConnections( void )
 {
-	//run through all connection and close all the ones that havn't been used in a while
-	for (unsigned long i = 0; i < _ActiveConnectionList.size(); i++)
+	//run through all connection and close all the ones that havn't been used in a while or that have had their client disconnect
+	for (int i = _SocketList.size(); i < _PollListSize; i++)
 	{
-		if (_ActiveConnectionList[i]->ShouldDestroy())
+		for (unsigned long j = 0; j < _ActiveConnectionList.size(); j++)
 		{
-			Answer	temp;
-			temp.SetStatus(HTTP_ERR_408);
-			_ActiveConnectionList[i]->SendAnswer(temp.MakeString());
-			delete _ActiveConnectionList[i];
-			_ActiveConnectionList.erase(_ActiveConnectionList.begin() + i);
-			break;
+			if (_ActiveConnectionList[j]->GetConnectionFD() == _PollList[i].fd)
+			{
+				if (_ActiveConnectionList[j]->ShouldDestroy() || (_PollList[i].revents&POLLERR) == POLLERR || (_PollList[i].revents&POLLHUP) == POLLHUP)
+				{
+					Answer	temp;
+					temp.SetStatus(HTTP_ERR_408);
+					_ActiveConnectionList[j]->SendAnswer(temp.MakeString());
+					delete _ActiveConnectionList[j];
+					_ActiveConnectionList.erase(_ActiveConnectionList.begin() + j);
+				}
+			}
 		}
 	}
 }
