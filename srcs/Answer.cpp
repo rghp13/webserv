@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:46:27 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 17:03:20 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:09:10 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,14 @@ std::string	Answer::MakeString( void )
 	std::string ret;
 	ret += _HTTPVersion + " ";
 	ret += SSTR(_StatusCode);
-	ret += " " + _StatusMessage + "\n";
+	ret += " " + _StatusMessage + HTTPNL;
 	
 	for(std::vector<t_header_argument>::iterator i = _Arguments.begin(); i != _Arguments.end(); i++)
 	{
 		ret += i->key + " ";
-		ret += i->value + "\n";
+		ret += i->value + HTTPNL;
 	}
-	ret += "\n" + _Body;
+	ret += HTTPNL + _Body;
 	SetBodyLen();
 	return (ret);
 }

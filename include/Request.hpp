@@ -6,14 +6,12 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:10:15 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 14:00:37 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:56:56 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REQUEST_HPP
  #define REQUEST_HPP
-#include <string>
-#include <algorithm>
 #include "webserv.hpp"
 
 class Request
