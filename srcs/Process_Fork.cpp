@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:35:18 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/07 15:22:51 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:17:09 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ Answer	fork_request(Request request, std::vector<conf> Vconf)
 	if (request._Method == "GET")
 	{
 		//commit GET processing
+		std::cout << "accepted as GET" << std::endl;
 		retval = process_get(request, Vconf);
 		return (retval);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Process_GET.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/08 14:32:46 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:35:11 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,15 @@ Answer	process_get(Request &src, std::vector<conf> &Vconf)//need to talk about a
 		if (!iter->get_listing())
 			return (Answer(404));
 		std::cout << "Make sure we have a function for directory listing\n Serving a 404 until we add that functionality" << std::endl;
-		path = iter->get_DocumentRoot() + src._Path + "index.html";
+		path = iter->get_ServerRoot() + src._Path + "index.html";
 		if (access(path.c_str(), R_OK))
 			return (Answer(404));
 	}
 	else
 	{
 		src.htmlize();
-		path = iter->get_DocumentRoot() + src._Path;
+		path = iter->get_ServerRoot() + src._Path;
+		std::cout << "Server Root: " << iter->get_ServerRoot() << "Reading page: " << src._Path << std::endl;
 		if (access(path.c_str(), R_OK))
 			return (Answer(403));//probably triggers if permission issue
 	}
