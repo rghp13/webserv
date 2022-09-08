@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/06 17:46:05 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:32:46 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ Answer	process_get(Request &src, std::vector<conf> &Vconf)//need to talk about a
 		if (!iter->get_listing())
 			return (Answer(404));
 		std::cout << "Make sure we have a function for directory listing\n Serving a 404 until we add that functionality" << std::endl;
-		path = iter->get_ServerRoot() + src._Path + "index.html";
+		path = iter->get_DocumentRoot() + src._Path + "index.html";
 		if (access(path.c_str(), R_OK))
 			return (Answer(404));
 	}
 	else
 	{
 		src.htmlize();
-		path = iter->get_ServerRoot() + src._Path;
+		path = iter->get_DocumentRoot() + src._Path;
 		if (access(path.c_str(), R_OK))
 			return (Answer(403));//probably triggers if permission issue
 	}

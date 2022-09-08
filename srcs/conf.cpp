@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/06/30 16:50:07 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:31:51 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,13 @@ std::string	conf::get_ServerName(void)const
 std::string	conf::get_ServerRoot(void)const
 {
 	return (_ServerRoot);
+}
+std::string conf::get_DocumentRoot(void)const
+{
+	if (_DocumentRoot.empty())
+		return (get_ServerRoot());
+	else
+		return (_DocumentRoot);
 }
 bool	conf::Alias_compare(std::string &src)
 {
