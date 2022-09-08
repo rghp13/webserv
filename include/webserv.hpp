@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
 /*   Updated: 2022/09/08 15:46:34 by dscriabi         ###   ########.fr       */
@@ -27,6 +27,7 @@
 
 #include <netinet/in.h> //variable types that can hold ip addresses
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/socket.h> //socket stuff
 #include <sys/select.h>//select
 #include <sys/epoll.h>//epoll
@@ -88,4 +89,6 @@ Answer	fork_request(Request request, std::vector<conf> Vconf);
 Answer	process_get(Request &src, std::vector<conf> &Vconf);
 std::vector<conf>::iterator	strict_scan(std::vector<conf> &Vconf, Request &src);
 std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &src);
+//Utils.cpp
+bool	isdir(std::string input);
 #endif

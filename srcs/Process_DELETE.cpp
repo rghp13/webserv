@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:39:44 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/07 18:32:57 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/08 17:40:45 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,24 @@ Answer	process_delete(Request &src, std::vector<conf> &Vconf)
 		if (iter == Vconf.end())
 			return (Answer(404));
 	}
-	full_path = iter->get_ServerRoot() + src._Path;
+	//use isdir()instead
+	full_path = iter->get_DocumentRoot() + src._Path;
+
 	if (access(full_path.c_str(), F_OK))
 	{
 		//file does not exist
 		return (Answer(404));
 	}
+	else if (access(full_path.c_str(), W_OK))
 	{
-		std::string command = "rm -rf " + full_path;
-		if (system(command.c_str()))
+		//file doesn't have proper permission
+		return (Answer(403));
 	}
-	
+	if (remove(full_path.c_str()) == 0)
+	{
+		Answer ret;
+		ret._Body = src._Path + " has been deleted" + HTTPNL;
+		return (ret);
+	}
+	return (Answer(403));	
 }
