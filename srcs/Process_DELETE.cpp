@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:39:44 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/08 17:37:27 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/08 17:40:45 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ Answer	process_delete(Request &src, std::vector<conf> &Vconf)
 	{
 		Answer ret;
 		ret._Body = src._Path + " has been deleted" + HTTPNL;
+		return (ret);
 	}
-	
+	return (Answer(403));	
 }
