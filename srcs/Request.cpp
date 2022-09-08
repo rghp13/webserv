@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/08 17:20:07 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/08 18:06:53 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ Request::Request(unsigned int newport, std::string newhost, std::string header)/
 		std::getline(subs, _Method, ' ');//Think about how to handle a simple newline entry
 		std::getline(subs, _Path, ' ');//
 		std::getline(subs, _Version, ' ');//
+		if (_Method.empty() || _Path.empty() || _Version.empty())
+			_malformed = true;
 	}
 	while (std::getline(ss, token, '\n'))
 	{
