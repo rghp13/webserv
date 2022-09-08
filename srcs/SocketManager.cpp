@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/08 15:53:23 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/08 17:52:30 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ SocketManager::SocketManager(std::vector<t_socket_info>	socketInitInfo)
 		for(std::vector<t_socket_info>::size_type i = 0; i != socketInitInfo.size(); i++)
 		{
 			_SocketList.push_back( new Socket(socketInitInfo[i].host, socketInitInfo[i].port));		//create the socket and store it's pointer in a vector
-			std::cout << "Created Socket: " << socketInitInfo[i].host << ":" << socketInitInfo[i].port << std::endl;
 			_SocketList.back()->bind_socket();													//bind the socket to the port
 			_SocketList.back()->start_listening(MAXQUEUESIZE);									//start the socket in listen (receive) mode with a queue size of 
 		}
@@ -65,7 +64,6 @@ void	SocketManager::fillPollList( void )
 		_PollList[i + _SocketList.size()].events = POLLIN;
 		_PollList[i + _SocketList.size()].revents = 0;
 	}
-	std::cout << _PollListSize << " Total: " << _SocketList.size() << " sockets and " << _ActiveConnectionList.size() << " connections" << std::endl;
 }
 
 void	SocketManager::createNewConnections( void )
@@ -88,7 +86,8 @@ void	SocketManager::createNewConnections( void )
 
 void	SocketManager::handleRequests(std::vector<conf> Vconf)
 {
-	Answer	tempanswer;
+	Answer		tempanswer;
+	std::string	request;
 	//for each socket that has data, read, pass to rponson's code and send answers
 	for (int i = _SocketList.size(); i < _PollListSize; i++)
 	{
@@ -101,8 +100,14 @@ void	SocketManager::handleRequests(std::vector<conf> Vconf)
 					// (void)Vconf;
 					// std::cout << _ActiveConnectionList[j]->GetNewestClientRequest() << std::endl;
 					// _ActiveConnectionList[j]->SendAnswer("HTTP/1.1 200 OK\r\nDate: Thu, 19 Feb 2009 12:27:04 GMT\r\nServer: Apache/2.2.3\r\nLast-Modified: Wed, 18 Jun 2003 16:05:58 GMT\r\nETag: \"56d-9989200-1132c580\"\r\nContent-Type: text/html\r\nContent-Length: 75\r\nAccept-Ranges: bytes\r\nConnection: Keep-Alive\r\n\r\n<html><div id=\"main\"><div class=\"fof\"><h1>Among us?</h1></div></div></html>"); //test line
-					tempanswer = fork_request(Request(_ActiveConnectionList[j]->GetPort(), _ActiveConnectionList[j]->GetHost(), _ActiveConnectionList[j]->GetNewestClientRequest()), Vconf);
-					_ActiveConnectionList[j]->SendAnswer(tempanswer.MakeString());
+					request = _ActiveConnectionList[j]->GetNewestClientRequest();
+					if (request.size() != 0)
+					{
+						tempanswer = fork_request(Request(_ActiveConnectionList[j]->GetPort(), _ActiveConnectionList[j]->GetHost(), request), Vconf);
+						_ActiveConnectionList[j]->SendAnswer(tempanswer.MakeString());
+					}
+					else
+						_ActiveConnectionList[j]->SetKeepAlive(false);
 					break;
 				}
 			}
@@ -139,18 +144,14 @@ int		SocketManager::cycle(int timeout, std::vector<conf> Vconf)
 	//	-add all sockets and connections to the poll list
 	this->fillPollList();
 	//	-use epoll to monitor all sockets until one has a connection
-	std::cout << "Waiting for connection..." << std::endl;
 	if (poll(_PollList, _PollListSize, timeout) > 0)
 	{
 		//	-create new connections for sockets that have them
-		std::cout << "Creating New Connections..." << std::endl;
 		this->createNewConnections();
 		//	-handle connections that can be read from (ignoring the ones created previously to give clients time to send requests)
-		std::cout << "Handling Established Connections..." << std::endl;
 		this->handleRequests(Vconf);
 	}
 	//	-close connections older than their timeout and cleanup
-	std::cout << "Closing Expired Connections..." << std::endl;
 	this->cleanConnections();
 	return (1);
 }

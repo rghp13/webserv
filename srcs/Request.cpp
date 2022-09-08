@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 17:02:43 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/08 17:39:27 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ Request::Request()
 
 Request::Request(unsigned int newport, std::string newhost, std::string header)//add a test to see if it's valid
 {
-	std::cout << header << std::endl;
 	_port = newport;
 	_host = newhost;
 	_malformed = false;
