@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 18:28:42 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:08:46 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 #include "conf.hpp"
 #define PORT 80
 #define HTTP_VERS "HTTP/1.1"
+#define HTTPNL "\r\n"
 class conf;
 class Socket;
 class Connection;
