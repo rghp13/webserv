@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/06 16:23:05 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:02:34 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,9 @@ void	SocketManager::createNewConnections( void )
 
 }
 
-void	SocketManager::handleRequests( void )
+void	SocketManager::handleRequests(std::vector<conf> Vconf)
 {
+	Answer	tempanswer;
 	//for each socket that has data, read, pass to rponson's code and send answers
 	for (int i = _SocketList.size(); i < _PollListSize; i++)
 	{
@@ -98,8 +99,11 @@ void	SocketManager::handleRequests( void )
 			{
 				if (_ActiveConnectionList[j]->GetConnectionFD() == _PollList[i].fd)
 				{
-					std::cout << _ActiveConnectionList[j]->GetNewestClientRequest() << std::endl;
-					_ActiveConnectionList[j]->SendAnswer("HTTP/1.1 200 OK\nDate: Thu, 19 Feb 2009 12:27:04 GMT\nServer: Apache/2.2.3\nLast-Modified: Wed, 18 Jun 2003 16:05:58 GMT\nETag: \"56d-9989200-1132c580\"\nContent-Type: text/html\nContent-Length: 75\nAccept-Ranges: bytes\nConnection: close\n\n<html><div id=\"main\"><div class=\"fof\"><h1>Error 404</h1></div></div></html>"); //test line
+					// (void)Vconf;
+					// std::cout << _ActiveConnectionList[j]->GetNewestClientRequest() << std::endl;
+					// _ActiveConnectionList[j]->SendAnswer("HTTP/1.1 200 OK\r\nDate: Thu, 19 Feb 2009 12:27:04 GMT\r\nServer: Apache/2.2.3\r\nLast-Modified: Wed, 18 Jun 2003 16:05:58 GMT\r\nETag: \"56d-9989200-1132c580\"\r\nContent-Type: text/html\r\nContent-Length: 75\r\nAccept-Ranges: bytes\r\nConnection: Keep-Alive\r\n\r\n<html><div id=\"main\"><div class=\"fof\"><h1>Among us?</h1></div></div></html>"); //test line
+					tempanswer = fork_request(Request(_ActiveConnectionList[j]->GetPort(), _ActiveConnectionList[j]->GetHost(), _ActiveConnectionList[j]->GetNewestClientRequest()), Vconf);
+					_ActiveConnectionList[j]->SendAnswer(tempanswer.MakeString());
 					break;
 				}
 			}
@@ -115,6 +119,9 @@ void	SocketManager::cleanConnections( void )
 	{
 		if (_ActiveConnectionList[i]->ShouldDestroy())
 		{
+			Answer	temp;
+			temp.SetStatus(HTTP_ERR_408);
+			_ActiveConnectionList[i]->SendAnswer(temp.MakeString());
 			delete _ActiveConnectionList[i];
 			_ActiveConnectionList.erase(_ActiveConnectionList.begin() + i);
 			break;
@@ -122,7 +129,7 @@ void	SocketManager::cleanConnections( void )
 	}
 }
 
-int		SocketManager::cycle(int timeout)
+int		SocketManager::cycle(int timeout, std::vector<conf> Vconf)
 {
 	//main function of the manager
 	//	-add all sockets and connections to the poll list
@@ -136,7 +143,7 @@ int		SocketManager::cycle(int timeout)
 		this->createNewConnections();
 		//	-handle connections that can be read from (ignoring the ones created previously to give clients time to send requests)
 		std::cout << "Handling Established Connections..." << std::endl;
-		this->handleRequests();
+		this->handleRequests(Vconf);
 	}
 	//	-close connections older than their timeout and cleanup
 	std::cout << "Closing Expired Connections..." << std::endl;

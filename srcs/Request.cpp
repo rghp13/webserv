@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
 /*   Updated: 2022/09/07 17:02:43 by rponsonn         ###   ########.fr       */
@@ -23,6 +23,7 @@ Request::Request()
 
 Request::Request(unsigned int newport, std::string newhost, std::string header)//add a test to see if it's valid
 {
+	std::cout << header << std::endl;
 	_port = newport;
 	_host = newhost;
 	_malformed = false;
@@ -39,13 +40,19 @@ Request::Request(unsigned int newport, std::string newhost, std::string header)/
 	}
 	while (std::getline(ss, token, '\n'))
 	{
-		if (token.length() == 0)
+		if (token.length() == 0)//carrage return break this
 			break;
 		std::stringstream subs(token);
 		t_header_argument tmp;
 		std::getline(subs, tmp.key, ' ');
 		if (tmp.key.find(':')== std::string::npos)
+		{
+			std::cout << "_______________________\n";
+			std::cout << token.length() << std::endl;
+			std::cout << token << std::endl;
+			std::cout << tmp.key << std::endl;
 			_malformed = true;//malformed
+		}
 		std::getline(subs, tmp.value, ' ');//check if these are valid
 		AddArgument(tmp);
 	}

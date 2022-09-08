@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   Answer.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:46:27 by dimitriscr        #+#    #+#             */
 /*   Updated: 2022/09/08 14:09:10 by rponsonn         ###   ########.fr       */
@@ -45,6 +45,24 @@ Answer	&Answer::operator=(Answer const &src)
 	_Arguments = src._Arguments;
 	_Body = src._Body;
 	return (*this);
+}
+
+void	Answer::SetStatus(int code, std::string message)
+{
+	_StatusCode = code;
+	_StatusMessage = message;
+	if (code != 200)
+		this->GenerateErrorBody();
+}
+
+void	Answer::GenerateErrorBody( void )
+{
+	_Body = "<div id=\"main\"><div class=\"fof\"><h1>Error ";
+	_Body += SSTR(_StatusCode);
+	_Body += " ";
+	_Body += _StatusMessage;
+	_Body += "</h1></div></div>";
+	this->SetBodyLen();
 }
 
 void	Answer::AddArgument(t_header_argument newArg)

@@ -1,48 +1,52 @@
 Error codes that matter to us (probably):
 
-200 OK:
+200 OK:		//Both
 The request succeeded. The result meaning of "success" depends on the HTTP method:
 GET - The resource has been fetched and transmitted in the message body.
 PUT or POST - The resource describing the result of the action is transmitted in the message body.
+DELETE - Ressource has been deleted and a confirmation message will be sent
 
-201 Created:
+201 Created:	//Whoever does post
 The request succeeded, and a new resource was created as a result. This is typically the response sent after POST requests.
 
-400 Bad Request:
+400 Bad Request:	//Me
 The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
 
-403 Forbidden:
+403 Forbidden:		//You
 The client does not have access rights to the content; that is, it is unauthorized, so the server is refusing to give the requested resource.
 
-404 Not Found:
+404 Not Found:		//You
 The server can not find the requested resource.
 
-405 Method Not Allowed:
+405 Method Not Allowed:		//You?
 The request method is known by the server but is not supported by the target resource.
 
-411 Length Required:
+408 Request Timeout:		//Me
+Sent when closing a keep-alive connection by timeout
+
+411 Length Required:		//You
 Server rejected the request because the Content-Length header field is not defined and the server requires it.
 
-414 URI Too Long: (Maybe, if we find a limit in file names)
+414 URI Too Long: (Maybe, if we find a limit in file names)		//??
 The URI requested by the client is longer than the server is willing to interpret.
 
-415 Unsupported Media Type: (Maybe)
+415 Unsupported Media Type: (Maybe)		//You?
 The media format of the requested data is not supported by the server, so the server is rejecting the request.
 
-418 I'm a teapot:
+418 I'm a teapot:		//??
 The server refuses the attempt to brew coffee with a teapot.
 
-431 Request Header Fields Too Large: (Maybe)
+431 Request Header Fields Too Large: (Maybe)		//You?
 The server is unwilling to process the request because its header fields are too large. The request may be resubmitted after reducing the size of the request header fields. 
 
-500 Internal Server Error:
+500 Internal Server Error:		//Both
 The server has encountered a situation it does not know how to handle.
 
-501 Not Implemented:
+501 Not Implemented:		//Me
 The request method is not supported by the server and cannot be handled. The only methods that servers are required to support (and therefore that must not return this code) are GET and HEAD.
 
-505 HTTP Version Not Supported:
+505 HTTP Version Not Supported:		//Me
 The HTTP version used in the request is not supported by the server.
 
-507 Insufficient Storage:
+507 Insufficient Storage:		//??
 The method could not be performed on the resource because the server is unable to store the representation needed to successfully complete the request.
