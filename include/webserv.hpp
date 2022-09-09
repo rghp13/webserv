@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/08 15:46:34 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 14:35:32 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 #define HTTP_VERS "HTTP/1.1"
 #define HTTPNL "\r\n"
 #define HTTP_ERR_400 400, "Bad Request"
+#define HTTP_ERR_403 403, "Forbidden"
+#define HTTP_ERR_404 404, "Not Found"
 #define	HTTP_ERR_408 408, "Request Timeout"
 #define HTTP_ERR_414 414, "URI Too Long"
 #define HTTP_ERR_501 501, "Not Implemented"
@@ -84,9 +86,9 @@ bool	connection_loop(std::vector<Socket*> socketList, struct pollfd *socketPoll,
 int		fill_socket_vector(std::vector<t_socket_info> &socketInitInfo, std::vector<conf> &Vconf);
 bool	check_duplicate_socket(std::vector<t_socket_info> &socketInitInfo);
 Answer	fork_request(Request request, std::vector<conf> Vconf);
-//Answer	process_delete(Request &src, std::vector<conf> &Vconf);
 //Process_get.cpp
 Answer	process_get(Request &src, std::vector<conf> &Vconf);
+Answer	process_delete(Request &src, std::vector<conf> &Vconf);
 std::vector<conf>::iterator	strict_scan(std::vector<conf> &Vconf, Request &src);
 std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &src);
 //Utils.cpp

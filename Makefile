@@ -6,7 +6,7 @@
 #    By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 11:39:56 by dimitriscr        #+#    #+#              #
-#    Updated: 2022/09/07 15:04:02 by dscriabi         ###   ########.fr        #
+#    Updated: 2022/09/09 14:11:23 by dscriabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC_NAME				=		Answer.cpp \
 								main.cpp \
 								Process_Fork.cpp \
 								Process_GET.cpp \
+								Process_DELETE.cpp \
 								Request.cpp \
 								Socket.cpp \
 								SocketManager.cpp \

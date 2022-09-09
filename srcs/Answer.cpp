@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:46:27 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/08 14:48:39 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 14:35:41 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,9 @@ Answer::Answer(int erno)
 	_StatusCode = erno;
 	_Body = "";
 	if (erno == 404)
-	{
-		_StatusMessage = "Not Found";
-		_Body = "<div id=\"main\"><div class=\"fof\"><h1>Error 404</h1></div></div>";
-	}
+		SetStatus(HTTP_ERR_404);
+	else if (erno == 403)
+		SetStatus(HTTP_ERR_403);
 
 }
 Answer::~Answer()
@@ -57,11 +56,9 @@ void	Answer::SetStatus(int code, std::string message)
 
 void	Answer::GenerateErrorBody( void )
 {
-	_Body = "<div id=\"main\"><div class=\"fof\"><h1>Error ";
+	_Body = "<!DOCTYPE html>\n<html lang=”en”>\n<head>\n<title></title>\n</head>\n<body>\n<div style=\"text-align: center;\">\n<h1>Oh No!</h1>\n<p>We have encountered an issue!</p>\n<img src=\"https://http.cat/";
 	_Body += SSTR(_StatusCode);
-	_Body += " ";
-	_Body += _StatusMessage;
-	_Body += "</h1></div></div>";
+	_Body += ".jpg\">\n</div>\n</body>\n</html>";
 	this->SetBodyLen();
 }
 

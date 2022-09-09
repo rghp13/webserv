@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:35:18 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/08 17:10:23 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 14:44:50 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ Answer	fork_request(Request request, std::vector<conf> Vconf)
 		std::cout << "Error 505 on Request, http request was: " << request._Version << std::endl;
 		return (retval);
 	}
-	if (request._host.size() > 4096) //URI is too long
+	if (request._Path.size() > 4096) //URI is too long
 	{
 		retval.SetStatus(HTTP_ERR_414);
 		std::cout << "Error 414 on Request" << std::endl;
@@ -49,6 +49,8 @@ Answer	fork_request(Request request, std::vector<conf> Vconf)
 	if (request._Method == "DELETE")
 	{
 		//commit DELETE processing
+		std::cout << "accepted as DELETE" << std::endl;
+		retval = process_delete(request, Vconf);
 		return (retval);
 	}
 	retval.SetStatus(HTTP_ERR_501);
