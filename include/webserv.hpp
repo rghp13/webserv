@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/09 15:05:55 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 16:25:47 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,17 @@ typedef	struct	s_socket_info
 	unsigned int	port;
 }				t_socket_info;
 
-typedef	struct s_header_argument
+typedef	struct	s_header_argument
 {
 	std::string		key;
 	std::string		value;
 }				t_header_argument;
+
+typedef struct	s_redirect
+{
+	int code;
+	std::string value;
+}				t_redirect;
 
 #include "Socket.hpp"
 #include "Request.hpp"

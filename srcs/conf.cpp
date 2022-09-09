@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/09 14:35:53 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/09 16:14:41 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,21 @@ int	conf::set_listing(std::string &line)
 		return (1);
 	if (token == "true")
 		_ListingEnabled = true;
+	return (0);
+}
+int	conf::set_redirect(std::string &line)
+{
+	std::string token;
+	std::stringstream ss(line);
+
+	if (!(std::getline(ss, token, ' ')))
+		return (1);
+	if (token.length() != 3)
+		return (1);
+	_redirect.code = std::atoi(token.c_str());
+	if (!(std::getline(ss, token, ' ')))
+		return (1);
+	_redirect.value = token;
 	return (0);
 }
 bool	conf::get_listing(void)const
