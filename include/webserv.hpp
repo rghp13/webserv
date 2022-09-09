@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/09 15:05:55 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 15:49:00 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,20 @@
 #include <poll.h>//poll
 
 #include "conf.hpp"
+#define GET 0b1
+#define POST 0b10
+#define DELETE 0b100
 #define PORT 80
 #define HTTP_VERS "HTTP/1.1"
 #define HTTPNL "\r\n"
 #define HTTP_ERR_400 400, "Bad Request"
 #define HTTP_ERR_403 403, "Forbidden"
 #define HTTP_ERR_404 404, "Not Found"
+#define HTTP_ERR_405 405, "Method Not Allowed"
 #define	HTTP_ERR_408 408, "Request Timeout"
 #define HTTP_ERR_414 414, "URI Too Long"
 #define HTTP_ERR_418 418, "I'm a teapot"
+#define	HTTP_ERR_500 500, "Internal Server Error"
 #define HTTP_ERR_501 501, "Not Implemented"
 #define HTTP_ERR_505 505, "HTTP Version Not Supported"
 class conf;
@@ -88,8 +93,8 @@ int		fill_socket_vector(std::vector<t_socket_info> &socketInitInfo, std::vector<
 bool	check_duplicate_socket(std::vector<t_socket_info> &socketInitInfo);
 Answer	fork_request(Request request, std::vector<conf> Vconf);
 //Process_get.cpp
-Answer	process_get(Request &src, std::vector<conf> &Vconf);
-Answer	process_delete(Request &src, std::vector<conf> &Vconf);
+Answer	process_get(Request &src, std::vector<conf>::iterator iter);
+Answer	process_delete(Request &src, std::vector<conf>::iterator iter);
 std::vector<conf>::iterator	strict_scan(std::vector<conf> &Vconf, Request &src);
 std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &src);
 //Utils.cpp

@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/09 15:03:56 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 15:40:23 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,13 @@ std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &s
 	return (i);
 }
 
-Answer	process_get(Request &src, std::vector<conf> &Vconf)//need to talk about arguments
+Answer	process_get(Request &src, std::vector<conf>::iterator iter)//need to talk about arguments
 {
-	std::vector<conf>::iterator iter;
 	std::ifstream				file;
 	Answer						ret;
 	std::string					path;
 	std::string					buffer;
 
-	iter = strict_scan(Vconf, src);
-	if (iter == Vconf.end())
-	{
-		iter = non_strict_scan(Vconf, src);
-		if (iter == Vconf.end())
-			return (Answer(404));
-	}
 	if (src.isPageADirectory())
 	{
 		if (iter->get_listing())
