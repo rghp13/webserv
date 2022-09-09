@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/09 16:34:50 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/09 17:00:30 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ conf::conf()
 	_Port = 0;
 	_Method = 0;
 	_ListingEnabled = false;
+	_redirect.code = 0;
 }
 conf::conf(conf const &src)
 {
@@ -37,6 +38,8 @@ conf	&conf::operator=(conf const &src)
 	_ServerName = src._ServerName;
 	_ServerRoot = src._ServerRoot;
 	_ListingEnabled = src._ListingEnabled;
+	_redirect.code = src._redirect.code;
+	_redirect.value = src._redirect.value;
 	return (*this);
 }
 int	conf::set_socket(std::string &input)
