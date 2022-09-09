@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/09 16:14:41 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/09 16:34:50 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,8 @@ void	conf::clear(void)
 	_DocumentRoot.clear();
 	_Method = 0;
 	_ListingEnabled = false;
+	_redirect.code = 0;
+	_redirect.value.clear();
 }
 void	conf::print(void)
 {
