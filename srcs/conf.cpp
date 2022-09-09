@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/09 17:00:30 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/09 18:06:39 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,9 @@ int	conf::set_redirect(std::string &line)
 
 	if (!(std::getline(ss, token, ' ')))
 		return (1);
-	if (token.length() != 3)
-		return (1);
 	_redirect.code = std::atoi(token.c_str());
+	if (_redirect.code < 100 || _redirect.code > 599)
+		return (1);
 	if (!(std::getline(ss, token, ' ')))
 		return (1);
 	_redirect.value = token;
@@ -181,6 +181,9 @@ void	conf::print(void)
 	if (_Method & DELETE)
 		std::cout << "DELETE ";
 	std::cout << std::endl;
+	std::cout << "Listing enabled: " << _ListingEnabled << std::endl;
+	std::cout << "Redirect code" << _redirect.code << " Value " << _redirect.value << std::endl;
+
 }
 std::string	conf::get_Host(void)const
 {
