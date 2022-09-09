@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/08 14:31:51 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/09 14:35:53 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,10 @@ std::string conf::get_DocumentRoot(void)const
 		return (get_ServerRoot());
 	else
 		return (_DocumentRoot);
+}
+unsigned short int conf::get_Method(void)const
+{
+	return (_Method);
 }
 bool	conf::Alias_compare(std::string &src)
 {

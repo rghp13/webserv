@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:21:40 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/08 14:30:08 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/09 14:31:21 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ public:
 	std::string					get_ServerName(void)const;
 	std::string					get_ServerRoot(void)const;
 	std::string					get_DocumentRoot(void)const;
+	unsigned short int			get_Method(void)const;
 	bool						Alias_compare(std::string &src);
 	void						print(void);
 	void						clear(void);
