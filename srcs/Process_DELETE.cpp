@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Process_DELETE.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:39:44 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/08 17:40:45 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/09 15:40:50 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,10 @@
 //delete request may have a body
 //may get a body response
 //
-Answer	process_delete(Request &src, std::vector<conf> &Vconf)
+Answer	process_delete(Request &src, std::vector<conf>::iterator iter)
 {
-	std::vector<conf>::iterator iter;
 	std::string full_path;
-	iter = strict_scan(Vconf, src);
-	if (iter == Vconf.end())
-	{
-		iter = non_strict_scan(Vconf, src);
-		if (iter == Vconf.end())
-			return (Answer(404));
-	}
+
 	//use isdir()instead
 	full_path = iter->get_DocumentRoot() + src._Path;
 

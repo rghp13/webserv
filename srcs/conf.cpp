@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   conf.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
 /*   Updated: 2022/09/09 16:34:50 by rponsonn         ###   ########.fr       */
@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/conf.hpp"
-#define GET 0b1
-#define POST 0b10
-#define DELETE 0b100
 conf::conf()
 {
 	_Port = 0;
