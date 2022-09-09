@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/08 17:39:27 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 14:02:29 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ Request::Request(unsigned int newport, std::string newhost, std::string header)/
 	}
 	while (std::getline(ss, token, '\n'))
 	{
-		if (token.length() == 0)//carrage return break this
+		if (token.length() == 0)
 			break;
 		std::stringstream subs(token);
 		t_header_argument tmp;
