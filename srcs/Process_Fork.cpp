@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:35:18 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/09 17:57:00 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 18:26:02 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,26 @@ Answer	fork_request(Request request, std::vector<conf> Vconf)
 
 	if (current_conf->get_redirect().code != 0)
 	{
-		retval.SetStatus(current_conf->get_redirect().code, current_conf->get_redirect().value);
+		int	code = current_conf->get_redirect().code;
+		t_header_argument	redirect;
+		if (code > 299 && code < 400)
+		{
+			if (code == 301)
+				retval.SetStatus(HTTP_ERR_301);
+			else if (code == 302)
+				retval.SetStatus(HTTP_ERR_302);
+			else if (code == 303)
+				retval.SetStatus(HTTP_ERR_303);
+			else if (code == 307)
+				retval.SetStatus(HTTP_ERR_307);
+			else if (code == 308)
+				retval.SetStatus(HTTP_ERR_308);
+			redirect.key = "Location:";
+			redirect.value = current_conf->get_redirect().value;
+			retval.AddArgument(redirect);
+			return (retval);
+		}
+		retval.SetStatus(code, current_conf->get_redirect().value);
 		retval.GenerateErrorBody();
 		return (retval);
 	}
