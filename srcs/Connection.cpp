@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/08 17:54:20 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 14:08:28 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ std::string	Connection::GetNewestClientRequest( void )
 {
 	//read from the connection to get client request
 	int			readret;
-	char		buffer[1024] = {0};
+	char		buffer[1025] = {0};
 	std::string	retstr;
 	time_t		start = time(NULL);
 
