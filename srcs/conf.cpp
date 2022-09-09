@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/09 18:08:58 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 18:15:09 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int	conf::set_redirect(std::string &line)
 	std::string token;
 	std::stringstream ss(line);
 
+	std::getline(ss, token, ' ');
 	if (!(std::getline(ss, token, ' ')))
 		return (1);
 	_redirect.code = std::atoi(token.c_str());
