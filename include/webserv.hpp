@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/09 16:56:15 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 18:00:23 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,17 @@
 #include <arpa/inet.h>//htons htonl ntohs ntohl
 #include <poll.h>//poll
 
-#include "conf.hpp"
 #define GET 0b1
 #define POST 0b10
 #define DELETE 0b100
 #define PORT 80
 #define HTTP_VERS "HTTP/1.1"
 #define HTTPNL "\r\n"
+#define	HTTP_ERR_301 301, "Moved Permanently"
+#define	HTTP_ERR_302 302, "Found"
+#define HTTP_ERR_303 303, "See Other"
+#define HTTP_ERR_307 307, "Temporary Redirect"
+#define HTTP_ERR_308 308, "Permanent Redirect"
 #define HTTP_ERR_400 400, "Bad Request"
 #define HTTP_ERR_403 403, "Forbidden"
 #define HTTP_ERR_404 404, "Not Found"
@@ -83,6 +87,7 @@ typedef struct	s_redirect
 	std::string value;
 }				t_redirect;
 
+#include "conf.hpp"
 #include "Socket.hpp"
 #include "Request.hpp"
 #include "Answer.hpp"

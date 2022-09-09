@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/09 17:00:30 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/09 18:01:39 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,10 @@ std::string	conf::get_ServerName(void)const
 std::string	conf::get_ServerRoot(void)const
 {
 	return (_ServerRoot);
+}
+t_redirect	conf::get_redirect(void)const
+{
+	return (_redirect);
 }
 std::string conf::get_DocumentRoot(void)const
 {

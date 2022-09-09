@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:35:18 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/09 15:50:39 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 17:57:00 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ Answer	fork_request(Request request, std::vector<conf> Vconf)
 		}
 	}
 	//
+
+	if (current_conf->get_redirect().code != 0)
+	{
+		retval.SetStatus(current_conf->get_redirect().code, current_conf->get_redirect().value);
+		retval.GenerateErrorBody();
+		return (retval);
+	}
 	
 	if (request._Method == "GET")
 	{
