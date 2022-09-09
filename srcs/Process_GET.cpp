@@ -56,7 +56,10 @@ Answer	process_get(Request &src, std::vector<conf>::iterator iter)//need to talk
 	if (src.isPageADirectory())
 	{
 		if (iter->get_listing())
-			return (Answer(418));//418 if listing is enabled because we do not have a function for it
+		{
+			ret._Body = generateDirectoryPage(path, iter->get_DocumentRoot());
+			return (ret);//418 if listing is enabled because we do not have a function for it
+		}
 		std::cout << "Make sure we have a function for directory listing\n Serving a 404 until we add that functionality" << std::endl;
 		path = iter->get_DocumentRoot() + src._Path;
 		if (access(path.c_str(), F_OK))

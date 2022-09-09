@@ -6,7 +6,7 @@
 #    By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 11:39:56 by dimitriscr        #+#    #+#              #
-#    Updated: 2022/09/09 14:11:23 by dscriabi         ###   ########.fr        #
+#    Updated: 2022/09/09 16:54:47 by dscriabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ PATH_SRC				=		./srcs
 PATH_HEAD				=		./includes
 SRC_NAME				=		Answer.cpp \
 								conf.cpp \
+								Utils.cpp \
 								Connection.cpp \
 								init.cpp \
 								main.cpp \
