@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/09 15:44:10 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 16:34:50 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,21 @@ int	conf::set_listing(std::string &line)
 		_ListingEnabled = true;
 	return (0);
 }
+int	conf::set_redirect(std::string &line)
+{
+	std::string token;
+	std::stringstream ss(line);
+
+	if (!(std::getline(ss, token, ' ')))
+		return (1);
+	if (token.length() != 3)
+		return (1);
+	_redirect.code = std::atoi(token.c_str());
+	if (!(std::getline(ss, token, ' ')))
+		return (1);
+	_redirect.value = token;
+	return (0);
+}
 bool	conf::get_listing(void)const
 {
 	return (_ListingEnabled);
@@ -142,6 +157,8 @@ void	conf::clear(void)
 	_DocumentRoot.clear();
 	_Method = 0;
 	_ListingEnabled = false;
+	_redirect.code = 0;
+	_redirect.value.clear();
 }
 void	conf::print(void)
 {
