@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Process_GET.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/09 14:54:25 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/09 15:03:56 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ Answer	process_get(Request &src, std::vector<conf> &Vconf)//need to talk about a
 	}
 	if (src.isPageADirectory())
 	{
-		if (!iter->get_listing())
+		if (iter->get_listing())
 			return (Answer(418));//418 if listing is enabled because we do not have a function for it
 		std::cout << "Make sure we have a function for directory listing\n Serving a 404 until we add that functionality" << std::endl;
 		path = iter->get_DocumentRoot() + src._Path;

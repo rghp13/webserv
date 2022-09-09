@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:46:27 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/09 14:35:41 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 15:05:27 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ Answer::Answer(int erno)
 		SetStatus(HTTP_ERR_404);
 	else if (erno == 403)
 		SetStatus(HTTP_ERR_403);
+	else if (erno == 418)
+		SetStatus(HTTP_ERR_418);
 
 }
 Answer::~Answer()

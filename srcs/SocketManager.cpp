@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/08 17:52:30 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 15:09:10 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ void	SocketManager::handleRequests(std::vector<conf> Vconf)
 						tempanswer = fork_request(Request(_ActiveConnectionList[j]->GetPort(), _ActiveConnectionList[j]->GetHost(), request), Vconf);
 						_ActiveConnectionList[j]->SendAnswer(tempanswer.MakeString());
 					}
-					else
-						_ActiveConnectionList[j]->SetKeepAlive(false);
+					// else
+					// 	_ActiveConnectionList[j]->SetKeepAlive(false);
 					break;
 				}
 			}

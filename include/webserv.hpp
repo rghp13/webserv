@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/09 14:35:32 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/09 15:05:55 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 #define HTTP_ERR_404 404, "Not Found"
 #define	HTTP_ERR_408 408, "Request Timeout"
 #define HTTP_ERR_414 414, "URI Too Long"
+#define HTTP_ERR_418 418, "I'm a teapot"
 #define HTTP_ERR_501 501, "Not Implemented"
 #define HTTP_ERR_505 505, "HTTP Version Not Supported"
 class conf;
