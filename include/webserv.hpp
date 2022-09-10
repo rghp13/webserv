@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/09 18:00:23 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/10 13:45:19 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,12 @@ std::string	generateDirectoryPage(std::string dirPath, std::string docroot);
 Answer	fork_request(Request request, std::vector<conf> Vconf);
 //Process_get.cpp
 Answer	process_get(Request &src, std::vector<conf>::iterator iter);
-Answer	process_delete(Request &src, std::vector<conf>::iterator iter);
 std::vector<conf>::iterator	strict_scan(std::vector<conf> &Vconf, Request &src);
 std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &src);
+//Process_delete.cpp
+Answer	process_delete(Request &src, std::vector<conf>::iterator iter);
+//Process_post.cpp
+Answer	process_post(Request &src, std::vector<conf>::iterator iter);
 //Utils.cpp
 bool	isdir(std::string input);
 #endif
