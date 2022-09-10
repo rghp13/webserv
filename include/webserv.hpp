@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/09 18:00:23 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/10 15:57:51 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,5 @@ std::vector<conf>::iterator	strict_scan(std::vector<conf> &Vconf, Request &src);
 std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &src);
 //Utils.cpp
 bool	isdir(std::string input);
+void	ascii_codes(std::string &string);
 #endif
