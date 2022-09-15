@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:21:40 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/09 16:30:16 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/14 15:18:45 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ private:
 	std::string					_DocumentRoot;//where all docs are stored,if not supplied will default to ServerRoot/htdocs
 	unsigned short int			_Method;//method flag GET == 1 POST == 2 DELETE == 4
 	bool						_ListingEnabled;
+	unsigned long int			_MaxBodySize;
 	t_redirect					_redirect;
 
 
@@ -44,6 +45,7 @@ public:
 	int							set_method(std::string &line);
 	int							set_listing(std::string &line);
 	int							set_redirect(std::string &line);
+	int							set_max_size(std::string &line);
 	std::string					get_Host(void)const;
 	unsigned int				get_Port(void)const;
 	std::string					get_ServerName(void)const;
@@ -51,6 +53,7 @@ public:
 	std::string					get_DocumentRoot(void)const;
 	unsigned short int			get_Method(void)const;
 	bool						get_listing(void)const;
+	unsigned long int			get_MaxSize(void)const;
 	t_redirect					get_redirect(void)const;
 	bool						Alias_compare(std::string &src);
 	void						print(void);

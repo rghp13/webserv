@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:10:15 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/07 16:56:56 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/10 16:13:21 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ public:
 	void	htmlize(void);//TODO: remember what this was supposed to do
 	void	AddArgument (t_header_argument newArg);//adds variables in a key/pair way
 	void	parse_header(std::string header);
-	bool	find_key(std::string key);
+	bool	key_exists(std::string key);
+	t_header_argument	&get_keyval(std::string key);
 };
 
 #endif

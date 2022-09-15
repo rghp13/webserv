@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/10 15:57:51 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/12 18:56:33 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ class Request;
 
 #define SSTR( x ) static_cast< std::ostringstream & >( \
 		( std::ostringstream() << std::dec << x ) ).str()
+#define KB(x) (x * 1024UL)
+#define MB(x) (x * (1024UL * 1024UL))
+#define GB(x) (x * (1024UL * 1024UL * 1024UL))
 
 #define MAXQUEUESIZE 3
 //research FD_SET, FD_CLR, FD_ISSET, FD_ZERO 
@@ -107,9 +110,12 @@ std::string	generateDirectoryPage(std::string dirPath, std::string docroot);
 Answer	fork_request(Request request, std::vector<conf> Vconf);
 //Process_get.cpp
 Answer	process_get(Request &src, std::vector<conf>::iterator iter);
-Answer	process_delete(Request &src, std::vector<conf>::iterator iter);
 std::vector<conf>::iterator	strict_scan(std::vector<conf> &Vconf, Request &src);
 std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &src);
+//Process_delete.cpp
+Answer	process_delete(Request &src, std::vector<conf>::iterator iter);
+//Process_post.cpp
+Answer	process_post(Request &src, std::vector<conf>::iterator iter);
 //Utils.cpp
 bool	isdir(std::string input);
 void	ascii_codes(std::string &string);
