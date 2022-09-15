@@ -118,4 +118,5 @@ Answer	process_delete(Request &src, std::vector<conf>::iterator iter);
 Answer	process_post(Request &src, std::vector<conf>::iterator iter);
 //Utils.cpp
 bool	isdir(std::string input);
+void	ascii_codes(std::string &string);
 #endif

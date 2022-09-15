@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
 /*   Updated: 2022/09/13 21:22:52 by rponsonn         ###   ########.fr       */
@@ -35,6 +35,7 @@ Request::Request(unsigned int newport, std::string newhost, std::string header)/
 		std::stringstream subs(token);
 		std::getline(subs, _Method, ' ');//Think about how to handle a simple newline entry
 		std::getline(subs, _Path, ' ');//
+		ascii_codes(_Path);
 		std::getline(subs, _Version, ' ');//
 		if (_Method.empty() || _Path.empty() || _Version.empty())
 			_malformed = true;
@@ -125,6 +126,9 @@ Request::~Request()
 }
 void	Request::htmlize(void)
 {
+	//This is problematic
+	if (_Path.find('.') != _Path.npos)
+		return ;
 	std::string html = ".html";
 	if (_Path.find(html.c_str(), _Path.size() - html.size(), html.size()) == std::string::npos)
 		_Path += html;

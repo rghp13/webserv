@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:46:27 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/09 15:05:27 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/10 14:52:57 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ void	Answer::SetStatus(int code, std::string message)
 
 void	Answer::GenerateErrorBody( void )
 {
-	_Body = "<!DOCTYPE html>\n<html lang=”en”>\n<head>\n<title></title>\n</head>\n<body>\n<div style=\"text-align: center;\">\n<h1>Oh No!</h1>\n<p>We have encountered an issue!</p>\n<img src=\"https://http.cat/";
+	_Body = "<!DOCTYPE html>\n<html lang=”en”>\n<head>\n<title></title>\n</head>\n<body>\n<div style=\"text-align: center;\">\n<h1>Oh No!</h1>\n<p>It seems your request was declared as: ";
+	_Body += _StatusMessage;
+	_Body += "</p>\n<img src=\"https://http.cat/";
 	_Body += SSTR(_StatusCode);
 	_Body += ".jpg\">\n</div>\n</body>\n</html>";
 	this->SetBodyLen();
