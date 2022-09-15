@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/10 13:45:19 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/12 18:56:33 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ class Request;
 
 #define SSTR( x ) static_cast< std::ostringstream & >( \
 		( std::ostringstream() << std::dec << x ) ).str()
+#define KB(x) (x * 1024UL)
+#define MB(x) (x * (1024UL * 1024UL))
+#define GB(x) (x * (1024UL * 1024UL * 1024UL))
 
 #define MAXQUEUESIZE 3
 //research FD_SET, FD_CLR, FD_ISSET, FD_ZERO 

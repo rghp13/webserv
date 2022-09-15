@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/10 16:19:22 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/13 21:22:52 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ t_header_argument	&Request::get_keyval(std::string key)
 			return (*iter);
 		iter++;
 	}
-	std::cout << "Critical error get_keyval called for non-existant key" << std::endl;
+	std::cerr << "Critical error get_keyval called for non-existant key" << std::endl;
+	return (*iter);
 }
 void	Request::AddArgument(t_header_argument newArg)
 {

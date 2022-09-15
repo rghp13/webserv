@@ -45,6 +45,9 @@ Sent when closing a keep-alive connection by timeout
 411 Length Required:		//You
 Server rejected the request because the Content-Length header field is not defined and the server requires it.
 
+413 Request entity too large
+Request entity is larger than limits defined by server. The server might close the connection or return an Retry-After header field.
+
 414 URI Too Long: (Maybe, if we find a limit in file names)		//??
 The URI requested by the client is longer than the server is willing to interpret.
 

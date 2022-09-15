@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 22:40:14 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/09 16:01:59 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/12 18:44:30 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 			error |= temp.set_listing(line);
 		else if (line.find("Return",0, 6) == 0)
 			error |= temp.set_redirect(line);
+		else if (line.find("ClientMaxBodySize", 0, 17) == 0)
+			error |= temp.set_max_size(line);
 		else
 			continue ;
 		isempty = 0;
