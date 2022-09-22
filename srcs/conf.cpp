@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/09 18:15:09 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/14 15:18:48 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ conf	&conf::operator=(conf const &src)
 {
 	if (this == &src)
 		return (*this);
+	clear();
 	_DocumentRoot = src._DocumentRoot;
 	_Method = src._Method;
 	_Host = src._Host;
@@ -40,6 +41,7 @@ conf	&conf::operator=(conf const &src)
 	_ListingEnabled = src._ListingEnabled;
 	_redirect.code = src._redirect.code;
 	_redirect.value = src._redirect.value;
+	_MaxBodySize = src._MaxBodySize;
 	return (*this);
 }
 int	conf::set_socket(std::string &input)
@@ -147,6 +149,30 @@ int	conf::set_redirect(std::string &line)
 	_redirect.value = token;
 	return (0);
 }
+int	conf::set_max_size(std::string &line)
+{
+	std::string token;
+	std::stringstream ss(line);
+	std::string::iterator iter;
+	unsigned long int x;
+	std::getline(ss, token, ' ');
+	if (!(std::getline(ss, token, ' ')) || token.length() < 2)
+		return (1);
+	x = std::atoi(token.c_str());
+	iter = token.begin();
+	if (iter[token.length() - 1] == 'B')
+		_MaxBodySize = x;
+	else if (iter[token.length() - 1] == 'K')
+		_MaxBodySize = KB(x);
+	else if (iter[token.length() - 1] == 'M')
+		_MaxBodySize = MB(x);
+	else if (iter[token.length() - 1] == 'G')
+		_MaxBodySize = GB(x);
+	else
+		return (1);
+	return (0);
+	
+}
 bool	conf::get_listing(void)const
 {
 	return (_ListingEnabled);
@@ -163,6 +189,7 @@ void	conf::clear(void)
 	_ListingEnabled = false;
 	_redirect.code = 0;
 	_redirect.value.clear();
+	_MaxBodySize = 0;
 }
 void	conf::print(void)
 {
@@ -184,6 +211,7 @@ void	conf::print(void)
 	std::cout << std::endl;
 	std::cout << "Listing enabled: " << _ListingEnabled << std::endl;
 	std::cout << "Redirect code" << _redirect.code << " Value " << _redirect.value << std::endl;
+	std::cout << "Max Body size = " << _MaxBodySize << std::endl;
 
 }
 std::string	conf::get_Host(void)const
@@ -201,6 +229,10 @@ std::string	conf::get_ServerName(void)const
 std::string	conf::get_ServerRoot(void)const
 {
 	return (_ServerRoot);
+}
+unsigned long int	conf::get_MaxSize(void)const
+{
+	return (_MaxBodySize);
 }
 t_redirect	conf::get_redirect(void)const
 {

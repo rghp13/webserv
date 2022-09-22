@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/10 16:04:02 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/13 21:22:52 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ Request::Request(unsigned int newport, std::string newhost, std::string header)/
 		std::getline(subs, tmp.value, ' ');//check if these are valid
 		AddArgument(tmp);
 	}
-	if (find_key("Content-Length:"))
+	if (key_exists("Content-Length:"))
 		std::getline(ss, _Body);
 }
 Request::Request(Request const &src)
@@ -77,7 +77,7 @@ Request &Request::operator=(Request const &src)
 	_Body = src._Body;
 	return (*this);
 }
-bool	Request::find_key(std::string key)
+bool	Request::key_exists(std::string key)
 {
 	std::vector<t_header_argument>::iterator it = _Arguments.begin();
 	while (it != _Arguments.end())
@@ -87,6 +87,18 @@ bool	Request::find_key(std::string key)
 		++it;
 	}
 	return (false);
+}
+t_header_argument	&Request::get_keyval(std::string key)
+{
+	std::vector<t_header_argument>::iterator iter = _Arguments.begin();
+	while (iter != _Arguments.end())
+	{
+		if (iter->key == key)
+			return (*iter);
+		iter++;
+	}
+	std::cerr << "Critical error get_keyval called for non-existant key" << std::endl;
+	return (*iter);
 }
 void	Request::AddArgument(t_header_argument newArg)
 {
@@ -104,7 +116,7 @@ void	Request::AddArgument(t_header_argument newArg)
 	_Arguments.push_back(newArg);
 }
 
-bool	Request::isPageADirectory( void ) const
+bool	Request::isPageADirectory( void ) const//this is probably not good enough
 {
 	return (_Path.at(_Path.length() - 1) == '/');
 }
