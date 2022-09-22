@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/23 00:43:56 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/23 00:54:03 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,21 @@ class Request;
 
 #define MAXQUEUESIZE 3
 //research FD_SET, FD_CLR, FD_ISSET, FD_ZERO 
+typedef std::pair<int, std::string>			Error_type, Redirect_type;
+typedef std::pair<std::string, std::string>	Cgi_type;
 
+struct location
+{
+	
+	std::string					_path;		// html path
+	std::vector<std::string>	_methods;	// GET POST DELETE
+	Redirect_type				_redirection;//redirect first is code second is path to file
+	std::string					_root;		// new docroot
+	std::vector<std::string>	_index;		// default file to answer if the request is a directory
+	bool						_autoindex;	// turn on or off directory listing
+	Cgi_type					_cgi;		// execute the cgi program
+	std::string					_uploaddir;// if set tells where to upload data to
+};
 typedef	struct	s_socket_info
 {
 	std::string		host;
