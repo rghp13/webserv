@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 16:50:09 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/24 16:52:11 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ class Connection;
 class Answer;
 class Request;
 #include <sstream>
-
+//SSTR converts ints to string
 #define SSTR( x ) static_cast< std::ostringstream & >( \
 		( std::ostringstream() << std::dec << x ) ).str()
 #define KB(x) (x * 1024UL)
@@ -138,4 +138,6 @@ Answer process_post(Request &src, std::vector<conf>::iterator iter, location loc
 //Utils.cpp
 bool	isdir(std::string input);
 void	ascii_codes(std::string &string);
+void	location_clear(location &loc);
+int		check_locroot(conf &temp);
 #endif
