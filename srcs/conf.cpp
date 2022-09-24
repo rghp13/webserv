@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/24 16:46:50 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/24 17:13:17 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,15 +316,15 @@ std::vector<location>	conf::get_location(void)const
 {
 	return (_location);
 }
-/*bool	conf::Alias_compare(std::string &src)//where is this being used?
+bool	conf::Alias_compare(std::string &src)
 {
-	for (std::vector<std::string>::iterator i = _ServerAlias.begin(); i != _ServerAlias.end(); i++)
+	for (std::vector<std::string>::iterator i = _ServerName.begin(); i != _ServerName.end(); i++)
 	{
 		if (*i == src)
 			return (true);
 	}
 	return (false);
-}*/
+}
 void	conf::push_loc(location &loc)
 {
 	_location.push_back(loc);

@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 16:52:11 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/24 16:59:42 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
  #define WEBSERV_HPP
 
 #include <string> //string functions
+#include <cstring>
 #include <stdio.h>
 #include <fstream>
 #include <iostream>

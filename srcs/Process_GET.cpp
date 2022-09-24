@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Process_GET.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/24 01:16:47 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/24 17:14:33 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ std::vector<conf>::iterator	strict_scan(std::vector<conf> &Vconf, Request &src) 
 	{
 		if (i->get_Port() == src._port && i->get_Host() == src._host)
 		{
-			if (src._domain == i->get_ServerName() || i->Alias_compare(src._domain))
+			if (i->Alias_compare(src._domain))
 				break;
 		}
 	}
@@ -32,7 +32,7 @@ std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &s
 	{
 		if ((i->get_Port() == src._port || 0 == i->get_Port()) && (i->get_Host() == "*" || i->get_Host() == src._host))
 		{
-			if (src._domain == i->get_ServerName() || i->Alias_compare(src._domain))
+			if (i->Alias_compare(src._domain))
 				return (i);
 		}
 	}
@@ -53,6 +53,7 @@ Answer	process_get(Request &src, std::vector<conf>::iterator iter, location loca
 	std::string					path;
 	std::string					buffer;
 
+	(void)iter; //we'll need it for CGI
 	if (src.isPageADirectory())
 	{
 		if (location._autoindex)

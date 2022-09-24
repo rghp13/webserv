@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:11:06 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 16:49:37 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/24 17:10:19 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void    CGIManager::initEnv()
 	_env["SERVER_PROTOCOL"] = HTTP_VERS;
 	_env["SERVER_PORT"] = SSTR(_config.get_Port());
 	_env["REQUEST_METHOD"] = _request._Method;
-	_env["SCRIPT_NAME"] = "TBD"; //see here
+	_env["SCRIPT_NAME"] = _request._Path.replace(0, _location._path.size(), _location._root); //see here
 	_env["DOCUMENT_ROOT"] = _location._root;
 	_env["QUERY_STRING"] = "Doesntworkyet"; //see here
 	//probably needs authentification headers
@@ -48,6 +48,18 @@ void    CGIManager::initEnv()
 
 char    **CGIManager::charArray( void ) const
 {
+	char	**env = new char*[_env.size() + 1];
+	int		j = 0;
+	for (std::map<std::string, std::string>::const_iterator i = _env.begin(); i != _env.end(); i++)
+	{
+		std::string		element = i->first + "=" + i->second;
+		env[j] = new char[element.size() + 1];
+		env[j] = strcpy(env[j], (const char*)element.c_str());
+		j++;
+	}
+	env[j] = NULL;
+	return (env);
+	
 }
 
 std::string CGIManager::runCGI( void )
@@ -79,7 +91,7 @@ std::string CGIManager::runCGI( void )
         //created process
 		dup2(sendpipe[0], STDIN_FILENO);
 		dup2(recvpipe[1], STDOUT_FILENO);
-		//execve("Pathname", NULL, env);
+		execve((_location._cgi.second + _env["SCRIPT_NAME"]).c_str(), NULL, env);
 		write(STDOUT_FILENO, "Error Status 500", 16); // if program gets this far execve has failed
     }
     else

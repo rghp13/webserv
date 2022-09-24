@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Process_Fork.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:35:18 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/23 22:59:55 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/24 17:11:22 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ location	locationForRequest(Request request, std::vector<conf>::iterator config)
 	{
 		if (config->get_location().at(i)._path.compare(0, config->get_location().at(i)._path.size(), request._Path) == 0)
 		{
-			if (config->get_location().at(i)._path.size() > foundlength)
+			if ((int)config->get_location().at(i)._path.size() > foundlength)
 			{
 				retloc = config->get_location().at(i);
 				foundlength = config->get_location().at(i)._path.size();
