@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:21:40 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/23 00:49:36 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/24 01:46:39 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,34 +36,29 @@ private:
 	std::string					_Host;
 	unsigned int				_Port;//recommmended between 1024-65535
 	std::vector<std::string>	_ServerName;//hostname or ip address
-	Error_type					_DefaultError;//Code/path
-	//std::string				_ServerRoot;//the root of our webserv instal
-	//bool						_ListingEnabled;//removing
+	Error_type					_DefaultError;
 	unsigned long int			_MaxBodySize;
-	//t_redirect				_redirect;//removing
 	std::vector<location>		_location;
-
 
 public:
 	conf();
 	conf(conf const &src);
 	~conf();
 	conf						&operator=(conf const &src);
-	int							set_socket(std::string &input);//host and port covered here
-	int							set_name(std::string &line);//now stored as a vector
-	int							set_default_error(std::string &line);
-	int							set_alias(std::string &line);//remove
-	int							set_method(std::string &line);//remove
-	int							set_max_size(std::string &line);
+	int							set_socket(std::string &input, bool test);//host and port covered here
+	int							set_name(std::string &line, bool test);//now stored as a vector
+	int							set_default_error(std::string &line, bool test);
+	int							set_max_size(std::string &line, bool test);
+	void						push_loc(location &loc);
 
 	int							set_location_path(std::string &line, location &loc);
-	int							set_location_methods(std::string &line, location &loc);
-	int							set_location_redirect(std::string &line, location &loc);
-	int							set_location_docroot(std::string &line, location &loc);
-	int							set_location_auto_listing(std::string &line, location &loc);
-	int							set_location_index(std::string &line, location &loc);
-	int							set_location_cgi(std::string &line, location &loc);
-	int							set_redirection(std::string &line);//should this be gone?
+	int							set_location_methods(std::string &line, location &loc, bool test);
+	int							set_location_redirect(std::string &line, location &loc, bool test);
+	int							set_location_docroot(std::string &line, location &loc, bool test);
+	int							set_location_auto_listing(std::string &line, location &loc, bool test);
+	int							set_location_index(std::string &line, location &loc, bool test);
+	int							set_location_cgi(std::string &line, location &loc, bool test);
+	int							set_location_upload_path(std::string &line, location &loc, bool test);
 
 	std::string					get_Host(void)const;
 	unsigned int				get_Port(void)const;

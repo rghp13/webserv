@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 22:40:14 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/12 18:44:30 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/24 02:01:15 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,35 +49,66 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 {
 	std::string	line;
 	conf		temp;
-	int			flag = 0;
+	location	loc;
+	bool		flag = false;
+	bool		locflag = false;
 	int			isempty = 1;
 	int			error = 0;
+
+	location_clear(loc);
 	while (!file.eof())
 	{
+		if (error)
+			break;
 		std::getline(file, line);
-		if (line.find("Listen", 0, 6) == 0)
+		if (line.find("Server", 0, 6) == 0)
 		{
-			if (flag++)
+			if (flag)
 			{
+				if (locflag)
+					temp.push_loc(loc);
+				error |= check_locroot(temp);//will scan all locs for a root that's just /
 				Vconf.push_back(temp);
 				temp.clear();
+				locflag = false;
+				location_clear(loc);
 			}
-			error |= temp.set_socket(line);
+			else
+				flag = true;
 		}
+		else if (line.find("Location", 0, 8) == 0)
+		{
+			if (locflag)
+			{
+				temp.push_loc(loc);
+				location_clear(loc);
+			}
+			else
+				locflag = true;
+			error |= temp.set_location_path(line, loc);
+		}
+		else if (line.find("Listen", 0, 6) == 0)
+			error |= temp.set_socket(line, flag);
 		else if (line.find("ServerName", 0, 10) == 0)
-			error |= temp.set_name(line);
-		else if (line.find("ServerAlias", 0, 11) == 0)
-			error |= temp.set_alias(line);
-		else if (line.find("DocumentRoot", 0, 12) == 0)
-			error |= temp.set_docroot(line);
+			error |= temp.set_name(line, flag);
+		else if (line.find("DefaultError", 0, 12) == 0)
+			error |= temp.set_default_error(line, flag);
+		else if (line.find("MaxSize",0 , 7) == 0)
+			error |= temp.set_max_size(line, flag);//last server block
 		else if (line.find("Method", 0, 6) == 0)
-			error |= temp.set_method(line);
+			error |= temp.set_location_methods(line, loc, locflag);
+		else if (line.find("Redirect",0, 8) == 0)
+			error |= temp.set_location_redirect(line, loc, locflag);
+		else if (line.find("Root", 0, 4) == 0)
+			error |= temp.set_location_docroot(line, loc, locflag);
 		else if (line.find("DirList", 0, 7) == 0)
-			error |= temp.set_listing(line);
-		else if (line.find("Return",0, 6) == 0)
-			error |= temp.set_redirect(line);
-		else if (line.find("ClientMaxBodySize", 0, 17) == 0)
-			error |= temp.set_max_size(line);
+			error |= temp.set_location_auto_listing(line, loc, locflag);
+		else if (line.find("Index", 0, 5) == 0)
+			error |= temp.set_location_index(line, loc, locflag);
+		else if (line.find("CGI", 0, 3) == 0)
+			error |= temp.set_location_cgi(line, loc, locflag);
+		else if (line.find("UploadDir", 0, 9) == 0)
+			error |= temp.set_location_upload_path(line, loc, locflag);
 		else
 			continue ;
 		isempty = 0;

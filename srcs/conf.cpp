@@ -6,12 +6,12 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/14 15:18:48 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/24 02:07:37 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/conf.hpp"
-conf::conf()
+conf::conf()//rework this
 {
 	_Port = 0;
 	_Method = 0;
@@ -26,7 +26,7 @@ conf::~conf()
 {
 	;
 }
-conf	&conf::operator=(conf const &src)
+conf	&conf::operator=(conf const &src)//will need an update
 {
 	if (this == &src)
 		return (*this);
@@ -44,11 +44,17 @@ conf	&conf::operator=(conf const &src)
 	_MaxBodySize = src._MaxBodySize;
 	return (*this);
 }
-int	conf::set_socket(std::string &input)
+//
+//server block
+//
+int	conf::set_socket(std::string &input, bool test)//host and port is set here
 {
 	std::string	delimiter = ":";
 	std::string	token;
 	size_t		i = 0;
+
+	if (test == false)
+		return (1);
 	RemoveWordString(input, "Listen");
 	RemoveWordString(input, " ");
 	if ((i = input.find(delimiter)) == std::string::npos)
@@ -61,100 +67,43 @@ int	conf::set_socket(std::string &input)
 		return (1);
 	return (0);
 }
-int	conf::set_name(std::string &line)
+int	conf::set_name(std::string &line, bool test)//now in vector form
 {
 	std::string	token;
 	std::stringstream	ss(line);
+	if (test == false)
+		return (1);
 	std::getline(ss, token, ' ');
-	std::getline(ss, token, ' ');
-	_ServerName = token;
+	while (std::getline(ss, token, ' '))
+		_ServerName.push_back(token);
 	if (token == "ServerName")
 		return (1);
 	return (0);
 }
-int	conf::set_alias(std::string &line)
-{
-	std::string			token;
-	std::stringstream	ss(line);
-	bool				loop = false;
-	std::getline(ss, token, ' ');
-	while (std::getline(ss, token, ' '))//rework this to be in a loop
-	{
-		loop = true;
-		_ServerAlias.push_back(token);
-	}
-	if (loop == false)
-		return (1);
-	return (0);
-}
-int	conf::set_docroot(std::string &line)
-{
-	std::string			token;
-	std::stringstream	ss(line);
-
-	std::getline(ss, token, ' ');
-	if (!(std::getline(ss, token, ' ')))
-		return (1);
-	_DocumentRoot = token;
-	return (0);
-}
-int	conf::set_method(std::string &line)
-{
-	std::string			token;
-	std::stringstream	ss(line);
-	bool				loop = false;
-
-	std::getline(ss, token, ' ');
-	while (std::getline(ss, token, ' '))
-	{
-		if (token == "GET")
-			_Method |= GET;
-		else if (token == "POST")
-			_Method |= POST;
-		else if (token == "DELETE")
-			_Method |= DELETE;
-		else
-			return (1);
-		loop = true;
-	}
-	if (loop)
-		return (0);
-	return (1);
-}
-int	conf::set_listing(std::string &line)
-{
-	std::string			token;
-	std::stringstream	ss(line);
-
-	std::getline(ss, token, ' ');
-	if (!(std::getline(ss, token, ' ')))
-		return (1);
-	if (token == "true")
-		_ListingEnabled = true;
-	return (0);
-}
-int	conf::set_redirect(std::string &line)
+int	conf::set_default_error(std::string &line, bool test)
 {
 	std::string token;
 	std::stringstream ss(line);
-
+	if (test == false)
+		return (1);
 	std::getline(ss, token, ' ');
-	if (!(std::getline(ss, token, ' ')))
+	std::getline(ss, token, ' ');
+	_DefaultError.first = std::atoi(token.c_str());
+	std::getline(ss, token, ' ');
+	_DefaultError.second = token;
+	if (_DefaultError.second.empty() || !(_DefaultError.first >= 100 && _DefaultError.first <= 599))
 		return (1);
-	_redirect.code = std::atoi(token.c_str());
-	if (_redirect.code < 100 || _redirect.code > 599)
-		return (1);
-	if (!(std::getline(ss, token, ' ')))
-		return (1);
-	_redirect.value = token;
 	return (0);
 }
-int	conf::set_max_size(std::string &line)
+int	conf::set_max_size(std::string &line, bool test)
 {
 	std::string token;
 	std::stringstream ss(line);
 	std::string::iterator iter;
 	unsigned long int x;
+
+	if (test == false)
+		return (1);
 	std::getline(ss, token, ' ');
 	if (!(std::getline(ss, token, ' ')) || token.length() < 2)
 		return (1);
@@ -173,10 +122,97 @@ int	conf::set_max_size(std::string &line)
 	return (0);
 	
 }
-bool	conf::get_listing(void)const
+//
+//Location block
+//
+int	conf::set_location_path(std::string &line, location &loc)
 {
-	return (_ListingEnabled);
+	std::string token;
+	std::stringstream ss(line);
+	std::getline(ss, token, ' ');
+	loc._path = token;
+	if (loc._path.empty())
+		return (1);
+	return (0);
 }
+int	conf::set_location_methods(std::string &line, location &loc, bool test)
+{
+	std::string			token;
+	std::stringstream	ss(line);
+
+	if (test == false)
+		return (1);
+	std::getline(ss, token, ' ');
+	while (std::getline(ss, token, ' '))
+	{
+		if (token == "GET")
+			loc._methods |= GET;
+		else if (token == "POST")
+			loc._methods |= POST;
+		else if (token == "DELETE")
+			loc._methods |= DELETE;
+		else
+			return (1);
+	}
+	if (loc._methods == 0)
+		return (1);
+	return (1);
+}
+int	conf::set_location_redirect(std::string &line, location &loc)
+{
+	std::string token;
+	std::stringstream ss(line);
+
+	std::getline(ss, token, ' ');
+	if (!(std::getline(ss, token, ' ')))
+		return (1);
+	_redirect.code = std::atoi(token.c_str());
+	if (_redirect.code < 100 || _redirect.code > 599)
+		return (1);
+	if (!(std::getline(ss, token, ' ')))
+		return (1);
+	_redirect.value = token;
+	return (0);
+}
+int	conf::set_location_docroot(std::string &line, location &loc)//renamed to be location dependent
+{
+	std::string			token;
+	std::stringstream	ss(line);
+
+	std::getline(ss, token, ' ');
+	if (!(std::getline(ss, token, ' ')))
+		return (1);
+	_DocumentRoot = token;
+	return (0);
+}
+int	conf::set_location_auto_listing(std::string &line, location &loc)
+{
+	std::string			token;
+	std::stringstream	ss(line);
+
+	std::getline(ss, token, ' ');
+	if (!(std::getline(ss, token, ' ')))
+		return (1);
+	if (token == "true")
+		_ListingEnabled = true;
+	return (0);
+}
+int	conf::set_location_index(std::string &line, location &loc)
+{
+	;
+}
+int	conf::set_location_cgi(std::string &line, location &loc)
+{
+	;
+}
+int	conf::set_location_upload_path(std::string &line, location &loc)
+{
+	;
+}
+
+//
+//Utilities
+//
 void	conf::clear(void)
 {
 	_Host.clear();
@@ -190,6 +226,7 @@ void	conf::clear(void)
 	_redirect.code = 0;
 	_redirect.value.clear();
 	_MaxBodySize = 0;
+	
 }
 void	conf::print(void)
 {
@@ -222,32 +259,21 @@ unsigned int conf::get_Port(void)const
 {
 	return(_Port);
 }
-std::string	conf::get_ServerName(void)const
+std::vector<std::string>	conf::get_ServerName(void)const
 {
 	return (_ServerName);
 }
-std::string	conf::get_ServerRoot(void)const
+Error_type	conf::get_Default_error(void)const
 {
-	return (_ServerRoot);
+	return (_DefaultError);
 }
 unsigned long int	conf::get_MaxSize(void)const
 {
 	return (_MaxBodySize);
 }
-t_redirect	conf::get_redirect(void)const
+std::vector<location>	conf::get_location(void)const
 {
-	return (_redirect);
-}
-std::string conf::get_DocumentRoot(void)const
-{
-	if (_DocumentRoot.empty())
-		return (get_ServerRoot());
-	else
-		return (_DocumentRoot);
-}
-unsigned short int conf::get_Method(void)const
-{
-	return (_Method);
+	return (_location);
 }
 bool	conf::Alias_compare(std::string &src)
 {
@@ -257,4 +283,8 @@ bool	conf::Alias_compare(std::string &src)
 			return (true);
 	}
 	return (false);
+}
+void	conf::push_loc(location &loc)
+{
+	_location.push_back(loc);
 }
