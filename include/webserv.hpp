@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 01:49:56 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/24 16:59:42 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
  #define WEBSERV_HPP
 
 #include <string> //string functions
+#include <cstring>
+#include <stdio.h>
 #include <fstream>
 #include <iostream>
 #include <algorithm>
@@ -25,9 +27,11 @@
 #include <fcntl.h>
 #include <exception>
 #include <vector>
+#include <map>
 
 #include <netinet/in.h> //variable types that can hold ip addresses
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <sys/stat.h>
 #include <sys/socket.h> //socket stuff
 #include <sys/select.h>//select
@@ -39,6 +43,7 @@
 #define POST 0b10
 #define DELETE 0b100
 #define PORT 80
+#define SERVER_VERS "Webserv/0.8.2"
 #define HTTP_VERS "HTTP/1.1"
 #define HTTPNL "\r\n"
 #define	HTTP_ERR_301 301, "Moved Permanently"
@@ -86,6 +91,7 @@ struct location
 	Cgi_type					_cgi;		// execute the cgi program
 	std::string					_uploaddir;// if set tells where to upload data to
 };
+
 typedef	struct	s_socket_info
 {
 	std::string		host;
@@ -123,13 +129,13 @@ bool	check_duplicate_socket(std::vector<t_socket_info> &socketInitInfo);
 std::string	generateDirectoryPage(std::string dirPath, std::string docroot);
 Answer	fork_request(Request request, std::vector<conf> Vconf);
 //Process_get.cpp
-Answer	process_get(Request &src, std::vector<conf>::iterator iter);
+Answer	process_get(Request &src, std::vector<conf>::iterator iter, location location);
 std::vector<conf>::iterator	strict_scan(std::vector<conf> &Vconf, Request &src);
 std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &src);
 //Process_delete.cpp
-Answer	process_delete(Request &src, std::vector<conf>::iterator iter);
+Answer	process_delete(Request &src, std::vector<conf>::iterator iter, location location);
 //Process_post.cpp
-Answer	process_post(Request &src, std::vector<conf>::iterator iter);
+Answer process_post(Request &src, std::vector<conf>::iterator iter, location location);
 //Utils.cpp
 bool	isdir(std::string input);
 void	ascii_codes(std::string &string);

@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:04:01 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/16 19:16:29 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/24 14:42:53 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 class CGIManager
 {
 private:
-    std::vector<t_header_argument>  _env;
-    void    initEnv(Request request, conf config);
+    location                            _location;
+	Request							    _request;
+	conf							    _config;
+    std::map<std::string, std::string>  _env;
+    void    initEnv();
     char    **charArray( void ) const;
 public:
     CGIManager();
-    CGIManager(Request request, conf config);
+    CGIManager(Request request, conf config, location location);
     CGIManager(const CGIManager &src);
     std::string     runCGI( void );
     ~CGIManager();

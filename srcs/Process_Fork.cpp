@@ -6,15 +6,35 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:35:18 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/09 18:26:02 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/24 17:11:22 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/webserv.hpp"
 
+location	locationForRequest(Request request, std::vector<conf>::iterator config)
+{
+	int			foundlength = 0;
+	location	retloc;
+
+	for (size_t i = 0; i < config->get_location().size(); i++)
+	{
+		if (config->get_location().at(i)._path.compare(0, config->get_location().at(i)._path.size(), request._Path) == 0)
+		{
+			if ((int)config->get_location().at(i)._path.size() > foundlength)
+			{
+				retloc = config->get_location().at(i);
+				foundlength = config->get_location().at(i)._path.size();
+			}
+		}
+	}
+	return (retloc);
+}
+
 Answer	fork_request(Request request, std::vector<conf> Vconf)
 {
 	Answer						retval;
+	location					current_location;
 	std::vector<conf>::iterator	current_conf;
 
 	if (request._malformed) //Malformed Request
@@ -47,11 +67,11 @@ Answer	fork_request(Request request, std::vector<conf> Vconf)
 			return (retval);
 		}
 	}
-	//
+	current_location = locationForRequest(request, current_conf);
 
-	if (current_conf->get_redirect().code != 0)
+	if (current_location._redirection.first != 0)
 	{
-		int	code = current_conf->get_redirect().code;
+		int	code = current_location._redirection.first;
 		t_header_argument	redirect;
 		if (code > 299 && code < 400)
 		{
@@ -66,11 +86,11 @@ Answer	fork_request(Request request, std::vector<conf> Vconf)
 			else if (code == 308)
 				retval.SetStatus(HTTP_ERR_308);
 			redirect.key = "Location:";
-			redirect.value = current_conf->get_redirect().value;
+			redirect.value = current_location._redirection.second;
 			retval.AddArgument(redirect);
 			return (retval);
 		}
-		retval.SetStatus(code, current_conf->get_redirect().value);
+		retval.SetStatus(code, current_location._redirection.second);
 		retval.GenerateErrorBody();
 		return (retval);
 	}
@@ -78,35 +98,36 @@ Answer	fork_request(Request request, std::vector<conf> Vconf)
 	if (request._Method == "GET")
 	{
 		//commit GET processing
-		if ((current_conf->get_Method()&GET) != GET)
+		if ((current_location._methods&GET) != GET)
 		{
 			retval.SetStatus(HTTP_ERR_405);
 			return (retval);
 		}
 		std::cout << "accepted as GET" << std::endl;
-		retval = process_get(request, current_conf);
+		retval = process_get(request, current_conf, current_location);
 		return (retval);
 	}
 	if (request._Method == "POST")
 	{
 		//commit POST processing
-		if ((current_conf->get_Method()&POST) != POST)
+		if ((current_location._methods&POST) != POST)
 		{
 			retval.SetStatus(HTTP_ERR_405);
 			return (retval);
 		}
+		//post here
 		return (retval);
 	}
 	if (request._Method == "DELETE")
 	{
 		//commit DELETE processing
-		if ((current_conf->get_Method()&DELETE) != DELETE)
+		if ((current_location._methods&DELETE) != DELETE)
 		{
 			retval.SetStatus(HTTP_ERR_405);
 			return (retval);
 		}
 		std::cout << "accepted as DELETE" << std::endl;
-		retval = process_delete(request, current_conf);
+		retval = process_delete(request, current_conf, current_location);
 		return (retval);
 	}
 	retval.SetStatus(HTTP_ERR_501);

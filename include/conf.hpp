@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:21:40 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/24 16:45:10 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/24 17:12:47 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ public:
 	Error_type					get_Default_error(void)const;
 	unsigned long int			get_MaxSize(void)const;
 	std::vector<location>		get_location(void)const;
-//	bool						Alias_compare(std::string &src);//why did I code this
+	bool						Alias_compare(std::string &src);
 	void						print(void);
 	void						clear(void);
 };
