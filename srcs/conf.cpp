@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/24 02:07:37 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/24 15:39:11 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,56 +158,99 @@ int	conf::set_location_methods(std::string &line, location &loc, bool test)
 		return (1);
 	return (1);
 }
-int	conf::set_location_redirect(std::string &line, location &loc)
+int	conf::set_location_redirect(std::string &line, location &loc, bool test)
 {
 	std::string token;
 	std::stringstream ss(line);
 
+	if  (test == false)
+		return (1);
 	std::getline(ss, token, ' ');
 	if (!(std::getline(ss, token, ' ')))
 		return (1);
-	_redirect.code = std::atoi(token.c_str());
-	if (_redirect.code < 100 || _redirect.code > 599)
+	loc._redirection.first = std::atoi(token.c_str());
+	if (loc._redirection.first < 100 || loc._redirection.first > 599)
 		return (1);
 	if (!(std::getline(ss, token, ' ')))
 		return (1);
-	_redirect.value = token;
+	loc._redirection.second = token;
 	return (0);
 }
-int	conf::set_location_docroot(std::string &line, location &loc)//renamed to be location dependent
+int	conf::set_location_docroot(std::string &line, location &loc, bool test)//renamed to be location dependent
 {
 	std::string			token;
 	std::stringstream	ss(line);
 
+	if (test == false)
+		return (1);
 	std::getline(ss, token, ' ');
 	if (!(std::getline(ss, token, ' ')))
 		return (1);
-	_DocumentRoot = token;
+	loc._root = token;
 	return (0);
 }
-int	conf::set_location_auto_listing(std::string &line, location &loc)
+int	conf::set_location_auto_listing(std::string &line, location &loc, bool test)
 {
 	std::string			token;
 	std::stringstream	ss(line);
 
+	if (test == false)
+		return (1);
 	std::getline(ss, token, ' ');
 	if (!(std::getline(ss, token, ' ')))
 		return (1);
 	if (token == "true")
-		_ListingEnabled = true;
+		loc._autoindex = true;
 	return (0);
 }
-int	conf::set_location_index(std::string &line, location &loc)
+int	conf::set_location_index(std::string &line, location &loc, bool test)
 {
-	;
+	std::string			token;
+	std::stringstream	ss(line);
+	bool				loop = false;
+
+	if (test == false)
+		return (1);
+	std::getline(ss, token, ' ');
+	while (std::getline(ss, token, ' '))
+	{
+		loop = true;
+		loc._index.push_back(token);
+	}
+	if (loop == true)
+		return (0);
+	return (1);
 }
-int	conf::set_location_cgi(std::string &line, location &loc)
+int	conf::set_location_cgi(std::string &line, location &loc, bool test)
 {
-	;
+	std::string			token;
+	std::stringstream	ss(line);
+
+	if(test == false)
+		return (1);
+	std::getline(ss, token, ' ');
+	if (!std::getline(ss, token, ' '))
+		return (1);
+	loc._cgi.first = token;
+	if (!std::getline(ss, token, ' '))
+		return (1);
+	loc._cgi.second = token;
+	return (0);
 }
-int	conf::set_location_upload_path(std::string &line, location &loc)
+int	conf::set_location_upload_path(std::string &line, location &loc, bool test)
 {
-	;
+	std::string			token;
+	std::stringstream	ss(line);
+
+	if (test == false)
+		return (1);
+	std::getline(ss, token, ' ');
+	if (!std::getline(ss, token, ' '))
+		return (1);
+	if (access(token.c_str(), W_OK))
+		return (1);
+	loc._uploaddir = token;
+	return (0);
 }
 
 //
@@ -218,14 +261,10 @@ void	conf::clear(void)
 	_Host.clear();
 	_Port = 0;
 	_ServerName.clear();
-	_ServerAlias.clear();
-	_ServerRoot.clear();
-	_DocumentRoot.clear();
-	_Method = 0;
-	_ListingEnabled = false;
-	_redirect.code = 0;
-	_redirect.value.clear();
+	_DefaultError.first = 0;
+	_DefaultError.second.clear();
 	_MaxBodySize = 0;
+	_location.clear();
 	
 }
 void	conf::print(void)
@@ -275,7 +314,7 @@ std::vector<location>	conf::get_location(void)const
 {
 	return (_location);
 }
-bool	conf::Alias_compare(std::string &src)
+bool	conf::Alias_compare(std::string &src)//where is this being used?
 {
 	for (std::vector<std::string>::iterator i = _ServerAlias.begin(); i != _ServerAlias.end(); i++)
 	{
