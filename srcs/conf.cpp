@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/24 15:39:11 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/24 16:46:50 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 conf::conf()//rework this
 {
 	_Port = 0;
-	_Method = 0;
-	_ListingEnabled = false;
-	_redirect.code = 0;
+	_MaxBodySize = 0;
 }
 conf::conf(conf const &src)
 {
@@ -31,17 +29,12 @@ conf	&conf::operator=(conf const &src)//will need an update
 	if (this == &src)
 		return (*this);
 	clear();
-	_DocumentRoot = src._DocumentRoot;
-	_Method = src._Method;
 	_Host = src._Host;
 	_Port = src._Port;
-	_ServerAlias = src._ServerAlias;
 	_ServerName = src._ServerName;
-	_ServerRoot = src._ServerRoot;
-	_ListingEnabled = src._ListingEnabled;
-	_redirect.code = src._redirect.code;
-	_redirect.value = src._redirect.value;
+	_DefaultError = src._DefaultError;
 	_MaxBodySize = src._MaxBodySize;
+	_location = src._location;
 	return (*this);
 }
 //
@@ -271,24 +264,33 @@ void	conf::print(void)
 {
 	std::cout << "Host address is: " << _Host << std::endl;
 	std::cout << "Socket number: " << _Port << std::endl;
-	std::cout << "Server Name: " << _ServerName << std::endl;
-	std::cout << "Alias list: ";
-	for (std::vector<std::string>::iterator i=_ServerAlias.begin(); i != _ServerAlias.end(); i++)
+	std::cout << "Server Names: " << std::endl;
+	for (std::vector<std::string>::iterator i=_ServerName.begin(); i != _ServerName.end(); i++)
 		std::cout << *i << " ";
 	std::cout << std::endl;
-	std::cout << "Docroot: " << _DocumentRoot << std::endl;
-	std::cout << "Methods: ";
-	if (_Method & GET)
-		std::cout << "GET ";
-	if (_Method & POST)
-		std::cout << "POST ";
-	if (_Method & DELETE)
-		std::cout << "DELETE ";
-	std::cout << std::endl;
-	std::cout << "Listing enabled: " << _ListingEnabled << std::endl;
-	std::cout << "Redirect code" << _redirect.code << " Value " << _redirect.value << std::endl;
+	std::cout << "Default Error Code: " << _DefaultError.first << " Path: " << _DefaultError.second << std::endl;
 	std::cout << "Max Body size = " << _MaxBodySize << std::endl;
-
+	std::cout << "---------------------------------------------------------------" << std::endl;
+	for (std::vector<location>::iterator iter = _location.begin(); iter != _location.end(); iter++)
+	{
+		std::cout << "Path: " << iter->_path << std::endl;
+		std::cout << "Methods: ";
+		if (iter->_methods & GET)
+			std::cout << "GET ";
+		if (iter->_methods & POST)
+			std::cout << "POST ";
+		if (iter->_methods & DELETE)
+			std::cout << "DELETE ";
+		std::cout << std::endl;
+		std::cout << "Redirect code" << iter->_redirection.first << " Value " << iter->_redirection.second << std::endl;
+		std::cout << "Root of location: " << iter->_root << std::endl;
+		for (std::vector<std::string>::iterator it = iter->_index.begin(); it != iter->_index.end(); it++)
+			std::cout << "Index file: " << *it << std::endl;
+		std::cout << "Auto indexing Bool: " << iter->_autoindex << std::endl;
+		std::cout << "CGI extension: " << iter->_cgi.first << std::endl;
+		std::cout << "CGI path: " << iter->_cgi.second << std::endl;
+		std::cout << "Upload Dir: " << iter->_uploaddir << std::endl;
+	}
 }
 std::string	conf::get_Host(void)const
 {
@@ -314,7 +316,7 @@ std::vector<location>	conf::get_location(void)const
 {
 	return (_location);
 }
-bool	conf::Alias_compare(std::string &src)//where is this being used?
+/*bool	conf::Alias_compare(std::string &src)//where is this being used?
 {
 	for (std::vector<std::string>::iterator i = _ServerAlias.begin(); i != _ServerAlias.end(); i++)
 	{
@@ -322,7 +324,7 @@ bool	conf::Alias_compare(std::string &src)//where is this being used?
 			return (true);
 	}
 	return (false);
-}
+}*/
 void	conf::push_loc(location &loc)
 {
 	_location.push_back(loc);
