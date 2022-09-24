@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CGIManager.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:11:06 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 15:33:02 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/24 16:49:37 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,21 @@ CGIManager::CGIManager(const CGIManager &src)
 
 void    CGIManager::initEnv()
 {
+	_env["REDIRECT_STATUS"] = "200";
+	_env["GATEWAY_INTERFACE"] = "CGI/1.1";
+	_env["SERVER_NAME"] = _config.get_ServerName().at(0);
+	_env["SERVER_SOFTWARE"] = SERVER_VERS;
+	_env["SERVER_PROTOCOL"] = HTTP_VERS;
+	_env["SERVER_PORT"] = SSTR(_config.get_Port());
+	_env["REQUEST_METHOD"] = _request._Method;
+	_env["SCRIPT_NAME"] = "TBD"; //see here
+	_env["DOCUMENT_ROOT"] = _location._root;
+	_env["QUERY_STRING"] = "Doesntworkyet"; //see here
+	//probably needs authentification headers
 }
 
 char    **CGIManager::charArray( void ) const
 {
-	_env["REDIRECT_STATUS"] = "200";
-	_env["GATEWAY_INTERFACE"] = "CGI/1.1";
 }
 
 std::string CGIManager::runCGI( void )

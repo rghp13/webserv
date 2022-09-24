@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 02:00:53 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/24 16:50:09 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
  #define WEBSERV_HPP
 
 #include <string> //string functions
+#include <stdio.h>
 #include <fstream>
 #include <iostream>
 #include <algorithm>
@@ -41,6 +42,7 @@
 #define POST 0b10
 #define DELETE 0b100
 #define PORT 80
+#define SERVER_VERS "Webserv/0.8.2"
 #define HTTP_VERS "HTTP/1.1"
 #define HTTPNL "\r\n"
 #define	HTTP_ERR_301 301, "Moved Permanently"
