@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/23 00:49:44 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/24 01:49:56 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ class Connection;
 class Answer;
 class Request;
 #include <sstream>
-
+//SSTR converts ints to string
 #define SSTR( x ) static_cast< std::ostringstream & >( \
 		( std::ostringstream() << std::dec << x ) ).str()
 #define KB(x) (x * 1024UL)
@@ -78,7 +78,7 @@ struct location
 {
 	
 	std::string					_path;		// html path
-	std::vector<std::string>	_methods;	// GET POST DELETE
+	int							_methods;	// GET POST DELETE
 	Redirect_type				_redirection;//redirect first is code second is path to file
 	std::string					_root;		// new docroot
 	std::vector<std::string>	_index;		// default file to answer if the request is a directory
@@ -133,4 +133,6 @@ Answer	process_post(Request &src, std::vector<conf>::iterator iter);
 //Utils.cpp
 bool	isdir(std::string input);
 void	ascii_codes(std::string &string);
+void	location_clear(location &loc);
+int		check_locroot(conf &temp);
 #endif
