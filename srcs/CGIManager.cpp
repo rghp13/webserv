@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:11:06 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 17:10:19 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/24 17:29:26 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,11 @@ std::string CGIManager::runCGI( void )
     }
     else if (!pid)
     {
+		char * const * nll = NULL;
         //created process
 		dup2(sendpipe[0], STDIN_FILENO);
 		dup2(recvpipe[1], STDOUT_FILENO);
-		execve((_location._cgi.second + _env["SCRIPT_NAME"]).c_str(), NULL, env);
+		execve((_location._cgi.second + _env["SCRIPT_NAME"]).c_str(), nll, env);
 		write(STDOUT_FILENO, "Error Status 500", 16); // if program gets this far execve has failed
     }
     else

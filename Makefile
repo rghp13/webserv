@@ -6,7 +6,7 @@
 #    By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 11:39:56 by dimitriscr        #+#    #+#              #
-#    Updated: 2022/09/09 16:54:47 by dscriabi         ###   ########.fr        #
+#    Updated: 2022/09/24 17:27:34 by dscriabi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ SRC_NAME				=		Answer.cpp \
 								Request.cpp \
 								Socket.cpp \
 								SocketManager.cpp \
-#Request.cpp Answer.cpp
+								CGIManager.cpp
 
 NAME					=		webserv
 OBJ_NAME				=		$(SRC_NAME:.cpp=.o)

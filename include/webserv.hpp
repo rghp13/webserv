@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 16:59:42 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/24 17:27:10 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ class Socket;
 class Connection;
 class Answer;
 class Request;
+class CGIManager;
 #include <sstream>
 //SSTR converts ints to string
 #define SSTR( x ) static_cast< std::ostringstream & >( \
