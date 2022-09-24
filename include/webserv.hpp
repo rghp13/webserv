@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/23 00:54:03 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/24 02:00:53 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include <fcntl.h>
 #include <exception>
 #include <vector>
+#include <map>
 
 #include <netinet/in.h> //variable types that can hold ip addresses
 #include <sys/types.h>
@@ -79,7 +80,7 @@ struct location
 {
 	
 	std::string					_path;		// html path
-	std::vector<std::string>	_methods;	// GET POST DELETE
+	int							_methods;	// GET POST DELETE
 	Redirect_type				_redirection;//redirect first is code second is path to file
 	std::string					_root;		// new docroot
 	std::vector<std::string>	_index;		// default file to answer if the request is a directory
@@ -87,6 +88,7 @@ struct location
 	Cgi_type					_cgi;		// execute the cgi program
 	std::string					_uploaddir;// if set tells where to upload data to
 };
+
 typedef	struct	s_socket_info
 {
 	std::string		host;
@@ -124,13 +126,13 @@ bool	check_duplicate_socket(std::vector<t_socket_info> &socketInitInfo);
 std::string	generateDirectoryPage(std::string dirPath, std::string docroot);
 Answer	fork_request(Request request, std::vector<conf> Vconf);
 //Process_get.cpp
-Answer	process_get(Request &src, std::vector<conf>::iterator iter);
+Answer	process_get(Request &src, std::vector<conf>::iterator iter, location location);
 std::vector<conf>::iterator	strict_scan(std::vector<conf> &Vconf, Request &src);
 std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &src);
 //Process_delete.cpp
-Answer	process_delete(Request &src, std::vector<conf>::iterator iter);
+Answer	process_delete(Request &src, std::vector<conf>::iterator iter, location location);
 //Process_post.cpp
-Answer	process_post(Request &src, std::vector<conf>::iterator iter);
+Answer process_post(Request &src, std::vector<conf>::iterator iter, location location);
 //Utils.cpp
 bool	isdir(std::string input);
 void	ascii_codes(std::string &string);

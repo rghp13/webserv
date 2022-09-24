@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Process_POST.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 18:25:28 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/17 17:10:28 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/23 22:57:34 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 // value2
 // --boundary--
 //find a way to store all the keywords, then pull data from body
-Answer process_post(Request &src, std::vector<conf>::iterator iter)
+Answer process_post(Request &src, std::vector<conf>::iterator iter, location location)
 {
 	std::string full_path;
 	

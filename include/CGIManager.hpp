@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CGIManager.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:04:01 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/17 16:35:39 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/24 02:00:25 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 class CGIManager
 {
 private:
-	Request							_request;
-	conf							_config;
-    std::vector<t_header_argument>  _env;
+	Request							    _request;
+	conf							    _config;
+    std::map<std::string, std::string>  _env;
     void    initEnv(Request request, conf config);
     char    **charArray( void ) const;
 public:
