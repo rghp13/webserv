@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 15:43:03 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/10 15:56:57 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/24 01:58:16 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,29 @@ void	ascii_codes(std::string &string)
 		found = string.find('%');
 	}
 	return ;
+}
+void	location_clear(location &loc)
+{
+	loc._path.clear();
+	loc._methods = 0;
+	loc._redirection.first = 0;
+	loc._redirection.second.clear();
+	loc._root.clear();
+	loc._index.clear();
+	loc._autoindex = false;
+	loc._cgi.first.clear();
+	loc._cgi.second.clear();
+	loc._uploaddir.clear();
+}
+int	check_locroot(conf &temp)
+{
+	std::vector<location> loc = temp.get_location();
+	std::vector<location>::iterator iter = loc.begin();
+	while(iter != loc.end())
+	{
+		if (iter->_path == "/")
+			return (0);
+		iter++;
+	}
+	return (1);
 }
