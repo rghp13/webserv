@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:11:06 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 02:06:22 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/09/24 15:33:02 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,29 @@ CGIManager::CGIManager()
 {
 }
 
-CGIManager::CGIManager(Request request, conf config)
+CGIManager::CGIManager(Request request, conf config, location location)
 {
 	_request = request;
 	_config = config;
+	_location = location;
 }
 
 CGIManager::CGIManager(const CGIManager &src)
 {
+	_location = src._location;
 	_request = src._request;
 	_config = src._config;
 	_env = src._env;
 }
 
-void    CGIManager::initEnv(Request request, conf config)
+void    CGIManager::initEnv()
 {
 }
 
 char    **CGIManager::charArray( void ) const
 {
+	_env["REDIRECT_STATUS"] = "200";
+	_env["GATEWAY_INTERFACE"] = "CGI/1.1";
 }
 
 std::string CGIManager::runCGI( void )
