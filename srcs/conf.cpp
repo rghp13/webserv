@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/24 17:13:17 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/25 16:02:04 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,10 @@ int	conf::set_location_methods(std::string &line, location &loc, bool test)
 	std::stringstream	ss(line);
 
 	if (test == false)
+	{
+		std::cout << "triggered bool check\n";
 		return (1);
+	}
 	std::getline(ss, token, ' ');
 	while (std::getline(ss, token, ' '))
 	{
@@ -149,7 +152,7 @@ int	conf::set_location_methods(std::string &line, location &loc, bool test)
 	}
 	if (loc._methods == 0)
 		return (1);
-	return (1);
+	return (0);
 }
 int	conf::set_location_redirect(std::string &line, location &loc, bool test)
 {

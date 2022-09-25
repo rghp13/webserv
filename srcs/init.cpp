@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 22:40:14 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/24 02:01:15 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/25 16:03:12 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,13 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 	while (!file.eof())
 	{
 		if (error)
+		{
+			std::cout << "Triggered break check on line" << std::endl;
+			std::cout << line << std::endl;
 			break;
+		}
 		std::getline(file, line);
-		if (line.find("Server", 0, 6) == 0)
+		if (line == "Server")
 		{
 			if (flag)
 			{
@@ -76,7 +80,7 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 			else
 				flag = true;
 		}
-		else if (line.find("Location", 0, 8) == 0)
+		else if (line.find("Location ", 0, 9) == 0)
 		{
 			if (locflag)
 			{
@@ -87,36 +91,43 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 				locflag = true;
 			error |= temp.set_location_path(line, loc);
 		}
-		else if (line.find("Listen", 0, 6) == 0)
+		else if (line.find("Listen ", 0, 7) == 0)
 			error |= temp.set_socket(line, flag);
-		else if (line.find("ServerName", 0, 10) == 0)
+		else if (line.find("ServerName ", 0, 11) == 0)
 			error |= temp.set_name(line, flag);
-		else if (line.find("DefaultError", 0, 12) == 0)
+		else if (line.find("DefaultError ", 0, 13) == 0)
 			error |= temp.set_default_error(line, flag);
-		else if (line.find("MaxSize",0 , 7) == 0)
+		else if (line.find("MaxSize ",0 , 8) == 0)
 			error |= temp.set_max_size(line, flag);//last server block
-		else if (line.find("Method", 0, 6) == 0)
+		else if (line.find("Method ", 0, 7) == 0)
 			error |= temp.set_location_methods(line, loc, locflag);
-		else if (line.find("Redirect",0, 8) == 0)
+		else if (line.find("Redirect ",0, 9) == 0)
 			error |= temp.set_location_redirect(line, loc, locflag);
-		else if (line.find("Root", 0, 4) == 0)
+		else if (line.find("Root ", 0, 5) == 0)
 			error |= temp.set_location_docroot(line, loc, locflag);
-		else if (line.find("DirList", 0, 7) == 0)
+		else if (line.find("DirList ", 0, 8) == 0)
 			error |= temp.set_location_auto_listing(line, loc, locflag);
-		else if (line.find("Index", 0, 5) == 0)
+		else if (line.find("Index ", 0, 6) == 0)
 			error |= temp.set_location_index(line, loc, locflag);
-		else if (line.find("CGI", 0, 3) == 0)
+		else if (line.find("CGI ", 0, 4) == 0)
 			error |= temp.set_location_cgi(line, loc, locflag);
-		else if (line.find("UploadDir", 0, 9) == 0)
+		else if (line.find("UploadDir ", 0, 10) == 0)
 			error |= temp.set_location_upload_path(line, loc, locflag);
 		else
 			continue ;
 		isempty = 0;
 	}
 	file.close();
-	if (error || isempty)
+	if (error/* || isempty*/)
 	{
 		std::cout << "An error was found\n";
+		std::cout << line << std::endl;
+		temp.print();
+		return (1);
+	}
+	else if (isempty)
+	{
+		std::cout << "empty file\n";
 		return (1);
 	}
 	Vconf.push_back(temp);
