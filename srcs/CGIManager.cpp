@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CGIManager.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:11:06 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 17:29:26 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/27 18:32:06 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void    CGIManager::initEnv()
 	_env["REQUEST_METHOD"] = _request._Method;
 	_env["SCRIPT_NAME"] = _request._Path.replace(0, _location._path.size(), _location._root); //see here
 	_env["DOCUMENT_ROOT"] = _location._root;
-	_env["QUERY_STRING"] = "Doesntworkyet"; //see here
+	_env["QUERY_STRING"] = _request._Query; //see here
 	//probably needs authentification headers
 }
 
@@ -71,20 +71,25 @@ std::string CGIManager::runCGI( void )
     std::string     retstr;
 
     env = this->charArray();
-    //if this alloc fails return 500
 
-    pipe(sendpipe);
-    pipe(recvpipe);
-    //this needs error checking
+    if (pipe(sendpipe))
+		return ("Error Status 500");
+    if (pipe(recvpipe))
+	{
+		close(sendpipe[0]);
+		close(sendpipe[1]);
+		return ("Error Status 500");
+	}
 
     //write what needs to be written to sendpipe[1]
-	write(sendpipe[1], _request._Body.c_str(), _request._Body.size());
+	if (_request._Body.size())
+		write(sendpipe[1], _request._Body.c_str(), _request._Body.size());
 
     pid = fork();
 
     if (pid == -1)
     {
-        return ("Error"); //fork failed return error
+        return ("Error Status 500"); //fork failed return error
     }
     else if (!pid)
     {
@@ -115,7 +120,6 @@ std::string CGIManager::runCGI( void )
 	close(sendpipe[1]);
 	close(recvpipe[0]);
 	close(recvpipe[1]);
-	//if child process gets this far, close it
 
 	for (size_t i = 0; env[i]; i++)
 		delete[] env[i];
