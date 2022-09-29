@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 22:40:14 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/25 16:03:12 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/29 21:25:24 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,12 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 		isempty = 0;
 	}
 	file.close();
+	if (locflag)
+		temp.push_loc(loc);
 	if (error/* || isempty*/)
 	{
 		std::cout << "An error was found\n";
 		std::cout << line << std::endl;
-		temp.print();
 		return (1);
 	}
 	else if (isempty)
@@ -131,6 +132,7 @@ int	init(std::vector<conf> &Vconf, std::ifstream &file)//read from file match to
 		return (1);
 	}
 	Vconf.push_back(temp);
+	//temp.print();
 	return (0);
 }
 

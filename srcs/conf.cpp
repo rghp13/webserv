@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/29 17:21:42 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/29 20:39:48 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	conf::set_location_path(std::string &line, location &loc)
 	std::string token;
 	std::stringstream ss(line);
 	std::getline(ss, token, ' ');
-	if (!std::getline(ss, token, ' '));
+	if (!std::getline(ss, token, ' '))
 		return (1);
 	loc._path = token;
 	if (loc._path.empty())
@@ -149,6 +149,8 @@ int	conf::set_location_methods(std::string &line, location &loc, bool test)
 			loc._methods |= POST;
 		else if (token == "DELETE")
 			loc._methods |= DELETE;
+		else if (token == "PUT")
+			loc._methods |= PUT;
 		else
 			return (1);
 	}
@@ -286,6 +288,8 @@ void	conf::print(void)
 			std::cout << "POST ";
 		if (iter->_methods & DELETE)
 			std::cout << "DELETE ";
+		if (iter->_methods & PUT)
+			std::cout << "PUT ";
 		std::cout << std::endl;
 		std::cout << "Redirect code" << iter->_redirection.first << " Value " << iter->_redirection.second << std::endl;
 		std::cout << "Root of location: " << iter->_root << std::endl;
