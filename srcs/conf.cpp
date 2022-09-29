@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/25 16:02:04 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/09/29 17:21:42 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ int	conf::set_location_path(std::string &line, location &loc)
 	std::string token;
 	std::stringstream ss(line);
 	std::getline(ss, token, ' ');
+	if (!std::getline(ss, token, ' '));
+		return (1);
 	loc._path = token;
 	if (loc._path.empty())
 		return (1);
