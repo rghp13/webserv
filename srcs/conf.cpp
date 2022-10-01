@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/29 17:24:25 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/01 17:51:49 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,8 @@ int	conf::set_location_methods(std::string &line, location &loc, bool test)
 			loc._methods |= POST;
 		else if (token == "DELETE")
 			loc._methods |= DELETE;
+		else if (token == "PUT")
+			loc._methods |= PUT;
 		else
 			return (1);
 	}
@@ -286,6 +288,8 @@ void	conf::print(void)
 			std::cout << "POST ";
 		if (iter->_methods & DELETE)
 			std::cout << "DELETE ";
+		if (iter->_methods & PUT)
+			std::cout << "PUT ";
 		std::cout << std::endl;
 		std::cout << "Redirect code" << iter->_redirection.first << " Value " << iter->_redirection.second << std::endl;
 		std::cout << "Root of location: " << iter->_root << std::endl;

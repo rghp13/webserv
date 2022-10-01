@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 17:27:10 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/09/29 20:12:13 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 #define GET 0b1
 #define POST 0b10
 #define DELETE 0b100
+#define PUT 0b1000
 #define PORT 80
 #define SERVER_VERS "Webserv/0.8.2"
 #define HTTP_VERS "HTTP/1.1"
