@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:21:40 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/24 17:12:47 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/10/02 00:59:20 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ private:
 	std::string					_Host;
 	unsigned int				_Port;//recommmended between 1024-65535
 	std::vector<std::string>	_ServerName;//hostname or ip address
-	Error_type					_DefaultError;
+	std::vector<Error_type>		_DefaultError;
 	unsigned long int			_MaxBodySize;
 	std::vector<location>		_location;
 
@@ -63,7 +63,7 @@ public:
 	std::string					get_Host(void)const;
 	unsigned int				get_Port(void)const;
 	std::vector<std::string>	get_ServerName(void)const;//updated from string to vector
-	Error_type					get_Default_error(void)const;
+	std::vector<Error_type>		get_Default_error(void)const;
 	unsigned long int			get_MaxSize(void)const;
 	std::vector<location>		get_location(void)const;
 	bool						Alias_compare(std::string &src);
