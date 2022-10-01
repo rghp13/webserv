@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/01 19:47:45 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/02 00:19:43 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,4 +145,5 @@ void	ascii_codes(std::string &string);
 void	location_clear(location &loc);
 int		check_locroot(conf &temp);
 void	print_answer_debug(Answer answer);
+std::string	dechunk(std::string input);
 #endif

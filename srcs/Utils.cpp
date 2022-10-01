@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 15:43:03 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/01 19:54:37 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/02 00:13:17 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,25 @@ void	print_answer_debug(Answer answer)
 	else
 		std::cout << "\033[41mSent answer with code " << answer._StatusCode << "\033[0m" << std::endl;
 	return;
+}
+
+std::string	dechunk(std::string input)
+{
+	std::string	retstr;
+	size_t	double_end_line_pos = 0;
+	size_t	start;
+	size_t	size;
+
+	if (input.find("Transfer-Encoding: chunked") == std::string::npos)
+		return (input);
+	double_end_line_pos = input.find("\r\n\r\n") + 4;
+	retstr += input.substr(0, double_end_line_pos);
+	while (double_end_line_pos < input.size())
+	{
+		start = input.find("\r\n", double_end_line_pos) + 2;
+		size = std::strtol(input.substr(double_end_line_pos).c_str(), NULL, 16);
+		retstr += input.substr(start, size);
+		double_end_line_pos = start + size + 2;
+	}
+	return (retstr);
 }

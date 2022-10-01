@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:35:18 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/01 19:49:17 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/01 20:07:59 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ location	locationForRequest(Request request, std::vector<conf>::iterator config)
 
 	for (size_t i = 0; i < config->get_location().size(); i++)
 	{
-		if (config->get_location().at(i)._path.compare(0, config->get_location().at(i)._path.size(), request._Path) == 0)
+		if (config->get_location().at(i)._path.size() >= request._Path.size() && config->get_location().at(i)._path.compare(0, config->get_location().at(i)._path.size(), request._Path) == 0)
 		{
 			if ((int)config->get_location().at(i)._path.size() > foundlength)
 			{
@@ -28,6 +28,7 @@ location	locationForRequest(Request request, std::vector<conf>::iterator config)
 			}
 		}
 	}
+	std::cout << "Chose location: " << retloc._path << std::endl;
 	return (retloc);
 }
 

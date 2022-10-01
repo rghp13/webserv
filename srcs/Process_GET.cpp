@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/01 18:40:06 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/01 20:17:49 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ Answer	process_get(Request &src, std::vector<conf>::iterator iter, location loca
 			return (Answer(404));
 		if (access(path.c_str(), R_OK))//testing if folder prior to index.html can 
 			return (Answer(403));
-		path += "index.html";
+		if (location._index.size() > 0) //this shouldn't be a vector
+			path += location._index.at(0);
+		else
+			path += "index.html";
 		if (access(path.c_str(), F_OK))
 			return (Answer(404));
 		if (access(path.c_str(), R_OK))
@@ -81,6 +84,7 @@ Answer	process_get(Request &src, std::vector<conf>::iterator iter, location loca
 		if (access(path.c_str(), R_OK))
 			return (Answer(403));//probably triggers if permission issue
 	}
+	std::cout << "Path Found: " << path << std::endl;
 	file.open(path.c_str());
 	while (std::getline(file, buffer))
 	{
