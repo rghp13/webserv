@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Process_GET.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/24 17:14:33 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/10/01 18:40:06 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,8 @@ Answer	process_get(Request &src, std::vector<conf>::iterator iter, location loca
 		if (location._autoindex)
 		{
 			ret._Body = generateDirectoryPage(src._Path, location._root);
-			return (ret);//418 if listing is enabled because we do not have a function for it
+			return (ret);
 		}
-		std::cout << "Make sure we have a function for directory listing\n Serving a 404 until we add that functionality" << std::endl;
 		path = location._root + src._Path;
 		if (access(path.c_str(), F_OK))
 			return (Answer(404));
@@ -77,7 +76,6 @@ Answer	process_get(Request &src, std::vector<conf>::iterator iter, location loca
 	{
 		src.htmlize();
 		path = location._root + src._Path;
-		std::cout << "Reading page: " << path << std::endl;
 		if (access(path.c_str(), F_OK))
 			return (Answer(404));
 		if (access(path.c_str(), R_OK))

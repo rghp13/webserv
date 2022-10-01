@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/01 17:51:49 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/01 19:52:32 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,7 @@ int	conf::set_location_methods(std::string &line, location &loc, bool test)
 	std::stringstream	ss(line);
 
 	if (test == false)
-	{
-		std::cout << "triggered bool check\n";
 		return (1);
-	}
 	std::getline(ss, token, ' ');
 	while (std::getline(ss, token, ' '))
 	{
@@ -269,19 +266,19 @@ void	conf::clear(void)
 }
 void	conf::print(void)
 {
-	std::cout << "Host address is: " << _Host << std::endl;
-	std::cout << "Socket number: " << _Port << std::endl;
-	std::cout << "Server Names: " << std::endl;
+	std::cout << "===============================================================" << std::endl;
+	std::cout << "Config for server: " << _Host << ":" << _Port << std::endl;
+	std::cout << "Server Names: ";
 	for (std::vector<std::string>::iterator i=_ServerName.begin(); i != _ServerName.end(); i++)
 		std::cout << *i << " ";
 	std::cout << std::endl;
-	std::cout << "Default Error Code: " << _DefaultError.first << " Path: " << _DefaultError.second << std::endl;
-	std::cout << "Max Body size = " << _MaxBodySize << std::endl;
-	std::cout << "---------------------------------------------------------------" << std::endl;
+	std::cout << "Page for error code " << _DefaultError.first << ": " << _DefaultError.second << std::endl;
+	std::cout << "Max Body size: " << _MaxBodySize << std::endl;
 	for (std::vector<location>::iterator iter = _location.begin(); iter != _location.end(); iter++)
 	{
-		std::cout << "Path: " << iter->_path << std::endl;
-		std::cout << "Methods: ";
+		std::cout << "---------------------------------------------------------------" << std::endl;
+		std::cout << "Location Block: " << iter->_path << std::endl;
+		std::cout << "Allowed Methods: ";
 		if (iter->_methods & GET)
 			std::cout << "GET ";
 		if (iter->_methods & POST)
@@ -291,15 +288,17 @@ void	conf::print(void)
 		if (iter->_methods & PUT)
 			std::cout << "PUT ";
 		std::cout << std::endl;
-		std::cout << "Redirect code" << iter->_redirection.first << " Value " << iter->_redirection.second << std::endl;
-		std::cout << "Root of location: " << iter->_root << std::endl;
-		for (std::vector<std::string>::iterator it = iter->_index.begin(); it != iter->_index.end(); it++)
-			std::cout << "Index file: " << *it << std::endl;
-		std::cout << "Auto indexing Bool: " << iter->_autoindex << std::endl;
-		std::cout << "CGI extension: " << iter->_cgi.first << std::endl;
-		std::cout << "CGI path: " << iter->_cgi.second << std::endl;
-		std::cout << "Upload Dir: " << iter->_uploaddir << std::endl;
+		if (iter->_redirection.first != 0)
+			std::cout << "Redirect code" << iter->_redirection.first << " Value " << iter->_redirection.second << std::endl;
+		std::cout << "File Root: " << iter->_root << std::endl;
+		if (iter->_index.size())
+			std::cout << "Default File: " << iter->_index.at(0) << std::endl;
+		std::cout << "Directory Listing Enabled?: " << iter->_autoindex << std::endl;
+		std::cout << "CGI executable path for " << iter->_cgi.first << "files: " << iter->_cgi.second << std::endl;
+		std::cout << "Upload Directory: " << iter->_uploaddir << std::endl;
 	}
+	std::cout << "---------------------------------------------------------------" << std::endl;
+	std::cout << "===============================================================" << std::endl;
 }
 std::string	conf::get_Host(void)const
 {

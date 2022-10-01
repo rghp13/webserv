@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Process_Fork.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:35:18 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/24 17:11:22 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/10/01 19:49:17 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,16 @@ Answer	fork_request(Request request, std::vector<conf> Vconf)
 	if (request._malformed) //Malformed Request
 	{
 		retval.SetStatus(HTTP_ERR_400);
-		std::cout << "Error 400 on Request" << std::endl;
 		return (retval);
 	}
 	if (request._Version != HTTP_VERS) //Incorrect HTTP Version
 	{
 		retval.SetStatus(HTTP_ERR_505);
-		std::cout << "Error 505 on Request, http request was: " << request._Version << std::endl;
 		return (retval);
 	}
 	if (request._Path.size() > 4096) //URI is too long
 	{
 		retval.SetStatus(HTTP_ERR_414);
-		std::cout << "Error 414 on Request" << std::endl;
 		return (retval);
 	}
 
@@ -103,7 +100,6 @@ Answer	fork_request(Request request, std::vector<conf> Vconf)
 			retval.SetStatus(HTTP_ERR_405);
 			return (retval);
 		}
-		std::cout << "accepted as GET" << std::endl;
 		retval = process_get(request, current_conf, current_location);
 		return (retval);
 	}
@@ -126,7 +122,6 @@ Answer	fork_request(Request request, std::vector<conf> Vconf)
 			retval.SetStatus(HTTP_ERR_405);
 			return (retval);
 		}
-		std::cout << "accepted as DELETE" << std::endl;
 		retval = process_delete(request, current_conf, current_location);
 		return (retval);
 	}

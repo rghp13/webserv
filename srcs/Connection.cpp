@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Connection.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/09 14:08:28 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/10/01 18:36:49 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,6 @@ std::string	Connection::GetNewestClientRequest( void )
 			start = time(NULL);
 		}
 	}
-	// std::cout << "_________________________" << std::endl;
-	// std::cout << retstr;
-	// std::cout << "_________________________" << std::endl;
 	return (retstr);
 }
 
@@ -115,7 +112,6 @@ bool		Connection::SendAnswer(std::string answerstr)
 	//send an answer to the client, return success status and update _LastActivity
 	send(_FD, answerstr.c_str(), answerstr.length(), 0);
 	_LastActivity = time(NULL);
-	std::cout << "Sent Answer" << std::endl;
 	return (true);
 }
 
