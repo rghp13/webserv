@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/02 00:19:43 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/02 01:16:01 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 #define POST 0b10
 #define DELETE 0b100
 #define PUT 0b1000
+#define HEAD 0b10000
 #define PORT 80
 #define DEBUG_LVL 3 //0 - No debug, 1 - Show Config Debug, 2 - Show Answers, 3 - Show Requests
 #define SERVER_VERS "Webserv/0.8.2"
@@ -89,7 +90,7 @@ struct location
 	int							_methods;	// GET POST DELETE
 	Redirect_type				_redirection;//redirect first is code second is path to file
 	std::string					_root;		// new docroot
-	std::vector<std::string>	_index;		// default file to answer if the request is a directory
+	std::string					_index;		// default file to answer if the request is a directory
 	bool						_autoindex;	// turn on or off directory listing
 	Cgi_type					_cgi;		// execute the cgi program
 	std::string					_uploaddir;// if set tells where to upload data to
