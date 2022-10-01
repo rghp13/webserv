@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/02 01:01:44 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/10/02 01:05:38 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	conf::set_default_error(std::string &line, bool test)
 	std::string token;
 	std::stringstream ss(line);
 	Error_type tmp;
+	bool loop = false;
 	if (test == false)
 		return (1);
 	std::getline(ss, token, ' ');
@@ -91,7 +92,10 @@ int	conf::set_default_error(std::string &line, bool test)
 			return (1);
 		else
 			_DefaultError.push_back(tmp);
+		loop = true;
 	}
+	if (loop == false)
+		return (1);
 	return (0);
 }
 int	conf::set_max_size(std::string &line, bool test)
