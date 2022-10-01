@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/29 20:12:13 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/10/01 19:47:45 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 #define DELETE 0b100
 #define PUT 0b1000
 #define PORT 80
+#define DEBUG_LVL 3 //0 - No debug, 1 - Show Config Debug, 2 - Show Answers, 3 - Show Requests
 #define SERVER_VERS "Webserv/0.8.2"
 #define HTTP_VERS "HTTP/1.1"
 #define HTTPNL "\r\n"
@@ -143,4 +144,5 @@ bool	isdir(std::string input);
 void	ascii_codes(std::string &string);
 void	location_clear(location &loc);
 int		check_locroot(conf &temp);
+void	print_answer_debug(Answer answer);
 #endif

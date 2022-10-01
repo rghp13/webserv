@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SocketManager.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/09 15:09:10 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/10/01 19:50:04 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,14 @@ void	SocketManager::handleRequests(std::vector<conf> Vconf)
 			{
 				if (_ActiveConnectionList[j]->GetConnectionFD() == _PollList[i].fd)
 				{
-					// (void)Vconf;
-					// std::cout << _ActiveConnectionList[j]->GetNewestClientRequest() << std::endl;
-					// _ActiveConnectionList[j]->SendAnswer("HTTP/1.1 200 OK\r\nDate: Thu, 19 Feb 2009 12:27:04 GMT\r\nServer: Apache/2.2.3\r\nLast-Modified: Wed, 18 Jun 2003 16:05:58 GMT\r\nETag: \"56d-9989200-1132c580\"\r\nContent-Type: text/html\r\nContent-Length: 75\r\nAccept-Ranges: bytes\r\nConnection: Keep-Alive\r\n\r\n<html><div id=\"main\"><div class=\"fof\"><h1>Among us?</h1></div></div></html>"); //test line
 					request = _ActiveConnectionList[j]->GetNewestClientRequest();
 					if (request.size() != 0)
 					{
+						if (DEBUG_LVL > 2)
+							std::cout << request << std::endl;
 						tempanswer = fork_request(Request(_ActiveConnectionList[j]->GetPort(), _ActiveConnectionList[j]->GetHost(), request), Vconf);
+						if (DEBUG_LVL > 1)
+							print_answer_debug(tempanswer);
 						_ActiveConnectionList[j]->SendAnswer(tempanswer.MakeString());
 					}
 					// else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 15:43:03 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/24 01:58:16 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/10/01 19:54:37 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,15 @@ int	check_locroot(conf &temp)
 		iter++;
 	}
 	return (1);
+}
+
+void	print_answer_debug(Answer answer)
+{
+	if (answer._StatusCode <= 299)
+		std::cout << "\033[42mSent answer with code " << answer._StatusCode << "\033[0m" << std::endl;
+	else if (answer._StatusCode <= 399)
+		std::cout << "\033[43mSent answer with code " << answer._StatusCode << "\033[0m" << std::endl;
+	else
+		std::cout << "\033[41mSent answer with code " << answer._StatusCode << "\033[0m" << std::endl;
+	return;
 }
