@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/02 02:45:08 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/02 22:01:24 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ std::string	Connection::GetNewestClientRequest( void )
 		}
 	}
 	retstr = dechunk(retstr);
+	if (retstr.find("Connection: close"))
+		_KeepAlive = false;
 	return (retstr);
 }
 
