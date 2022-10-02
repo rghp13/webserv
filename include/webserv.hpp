@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 17:27:10 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/10/02 14:58:19 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@
 #define	HTTP_ERR_500 500, "Internal Server Error"
 #define HTTP_ERR_501 501, "Not Implemented"
 #define HTTP_ERR_505 505, "HTTP Version Not Supported"
+#define DEF_UPL_DIR "./www/upload/"
 class conf;
 class Socket;
 class Connection;
@@ -136,7 +137,8 @@ std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &s
 //Process_delete.cpp
 Answer	process_delete(Request &src, std::vector<conf>::iterator iter, location location);
 //Process_post.cpp
-Answer process_post(Request &src, std::vector<conf>::iterator iter, location location);
+Answer	process_post(Request &src, std::vector<conf>::iterator iter, location location);
+void	plain_post(Request &src, std::vector<conf>::iterator iter, location location);
 //Utils.cpp
 bool	isdir(std::string input);
 void	ascii_codes(std::string &string);

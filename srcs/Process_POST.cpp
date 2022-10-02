@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Process_POST.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 18:25:28 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/09/23 22:57:34 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/02 14:57:58 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,52 @@
 **Providing a block of data, such as the result of submitting a form, to a data-handling process;
 **Extending a database through an append operation.
 */
-//sample
-// POST /test HTTP/1.1
-// Host: foo.example
-// Content-Type: multipart/form-data;boundary="boundary"
+//The type of body in the post is determined by the header key "Content-Type"
 
-// --boundary
-// Content-Disposition: form-data; name="field1"
+//application/x-www-form-urlencoded is done with key-value pairs.
+//'='separates the key and value. '&' separates variables
 
-// value1
-// --boundary
-// Content-Disposition: form-data; name="field2"; filename="example.txt"
+//multipart/form-data is sent as blocks of data with boundary delimiter that is set in 'Content-Disposition' header
+//
 
-// value2
-// --boundary--
-//find a way to store all the keywords, then pull data from body
+//text/plain
+
+//since no one can explain how post works i'll scrape the data
 Answer process_post(Request &src, std::vector<conf>::iterator iter, location location)
 {
 	std::string full_path;
-	
+	std::string content_type;
+
 	Answer ret(200);
 	if (!src.key_exists("Content-Length:"))
 		return (Answer(411));//length required
-	t_header_argument tmp = src.get_keyval("Content-Length:");
-	//if (iter->get_MaxSize() < static_cast<unsigned long int>(std::atol(tmp.value.c_str())))
-	//	return (Answer(413));
+	else
+	{
+		std::string len = src.get_keyval("Content-Length:").value;
+		if (iter->get_MaxSize() < static_cast<unsigned long int>(std::atol(len.c_str())))
+			return (Answer(413));
+	}
+	if (src.key_exists("Content-Type:"))
+	{
+		content_type = src.get_keyval("Content-Type:").value;
+	}
+	else
+		content_type = "text/plain";
+	if (content_type == "text/plain")
+		plain_post(src, iter, location);
+	else if (content_type == "application/x-www-form-urlencoded")
+		form_post(src, iter, location);
+	else if (content_type == "multipart/form-data")
+		multi_post(src, iter, location);
+	else
+	{
+		std::cerr << "content-type mismatch" << std::endl;
+		plain_post(src, iter, location);
+	}
 	
+}
+void	plain_post(Request &src, std::vector<conf>::iterator iter, location location)
+{
+	time_t hold = time(0);
+	std::string filename = "File" + hold;
 }
