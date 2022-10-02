@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 22:53:19 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/10/01 18:42:53 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ int main(int argc, char **argv)
 	// -load config file
 	if (init(Vconf, argfile))
 		return (1);
-	for (std::vector<conf>::iterator i = Vconf.begin(); i != Vconf.end(); i++)
-		i->print();
+	if (DEBUG_LVL > 0)
+	{
+		for (std::vector<conf>::iterator i = Vconf.begin(); i != Vconf.end(); i++)
+			i->print();
+	}
 	// -get a list of all prots that need websockets
 	fill_socket_vector(socketInitInfo, Vconf);
 	if (check_duplicate_socket(socketInitInfo))
@@ -36,7 +39,6 @@ int main(int argc, char **argv)
 
 	SocketManager	Manager(socketInitInfo);
 
-	std::cout << "test";
 	while (1)
 	{
 		Manager.cycle(10000, Vconf);
