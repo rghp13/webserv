@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/01 23:37:46 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/02 02:45:08 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ bool	Connection::ShouldDestroy ( void ) const
 {
 	if (_KeepAlive == false)
 		return (true);
-	if (difftime(time(NULL), _LastActivity) > 10.0f)
+	if (difftime(time(NULL), _LastActivity) > KEEP_ALIVE_TIME)
 		return (true);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 15:43:03 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/02 00:13:17 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/02 04:10:59 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,51 @@ std::string	dechunk(std::string input)
 		double_end_line_pos = start + size + 2;
 	}
 	return (retstr);
+}
+
+std::string	get_format_time( void )
+{
+	char	buf[30];
+	time_t now = time(NULL);
+	struct tm tm = *gmtime(&now);
+	std::string	retstr;
+
+	strftime(buf, 30, "%a, %d %b %Y %H:%M:%S %Z", &tm);
+	retstr = buf;
+	return (retstr);
+}
+
+location	get_root_loc(std::vector<conf>::iterator config)
+{
+	for (size_t i = 0; i < config->get_location().size(); i++)
+	{
+		if (config->get_location().at(i)._path == "/")
+			return (config->get_location().at(i));
+	}
+	return (location());
+}
+
+std::string	get_ressource_location(location loc, std::string reqpath)
+{
+	size_t size;
+	std::string truepath;
+
+	size = loc._path.size();
+	if (loc._path.at(size - 1))
+		size -= 1;
+	truepath = loc._root;
+	truepath += reqpath.substr(size);
+	return (truepath);
+}
+
+bool	is_ressource_directory(std::string path)
+{
+	struct stat s;
+	if (stat(path.c_str(), &s) == 0)
+	{
+		if( s.st_mode & S_IFDIR )
+			return (true);
+		return (false);
+	}
+	return (false);
 }
