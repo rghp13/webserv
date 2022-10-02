@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/01 18:36:49 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/02 02:45:08 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ bool	Connection::ShouldDestroy ( void ) const
 {
 	if (_KeepAlive == false)
 		return (true);
-	if (difftime(time(NULL), _LastActivity) > 10.0f)
+	if (difftime(time(NULL), _LastActivity) > KEEP_ALIVE_TIME)
 		return (true);
 	return (false);
 }
@@ -77,6 +77,8 @@ bool	Connection::IsRequestFull( std::string request) const
 	size_t	double_end_line_pos;
 
 	double_end_line_pos = request.find("\r\n\r\n");
+	if (request.find("Transfer-Encoding: chunked") != std::string::npos && request.find("0\r\n\r\n", double_end_line_pos + 4) == std::string::npos) //this needs polish
+		return (false);
 	if (double_end_line_pos == std::string::npos)
 		return (false);
 	if (request.find("Content-Length") != std::string::npos && request.find("\r\n", double_end_line_pos + 4) == std::string::npos)
@@ -104,6 +106,7 @@ std::string	Connection::GetNewestClientRequest( void )
 			start = time(NULL);
 		}
 	}
+	retstr = dechunk(retstr);
 	return (retstr);
 }
 

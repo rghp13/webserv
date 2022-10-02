@@ -6,28 +6,35 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:35:18 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/01 19:49:17 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/02 14:15:52 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/webserv.hpp"
 
-location	locationForRequest(Request request, std::vector<conf>::iterator config)
+location	locationForRequest(Request request, std::vector<conf>::iterator config) //this doesn't work anymore
 {
 	int			foundlength = 0;
 	location	retloc;
 
 	for (size_t i = 0; i < config->get_location().size(); i++)
 	{
-		if (config->get_location().at(i)._path.compare(0, config->get_location().at(i)._path.size(), request._Path) == 0)
+		//if (config->get_location().at(i)._path.size() - 1 <= request._Path.size() && config->get_location().at(i)._path.compare(0, config->get_location().at(i)._path.size() - 1, request._Path) == 0)
+		if (config->get_location().at(i)._path.substr(0, config->get_location().at(i)._path.size() - 1) == request._Path.substr(0, config->get_location().at(i)._path.size() - 1))
 		{
-			if ((int)config->get_location().at(i)._path.size() > foundlength)
+			if (config->get_location().at(i)._path.size() - 1 == request._Path.size() || request._Path.at(config->get_location().at(i)._path.size() - 1) == '/')
 			{
-				retloc = config->get_location().at(i);
-				foundlength = config->get_location().at(i)._path.size();
+				if ((int)config->get_location().at(i)._path.size() > foundlength)
+				{
+					retloc = config->get_location().at(i);
+					foundlength = config->get_location().at(i)._path.size();
+				}
 			}
 		}
 	}
+	if (foundlength == 0)
+		retloc = get_root_loc(config);
+	std::cout << "Chose location: " << retloc._path << std::endl;
 	return (retloc);
 }
 
@@ -101,6 +108,19 @@ Answer	fork_request(Request request, std::vector<conf> Vconf)
 			return (retval);
 		}
 		retval = process_get(request, current_conf, current_location);
+		return (retval);
+	}
+	if (request._Method == "HEAD")
+	{
+		//commit HEAD processing
+		if ((current_location._methods&HEAD) != HEAD)
+		{
+			retval.SetStatus(HTTP_ERR_405);
+			retval._Body = "";
+			return (retval);
+		}
+		retval = process_get(request, current_conf, current_location);
+		retval._Body = "";
 		return (retval);
 	}
 	if (request._Method == "POST")

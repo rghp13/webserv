@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Answer.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:45:24 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/09 15:46:08 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/10/02 02:36:47 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ public:
 	void			SetStatus(int code, std::string message);//set the error code and message in a single function call
 	void			GenerateErrorBody( void );
 	void			AddArgument (t_header_argument newArg);//adds variables in a key/pair way
+	void			AddArgument (std::string key, std::string value);//adds variables in a key/pair way
 	std::string		MakeString( void );//stringify everything in this object
 	int				SetBodyLen( void );//runs strlen within _body and stores data in arguments
 	~Answer();

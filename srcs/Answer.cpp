@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Answer.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:46:27 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/10 14:52:57 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/10/02 03:09:25 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ Answer::Answer()
 	_StatusCode = 200;
 	_StatusMessage = "OK";
 	//place any arguments that are always the same here
-	//Server
+	AddArgument("Server:", SERVER_VERS);
+	AddArgument("Connection:", "keep-alive");
+	AddArgument("Keep-Alive:", "timeout=10");
+	AddArgument("Date:", get_format_time());
 	_Body = "";
 }
 Answer::Answer(int erno)
@@ -26,6 +29,10 @@ Answer::Answer(int erno)
 	_HTTPVersion = HTTP_VERS;
 	_StatusCode = erno;
 	_Body = "";
+	AddArgument("Server:", SERVER_VERS);
+	AddArgument("Connection:", "keep-alive");
+	AddArgument("Keep-Alive:", "timeout=10");
+	AddArgument("Date:", get_format_time());
 	if (erno == 404)
 		SetStatus(HTTP_ERR_404);
 	else if (erno == 403)
@@ -69,6 +76,26 @@ void	Answer::GenerateErrorBody( void )
 void	Answer::AddArgument(t_header_argument newArg)
 {
 	//if key already exists will overwrite value
+	std::vector<t_header_argument>::iterator it = _Arguments.begin();
+	while (it != _Arguments.end())
+	{
+		if (newArg.key == it->key)
+		{
+			it->value = newArg.value;
+			return;
+		}
+		it++;
+	}
+	_Arguments.push_back(newArg);
+}
+
+void	Answer::AddArgument(std::string key, std::string value)
+{
+	//if key already exists will overwrite value
+	t_header_argument newArg;
+
+	newArg.key = key;
+	newArg.value = value;
 	std::vector<t_header_argument>::iterator it = _Arguments.begin();
 	while (it != _Arguments.end())
 	{

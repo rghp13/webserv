@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Request.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 17:40:53 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/10/02 04:02:05 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	Request::AddArgument(t_header_argument newArg)
 	_Arguments.push_back(newArg);
 }
 
-bool	Request::isPageADirectory( void ) const//this is probably not good enough
+bool	Request::isPageADirectory( void ) const//this is probably not good enough //I, Dimitri, confirmed that it wasn't, a request on it own cant determine that, function is now in utils, this can be safely removed
 {
 	return (_Path.at(_Path.length() - 1) == '/');
 }
