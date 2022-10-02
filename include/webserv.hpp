@@ -65,6 +65,7 @@
 #define	HTTP_ERR_500 500, "Internal Server Error"
 #define HTTP_ERR_501 501, "Not Implemented"
 #define HTTP_ERR_505 505, "HTTP Version Not Supported"
+#define DEF_UPL_DIR "./www/upload/"
 class conf;
 class Socket;
 class Connection;
@@ -140,7 +141,8 @@ std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &s
 //Process_delete.cpp
 Answer	process_delete(Request &src, std::vector<conf>::iterator iter, location location);
 //Process_post.cpp
-Answer process_post(Request &src, std::vector<conf>::iterator iter, location location);
+Answer	process_post(Request &src, std::vector<conf>::iterator iter, location location);
+void	plain_post(Request &src, std::vector<conf>::iterator iter, location location);
 //Utils.cpp
 bool	isdir(std::string input);
 void	ascii_codes(std::string &string);
