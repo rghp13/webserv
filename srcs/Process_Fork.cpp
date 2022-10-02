@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:35:18 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/02 14:15:52 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/02 23:40:11 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ location	locationForRequest(Request request, std::vector<conf>::iterator config)
 
 	for (size_t i = 0; i < config->get_location().size(); i++)
 	{
-		//if (config->get_location().at(i)._path.size() - 1 <= request._Path.size() && config->get_location().at(i)._path.compare(0, config->get_location().at(i)._path.size() - 1, request._Path) == 0)
 		if (config->get_location().at(i)._path.substr(0, config->get_location().at(i)._path.size() - 1) == request._Path.substr(0, config->get_location().at(i)._path.size() - 1))
 		{
 			if (config->get_location().at(i)._path.size() - 1 == request._Path.size() || request._Path.at(config->get_location().at(i)._path.size() - 1) == '/')
@@ -34,7 +33,6 @@ location	locationForRequest(Request request, std::vector<conf>::iterator config)
 	}
 	if (foundlength == 0)
 		retloc = get_root_loc(config);
-	std::cout << "Chose location: " << retloc._path << std::endl;
 	return (retloc);
 }
 
