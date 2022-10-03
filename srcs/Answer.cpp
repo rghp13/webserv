@@ -133,7 +133,7 @@ int		Answer::SetBodyLen( void )
 	//Adds or replaces the Content-Length argument to match the
 	//size of the body (also returns it in case it is needed)
 	t_header_argument ret;
-	ret.value = SSTR(_Body.length());//needs testing
+	ret.value = SSTR(_Body.length());
 	ret.key = "Content-Length:";
 	AddArgument(ret);
 	return (_Body.length());
