@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/02 04:02:05 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/03 03:13:55 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ Request::Request(unsigned int newport, std::string newhost, std::string header)/
 		std::getline(subs, tmp.value, ' ');//check if these are valid
 		AddArgument(tmp);
 	}
-	if (key_exists("Content-Length:"))
-		std::getline(ss, _Body);
+	//if (key_exists("Content-Length:")) //this has been commented out by Dimitri, the tester has tests that have content with Content-Length, and since getline running when you are out of text does nothing then who cares
+	std::getline(ss, _Body);
 }
 Request::Request(Request const &src)
 {
