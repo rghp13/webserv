@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 18:25:28 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/03 15:20:16 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/10/03 15:33:39 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@
 //if you claim i did something wrong you'll have to explain how post works
 Answer process_post(Request &src, std::vector<conf>::iterator iter, location location)
 {
-	//std::string full_path;
 	std::string content_type;
 
-	Answer ret(201);
 	if (!src.key_exists("Content-Length:"))
 		return (Answer(411));//length required
 	else
@@ -50,7 +48,7 @@ Answer process_post(Request &src, std::vector<conf>::iterator iter, location loc
 		content_type = src.get_keyval("Content-Type:").value;
 	}
 	if (content_type == "text/plain")
-		plain_post(src, location);
+		return (plain_post(src, location));
 	/*else if (content_type == "application/x-www-form-urlencoded")
 		;//form_post(src, iter, location);
 	else if (content_type == "multipart/form-data")
@@ -60,7 +58,6 @@ Answer process_post(Request &src, std::vector<conf>::iterator iter, location loc
 		std::cerr << "content-type mismatch" << std::endl;
 		return(Answer(415));
 	}
-	return (ret);
 }
 Answer	plain_post(Request &src, location location)
 {
@@ -87,7 +84,11 @@ std::string	newfilename(location location)//creates semi-random filename
 	std::string	ret;
 	int			fileno = 0;
 	if (location._uploaddir.empty())
+	{
 		fileroot = DEF_UPL_DIR;
+		//if (access(fileroot.c_str(), W_OK))
+		//	return (Answer(500));see how it handles without this check
+	}
 	else
 		fileroot = location._uploaddir;
 	while (true)
