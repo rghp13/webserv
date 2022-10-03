@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/02 22:01:24 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/03 03:15:16 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ std::string	Connection::GetNewestClientRequest( void )
 
 	readret = 1024;
 	retstr = "";
-	while (readret > 0 || (!this->IsRequestFull(retstr) && difftime(time(NULL), start) < 1.0f))
+	while (readret > 0 || (!this->IsRequestFull(retstr) && difftime(time(NULL), start) < 10.0f))
 	{
 		readret = read(_FD, buffer, 1024);
 		if (readret > 0)
@@ -107,7 +107,7 @@ std::string	Connection::GetNewestClientRequest( void )
 		}
 	}
 	retstr = dechunk(retstr);
-	if (retstr.find("Connection: close"))
+	if (retstr.find("Connection: close") != std::string::npos)
 		_KeepAlive = false;
 	return (retstr);
 }

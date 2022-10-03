@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/02 21:57:54 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/03 03:25:01 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 #define HTTP_VERS "HTTP/1.1"
 #define HTTPNL "\r\n"
 #define KEEP_ALIVE_TIME 10.0f
+#define HTTP_ERR_201 201, "Created"
 #define	HTTP_ERR_301 301, "Moved Permanently"
 #define	HTTP_ERR_302 302, "Found"
 #define HTTP_ERR_303 303, "See Other"
@@ -133,13 +134,15 @@ bool	connection_loop(std::vector<Socket*> socketList, struct pollfd *socketPoll,
 int		fill_socket_vector(std::vector<t_socket_info> &socketInitInfo, std::vector<conf> &Vconf);
 bool	check_duplicate_socket(std::vector<t_socket_info> &socketInitInfo);
 std::string	generateDirectoryPage(std::string dirPath, std::string docroot);
-Answer	fork_request(Request request, std::vector<conf> Vconf);
+Answer	fork_request(Request &request, std::vector<conf> Vconf);
 //Process_get.cpp
 Answer	process_get(Request &src, std::vector<conf>::iterator iter, location location);
 std::vector<conf>::iterator	strict_scan(std::vector<conf> &Vconf, Request &src);
 std::vector<conf>::iterator	non_strict_scan(std::vector<conf> &Vconf, Request &src);
 //Process_delete.cpp
 Answer	process_delete(Request &src, std::vector<conf>::iterator iter, location location);
+//Process_put.cpp
+Answer process_put(Request &src, std::vector<conf>::iterator iter, location location);
 //Process_post.cpp
 Answer	process_post(Request &src, std::vector<conf>::iterator iter, location location);
 void	plain_post(Request &src, std::vector<conf>::iterator iter, location location);

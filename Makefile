@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+         #
+#    By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 11:39:56 by dimitriscr        #+#    #+#              #
-#    Updated: 2022/09/24 17:27:34 by dscriabi         ###   ########.fr        #
+#    Updated: 2022/10/03 02:52:23 by dimitriscr       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRC_NAME				=		Answer.cpp \
 								Process_Fork.cpp \
 								Process_GET.cpp \
 								Process_DELETE.cpp \
+								Process_PUT.cpp \
 								Request.cpp \
 								Socket.cpp \
 								SocketManager.cpp \
