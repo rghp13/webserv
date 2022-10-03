@@ -6,7 +6,7 @@
 /*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 18:25:28 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/02 14:57:58 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/10/03 15:20:16 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@
 
 //text/plain
 
-//since no one can explain how post works i'll scrape the data
+//since absolutely no one can explain how post works i'm making it up as I go
+//if you claim i did something wrong you'll have to explain how post works
 Answer process_post(Request &src, std::vector<conf>::iterator iter, location location)
 {
-	std::string full_path;
+	//std::string full_path;
 	std::string content_type;
 
-	Answer ret(200);
+	Answer ret(201);
 	if (!src.key_exists("Content-Length:"))
 		return (Answer(411));//length required
 	else
@@ -48,23 +49,53 @@ Answer process_post(Request &src, std::vector<conf>::iterator iter, location loc
 	{
 		content_type = src.get_keyval("Content-Type:").value;
 	}
-	else
-		content_type = "text/plain";
 	if (content_type == "text/plain")
-		plain_post(src, iter, location);
-	else if (content_type == "application/x-www-form-urlencoded")
-		form_post(src, iter, location);
+		plain_post(src, location);
+	/*else if (content_type == "application/x-www-form-urlencoded")
+		;//form_post(src, iter, location);
 	else if (content_type == "multipart/form-data")
-		multi_post(src, iter, location);
+		;//multi_post(src, iter, location);*/
 	else
 	{
 		std::cerr << "content-type mismatch" << std::endl;
-		plain_post(src, iter, location);
+		return(Answer(415));
 	}
+	return (ret);
+}
+Answer	plain_post(Request &src, location location)
+{
+	//do nothing special, just dump it into a file;
+	std::string filename;
+	std::ofstream file;
+
+	//first create a filename
+	filename = newfilename(location);
+	file.open(filename.c_str());
+	if (file.fail())
+		return (Answer(500));
+	file << src._Body;
+	if (file.fail())
+		return (Answer(500));
+	file.close();
+	return (Answer(201));
 	
 }
-void	plain_post(Request &src, std::vector<conf>::iterator iter, location location)
+std::string	newfilename(location location)//creates semi-random filename
 {
-	time_t hold = time(0);
-	std::string filename = "File" + hold;
+	std::string	filename = "file_" + SSTR(time(0));
+	std::string	fileroot;
+	std::string	ret;
+	int			fileno = 0;
+	if (location._uploaddir.empty())
+		fileroot = DEF_UPL_DIR;
+	else
+		fileroot = location._uploaddir;
+	while (true)
+	{
+		ret = fileroot + filename + SSTR(fileno);
+		if (access(ret.c_str(), F_OK))//file doesn't exist
+			return (ret);
+		else
+			++fileno;
+	}
 }

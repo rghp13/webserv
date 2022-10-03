@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/03 03:25:01 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/03 15:20:11 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@
 #define HTTP_ERR_405 405, "Method Not Allowed"
 #define	HTTP_ERR_408 408, "Request Timeout"
 #define HTTP_ERR_414 414, "URI Too Long"
+#define HTTP_ERR_415 415, "Unsupported Media Type"
 #define HTTP_ERR_418 418, "I'm a teapot"
 #define	HTTP_ERR_500 500, "Internal Server Error"
 #define HTTP_ERR_501 501, "Not Implemented"
@@ -145,7 +146,8 @@ Answer	process_delete(Request &src, std::vector<conf>::iterator iter, location l
 Answer process_put(Request &src, std::vector<conf>::iterator iter, location location);
 //Process_post.cpp
 Answer	process_post(Request &src, std::vector<conf>::iterator iter, location location);
-void	plain_post(Request &src, std::vector<conf>::iterator iter, location location);
+Answer	plain_post(Request &src, location location);
+std::string	newfilename(location location);
 //Utils.cpp
 bool	isdir(std::string input);
 void	ascii_codes(std::string &string);
