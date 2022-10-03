@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/02 23:39:09 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/03 19:15:14 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,13 @@ Answer	process_get(Request &src, std::vector<conf>::iterator iter, location loca
 
 	(void)iter; //we'll need it for CGI
 	path = get_ressource_location(location, src._Path);
+	// if (path.substr(path.size() - location._cgi.first.size(), location._cgi.first.size()) == location._cgi.first)
+	// {
+	// 	//run cgi
+	// 	CGIManager	cgi(src, *iter, location);
+	// 	ret._Body = cgi.runCGI();
+	// 	return (ret);
+	// }
 	if (is_ressource_directory(path))//this doesn't work as it should
 	{
 		if (path.at(path.size() - 1) != '/')

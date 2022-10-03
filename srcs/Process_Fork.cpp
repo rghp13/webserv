@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:35:18 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/03 03:23:55 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/03 20:14:22 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ Answer	fork_request(Request &request, std::vector<conf> Vconf)
 			retval.SetStatus(HTTP_ERR_405);
 			return (retval);
 		}
-		//post here
+		retval = process_post(request, current_conf, current_location);
 		return (retval);
 	}
 	if (request._Method == "DELETE")

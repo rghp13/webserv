@@ -6,21 +6,22 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:11:06 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/27 18:32:06 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/03 19:12:50 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/CGIManager.hpp"
+#include "../include/webserv.hpp"
 
 CGIManager::CGIManager()
 {
 }
 
-CGIManager::CGIManager(Request request, conf config, location location)
+CGIManager::CGIManager(Request &request, conf config, location location)
 {
 	_request = request;
 	_config = config;
 	_location = location;
+	this->initEnv();
 }
 
 CGIManager::CGIManager(const CGIManager &src)
@@ -40,7 +41,7 @@ void    CGIManager::initEnv()
 	_env["SERVER_PROTOCOL"] = HTTP_VERS;
 	_env["SERVER_PORT"] = SSTR(_config.get_Port());
 	_env["REQUEST_METHOD"] = _request._Method;
-	_env["SCRIPT_NAME"] = _request._Path.replace(0, _location._path.size(), _location._root); //see here
+	_env["SCRIPT_NAME"] = get_ressource_location(_location, _request._Path);//_request._Path.replace(0, _location._path.size(), _location._root); //see here
 	_env["DOCUMENT_ROOT"] = _location._root;
 	_env["QUERY_STRING"] = _request._Query; //see here
 	//probably needs authentification headers
@@ -88,7 +89,11 @@ std::string CGIManager::runCGI( void )
     pid = fork();
 
     if (pid == -1)
-    {
+	{
+		close(sendpipe[0]);
+		close(sendpipe[1]);
+		close(recvpipe[0]);
+		close(recvpipe[1]);
         return ("Error Status 500"); //fork failed return error
     }
     else if (!pid)

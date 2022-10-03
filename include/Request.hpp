@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   Request.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:10:15 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 17:14:28 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:32:34 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REQUEST_HPP
- #define REQUEST_HPP
-#include "webserv.hpp"
+# define REQUEST_HPP
 
 class Request
 {

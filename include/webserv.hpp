@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/03 15:20:11 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:51:28 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WEBSERV_HPP
- #define WEBSERV_HPP
+# define WEBSERV_HPP
 
 #include <string> //string functions
 #include <cstring>
@@ -38,6 +38,7 @@
 #include <sys/epoll.h>//epoll
 #include <arpa/inet.h>//htons htonl ntohs ntohl
 #include <poll.h>//poll
+#include <sstream>
 
 #define GET 0b1
 #define POST 0b10
@@ -45,7 +46,8 @@
 #define PUT 0b1000
 #define HEAD 0b10000
 #define PORT 80
-#define DEBUG_LVL 3 //0 - No debug, 1 - Show Config Debug, 2 - Show Answers, 3 - Show Requests
+#define DEBUG_LVL 2 //0 - No debug, 1 - Show Config Debug, 2 - Show Answers, 3 - Show Requests
+#define RECV_SIZE 65536
 #define SERVER_VERS "Webserv/0.8.7"
 #define HTTP_VERS "HTTP/1.1"
 #define HTTPNL "\r\n"
@@ -68,13 +70,13 @@
 #define HTTP_ERR_501 501, "Not Implemented"
 #define HTTP_ERR_505 505, "HTTP Version Not Supported"
 #define DEF_UPL_DIR "./www/upload/"
-class conf;
-class Socket;
-class Connection;
-class Answer;
-class Request;
-class CGIManager;
-#include <sstream>
+// class conf;
+// class Socket;
+// class Connection;
+// class Answer;
+// class Request;
+// class CGIManager;
+
 //SSTR converts ints to string
 #define SSTR( x ) static_cast< std::ostringstream & >( \
 		( std::ostringstream() << std::dec << x ) ).str()
@@ -118,12 +120,15 @@ typedef struct	s_redirect
 	std::string value;
 }				t_redirect;
 
+class Answer;
+
+#include "Answer.hpp"
 #include "conf.hpp"
 #include "Socket.hpp"
 #include "Request.hpp"
-#include "Answer.hpp"
 #include "Connection.hpp"
 #include "SocketManager.hpp"
+#include "CGIManager.hpp"
 
 int		init(std::vector<conf> &Vconf, std::ifstream &file);
 bool	boot_check(int argc, char **argv, std::ifstream &argfile);

@@ -6,11 +6,11 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/03 03:26:26 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/03 19:10:01 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/SocketManager.hpp"
+#include "../include/webserv.hpp"
 
 SocketManager::SocketManager()
 {

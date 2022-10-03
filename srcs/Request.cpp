@@ -6,11 +6,11 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:15:57 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/03 03:13:55 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/03 19:09:50 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/Request.hpp"
+#include "../include/webserv.hpp"
 
 Request::Request()
 {

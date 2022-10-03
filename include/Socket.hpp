@@ -6,13 +6,12 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 03:59:50 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/06 11:57:07 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/03 19:32:35 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SOCKET_HPP
- #define SOCKET_HPP
-#include "../include/webserv.hpp"
+# define SOCKET_HPP
 
 class Socket
 {

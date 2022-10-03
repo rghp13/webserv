@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   Connection.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:29:55 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/08 16:55:55 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:32:32 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONNECTION_HPP
- #define CONNECTION_HPP
-#include "../include/webserv.hpp"
+# define CONNECTION_HPP
 
 class Connection
 {

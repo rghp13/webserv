@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   SocketManager.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 21:59:33 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/09/24 17:25:51 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:05:03 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SOCKETMANAGER_HPP
- #define SOCKETMANAGER_HPP
-#include "webserv.hpp"
+# define SOCKETMANAGER_HPP
+#include "conf.hpp"
+#include "Socket.hpp"
+#include "Connection.hpp"
 
 class SocketManager
 {

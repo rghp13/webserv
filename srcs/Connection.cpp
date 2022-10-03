@@ -6,11 +6,11 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/03 03:15:16 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/03 20:19:09 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/Connection.hpp"
+#include "../include/webserv.hpp"
 
 Connection::Connection()
 {
@@ -90,15 +90,15 @@ std::string	Connection::GetNewestClientRequest( void )
 {
 	//read from the connection to get client request
 	int			readret;
-	char		buffer[1025] = {0};
+	char		buffer[RECV_SIZE] = {0};
 	std::string	retstr;
 	time_t		start = time(NULL);
 
-	readret = 1024;
+	readret = RECV_SIZE;
 	retstr = "";
 	while (readret > 0 || (!this->IsRequestFull(retstr) && difftime(time(NULL), start) < 10.0f))
 	{
-		readret = read(_FD, buffer, 1024);
+		readret = read(_FD, buffer, RECV_SIZE);
 		if (readret > 0)
 		{
 			buffer[readret] = '\0';
