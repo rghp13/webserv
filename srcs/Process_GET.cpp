@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/02 14:21:16 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/02 23:39:09 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ Answer	process_get(Request &src, std::vector<conf>::iterator iter, location loca
 
 	(void)iter; //we'll need it for CGI
 	path = get_ressource_location(location, src._Path);
-	std::cout << "Path Found: " << path << std::endl;
 	if (is_ressource_directory(path))//this doesn't work as it should
 	{
 		if (path.at(path.size() - 1) != '/')
@@ -73,7 +72,6 @@ Answer	process_get(Request &src, std::vector<conf>::iterator iter, location loca
 			path += location._index;
 		else
 			path += "index.html";
-		std::cout << "Path Found: " << path << std::endl;
 		if (access(path.c_str(), F_OK))
 			return (Answer(404));
 		if (access(path.c_str(), R_OK))

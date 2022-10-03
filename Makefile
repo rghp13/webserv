@@ -42,6 +42,7 @@ SRC_NAME				=		Answer.cpp \
 								Process_GET.cpp \
 								Process_DELETE.cpp \
 								Process_POST.cpp \
+								Process_PUT.cpp \
 								Request.cpp \
 								Socket.cpp \
 								SocketManager.cpp \
