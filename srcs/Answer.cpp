@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Answer.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:46:27 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/02 03:09:25 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/02 17:49:14 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int		Answer::SetBodyLen( void )
 	//Adds or replaces the Content-Length argument to match the
 	//size of the body (also returns it in case it is needed)
 	t_header_argument ret;
-	ret.value = SSTR(_Body.length());
+	ret.value = SSTR(_Body.length());//needs testing
 	ret.key = "Content-Length:";
 	AddArgument(ret);
 	return (_Body.length());
