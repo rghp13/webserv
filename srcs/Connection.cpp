@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/03 20:19:09 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/04 18:41:23 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,25 +91,44 @@ std::string	Connection::GetNewestClientRequest( void )
 	//read from the connection to get client request
 	int			readret;
 	char		buffer[RECV_SIZE] = {0};
-	std::string	retstr;
-	time_t		start = time(NULL);
+	std::string	temp;
 
-	readret = RECV_SIZE;
-	retstr = "";
-	while (readret > 0 || (!this->IsRequestFull(retstr) && difftime(time(NULL), start) < 10.0f))
+	// readret = RECV_SIZE;
+	// retstr = "";
+	// while (readret > 0 || (!this->IsRequestFull(retstr) && difftime(time(NULL), start) < 10.0f))
+	// {
+	// 	readret = read(_FD, buffer, RECV_SIZE);
+	// 	if (readret > 0)
+	// 	{
+	// 		buffer[readret] = '\0';
+	// 		retstr.append(buffer);
+	// 		start = time(NULL);
+	// 	}
+	// }
+	// retstr = dechunk(retstr);
+	// if (retstr.find("Connection: close") != std::string::npos)
+	// 	_KeepAlive = false;
+	// return (retstr);
+	readret = read(_FD, buffer, RECV_SIZE);
+	if (readret <= 0 )
 	{
-		readret = read(_FD, buffer, RECV_SIZE);
-		if (readret > 0)
-		{
-			buffer[readret] = '\0';
-			retstr.append(buffer);
-			start = time(NULL);
-		}
-	}
-	retstr = dechunk(retstr);
-	if (retstr.find("Connection: close") != std::string::npos)
 		_KeepAlive = false;
-	return (retstr);
+		return ("");
+	}
+	std::cout << "Received " << readret << " bytes" << std::endl;
+	_LastActivity = time(NULL);
+	buffer[readret] = '\0';
+	_Requesthold.append(buffer);
+	if (this->IsRequestFull(_Requesthold))
+	{
+		if (_Requesthold.find("Connection: close") != std::string::npos)
+			_KeepAlive = false;
+		temp = dechunk(_Requesthold);
+		_Requesthold = "";
+		std::cout << "returned" << std::endl;
+		return (temp);
+	}
+	return ("");
 }
 
 bool		Connection::SendAnswer(std::string answerstr)
@@ -123,4 +142,5 @@ bool		Connection::SendAnswer(std::string answerstr)
 Connection::~Connection()
 {
 	close (_FD);
+	std::cout << "closed a socket" << std::endl;
 }

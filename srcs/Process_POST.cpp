@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 18:25:28 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/03 19:58:30 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/04 18:07:36 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ Answer process_post(Request &src, std::vector<conf>::iterator iter, location loc
 	{
 		//run cgi
 		Answer		ret;
+		std::cout << "Creating CGI" << std::endl;
 		CGIManager	cgi(src, *iter, location);
+		std::cout << "CGI Created" << std::endl;
 		ret._Body = cgi.runCGI();
 		std::cout << "\n\n\n============\n" << ret._Body << "\n\n\n===========\n" << std::endl;
 		return (ret);

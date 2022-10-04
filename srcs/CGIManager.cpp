@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:11:06 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/03 19:12:50 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/04 20:38:20 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void    CGIManager::initEnv()
 	_env["SERVER_PORT"] = SSTR(_config.get_Port());
 	_env["REQUEST_METHOD"] = _request._Method;
 	_env["SCRIPT_NAME"] = get_ressource_location(_location, _request._Path);//_request._Path.replace(0, _location._path.size(), _location._root); //see here
+	_env["PATH_INFO"] = _env["SCRIPT_NAME"];
 	_env["DOCUMENT_ROOT"] = _location._root;
 	_env["QUERY_STRING"] = _request._Query; //see here
 	//probably needs authentification headers
@@ -82,10 +83,6 @@ std::string CGIManager::runCGI( void )
 		return ("Error Status 500");
 	}
 
-    //write what needs to be written to sendpipe[1]
-	if (_request._Body.size())
-		write(sendpipe[1], _request._Body.c_str(), _request._Body.size());
-
     pid = fork();
 
     if (pid == -1)
@@ -98,31 +95,55 @@ std::string CGIManager::runCGI( void )
     }
     else if (!pid)
     {
-		char * const * nll = NULL;
+		char *args[] = {
+			(char*)_location._cgi.second.c_str(),
+			(char*)_env["SCRIPT_NAME"].c_str(),
+			NULL
+		};
         //created process
 		dup2(sendpipe[0], STDIN_FILENO);
 		dup2(recvpipe[1], STDOUT_FILENO);
-		execve((_location._cgi.second + _env["SCRIPT_NAME"]).c_str(), nll, env);
+		execve((_location._cgi.second).c_str(), args, env);
 		write(STDOUT_FILENO, "Error Status 500", 16); // if program gets this far execve has failed
     }
     else
     {
         //stil this process
+
+		//write what needs to be written to sendpipe[1]
+		std::cout << "Started writting to CGI" << std::endl;
+		if (_request._Body.size())
+			write(sendpipe[1], _request._Body.c_str(), 10);//_request._Body.size());
+		close(sendpipe[1]);
+		std::cout << "Finished writting to CGI" << std::endl;
+		
 		waitpid(-1, NULL, 0);
 
+		std::cout << "CGI has ended" << std::endl;
 		char	buffer[1025] = {0};
 		int		ret			 = 1024;
-
-		while (ret == 1024)
+		fd_set	read_fds;
+		timeval	timeout;
+		
+		FD_SET(recvpipe[0], &read_fds);
+		timeout.tv_sec = 1;
+		timeout.tv_usec = 0;
+		while (select(recvpipe[0] + 1, &read_fds, NULL, NULL, &timeout) != 0)
 		{
-			read(recvpipe[0], buffer, 1024);
+			if (FD_ISSET(recvpipe[0], &read_fds) == 0)
+				break;
+			std::cout << "." << std::endl;
+			ret = read(recvpipe[0], buffer, 1024);
+			std::cout << ". but after the read this time" << std::endl;
+			if (ret == 0)
+				break;
 			buffer[ret] = '\0';
 			retstr += buffer;
 		}
+		std::cout << "Finished reading from CGI" << std::endl;
     }
 
 	close(sendpipe[0]);
-	close(sendpipe[1]);
 	close(recvpipe[0]);
 	close(recvpipe[1]);
 

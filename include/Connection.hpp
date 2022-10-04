@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:29:55 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/03 19:32:32 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/04 17:13:12 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ private:
 	std::string	_host;
 	bool		_KeepAlive;
 	time_t		_LastActivity;
+	std::string	_Requesthold;
 public:
 	Connection();
 	Connection(int NewFD, t_socket_info sockinfo);
