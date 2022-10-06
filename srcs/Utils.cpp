@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 15:43:03 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/03 19:10:08 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/05 22:54:13 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,11 @@ int	check_locroot(conf &temp)
 void	print_answer_debug(Answer answer)
 {
 	if (answer._StatusCode <= 299)
-		std::cout << "\033[42mSent answer with code " << answer._StatusCode << "\033[0m" << std::endl;
+		std::cout << "\033[42mSent answer with code " << answer._StatusCode << " with a body size of " << answer._Body.size() << "\033[0m" << std::endl;
 	else if (answer._StatusCode <= 399)
-		std::cout << "\033[43mSent answer with code " << answer._StatusCode << "\033[0m" << std::endl;
+		std::cout << "\033[43mSent answer with code " << answer._StatusCode << " with a body size of " << answer._Body.size() << "\033[0m" << std::endl;
 	else
-		std::cout << "\033[41mSent answer with code " << answer._StatusCode << "\033[0m" << std::endl;
+		std::cout << "\033[41mSent answer with code " << answer._StatusCode << " with a body size of " << answer._Body.size() << "\033[0m" << std::endl;
 	return;
 }
 
@@ -160,12 +160,17 @@ std::string	get_ressource_location(location loc, std::string reqpath)
 {
 	size_t size;
 	std::string truepath;
+	char	buffer[256];
 
 	size = loc._path.size();
 	if (loc._path.at(size - 1))
 		size -= 1;
 	truepath = loc._root;
 	truepath += reqpath.substr(size);
+	if (truepath.substr(0, 2) == "./")
+		truepath.replace(0, 1, getcwd(&buffer[0], 256));
+	while (truepath.find("//") != std::string::npos)
+		truepath.replace(truepath.find("//"), 2, "/");
 	return (truepath);
 }
 

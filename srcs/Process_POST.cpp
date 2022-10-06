@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 18:25:28 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/04 18:07:36 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/06 01:33:42 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,14 @@ Answer process_post(Request &src, std::vector<conf>::iterator iter, location loc
 	{
 		//run cgi
 		Answer		ret;
-		std::cout << "Creating CGI" << std::endl;
+		std::string	temp;
 		CGIManager	cgi(src, *iter, location);
-		std::cout << "CGI Created" << std::endl;
-		ret._Body = cgi.runCGI();
-		std::cout << "\n\n\n============\n" << ret._Body << "\n\n\n===========\n" << std::endl;
+		temp = cgi.runCGI();
+		if (temp == "Error Status 500")
+			return (Answer(500));
+		ret._Body = temp.substr(temp.find("\r\r") + 2);
+		//ret._Body += HTTPNL;
+		ret.SetBodyLen();
 		return (ret);
 	}
 	if (!src.key_exists("Content-Length:"))

@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/04 18:41:23 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/06 01:15:47 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,22 @@ std::string	Connection::GetNewestClientRequest( void )
 bool		Connection::SendAnswer(std::string answerstr)
 {
 	//send an answer to the client, return success status and update _LastActivity
-	send(_FD, answerstr.c_str(), answerstr.length(), 0);
+	// send(_FD, answerstr.c_str(), answerstr.length(), 0);
+	ssize_t nb = 0;
+    size_t nleft = answerstr.length();
+    ssize_t tbytes = 0;
+    while (nleft > 0)
+    {
+		nb = send(_FD, answerstr.c_str(), nleft, 0);
+		if (nb > 0)
+		{
+			std::cout << "." << std::endl;
+        	tbytes += nb;
+        	answerstr = answerstr.substr(nb);
+        	nleft  -= nb;
+		}
+    }
+	std::cout << nleft << std::endl;
 	_LastActivity = time(NULL);
 	return (true);
 }

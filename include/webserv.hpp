@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/04 19:38:24 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/05 21:20:07 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@
 #define HTTP_ERR_404 404, "Not Found"
 #define HTTP_ERR_405 405, "Method Not Allowed"
 #define	HTTP_ERR_408 408, "Request Timeout"
+#define	HTTP_ERR_413 413, "Payload Too Large"
 #define HTTP_ERR_414 414, "URI Too Long"
 #define HTTP_ERR_415 415, "Unsupported Media Type"
 #define HTTP_ERR_418 418, "I'm a teapot"
@@ -164,4 +165,5 @@ std::string	get_format_time( void );
 location	get_root_loc(std::vector<conf>::iterator config);
 std::string	get_ressource_location(location loc, std::string reqpath);
 bool	is_ressource_directory(std::string path);
+ssize_t write_to_CGI(int fd, const char *buffer, size_t nbytes);
 #endif

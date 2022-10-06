@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:11:06 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/05 05:13:57 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/05 23:30:05 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,31 @@ CGIManager::CGIManager(const CGIManager &src)
 
 void    CGIManager::initEnv()
 {
+	char	buffer[256];
+
 	_env["REDIRECT_STATUS"] = "200";
 	_env["GATEWAY_INTERFACE"] = "CGI/1.1";
+	_env["CONTENT_TYPE"] = "text/plain";
+	_env["HTTP_ACCEPT-ENCODING"] = "gzip";
+	_env["HTTP_HOST"] = "localhost";
+	_env["HTTP_USER-AGENT"] = "Go-http-client/1.1";
+	_env["REMOTE_ADDR"] = "127.0.0.1";
+	_env["CONTENT_LENGTH"] = _request._Body.size();
 	_env["SERVER_NAME"] = _config.get_ServerName().at(0);
 	_env["SERVER_SOFTWARE"] = SERVER_VERS;
 	_env["SERVER_PROTOCOL"] = HTTP_VERS;
 	_env["SERVER_PORT"] = SSTR(_config.get_Port());
 	_env["REQUEST_METHOD"] = _request._Method;
-	_env["SCRIPT_NAME"] = get_ressource_location(_location, _request._Path);
-	_env["PATH_INFO"] = _request._Path; //this needs to be the exact full path of the script, probably use getcwd()
+	_env["REQUEST_URI"] = _request._Path;
+	_env["SCRIPT_FILENAME"] = get_ressource_location(_location, _request._Path);
+	_env["SCRIPT_NAME"] = _location._cgi.second;
+	_env["PATH_INFO"] = _request._Path;
+	_env["PATH_TRANSLATED"] = _location._root + _request._Path.substr(_location._path.size());
 	_env["DOCUMENT_ROOT"] = _location._root;
 	_env["QUERY_STRING"] = _request._Query; //see here
-	//probably needs authentification headers
+	if (_env["SCRIPT_NAME"].substr(0, 2) == "./")
+		_env["SCRIPT_NAME"].replace(0, 1, getcwd(&buffer[0], 256));
+	std::cout << _env["PATH_INFO"] << std::endl;
 }
 
 char    **CGIManager::charArray( void ) const
@@ -67,8 +80,6 @@ char    **CGIManager::charArray( void ) const
 std::string CGIManager::runCGI( void )
 {
     pid_t           pid;
-    int             sendpipe[2];
-	int             recvpipe[2];
     char            **env;
 	std::string		retstr;
 
@@ -80,59 +91,50 @@ std::string CGIManager::runCGI( void )
 		NULL
 	};
 
-    if (pipe(sendpipe))
-		return ("Error Status 500");
-	if (pipe(recvpipe))
-	{
-		close(sendpipe[0]);
-		close(sendpipe[1]);
-		return ("Error Status 500");
-	}
+	std::ofstream tempfile(".tempcgi");
+	tempfile << _request._Body.c_str();
+	tempfile.close();
+	std::ofstream tempfile2(".tempcgiout");
+	tempfile.close();
 
     pid = fork();
 
     if (pid == -1)
 	{
-		close(sendpipe[0]);
-		close(sendpipe[1]);
-		close(recvpipe[0]);
-		close(recvpipe[1]);
+		remove(".tempcgiout");
+		remove(".tempcgi");
         return ("Error Status 500"); //fork failed return error
     }
     else if (!pid)
     {
-        close(sendpipe[1]);
-		dup2(sendpipe[0], STDIN_FILENO);
-		dup2(recvpipe[1], STDOUT_FILENO);
-		execve((_location._cgi.second).c_str(), args, env);
+		int	fd;
+		int fdout;
+
+		fd = open(".tempcgi", O_RDONLY);
+		fdout = open(".tempcgiout", O_WRONLY | O_CREAT);
+		if (fd != -1 && fdout != -1)
+		{
+			dup2(fdout, STDOUT_FILENO);
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+			execve((_location._cgi.second).c_str(), args, env);
+		}
 		write(STDOUT_FILENO, "Error Status 500", 16); // if program gets this far execve has failed
     }
     else
     {
-        //stil this process
-
-		//write what needs to be written to sendpipe[1]
-		std::cout << "Started writting to CGI" << std::endl;
-		if (_request._Body.size())
-			write(sendpipe[1], _request._Body.c_str(), 10); //_request._Body.size());
-		close(sendpipe[1]);
-		std::cout << "Finished writting to CGI" << std::endl;
-		
 		waitpid(pid, NULL, 0);
 
-		std::cout << "CGI has ended" << std::endl;
-
-		char	buffer[1025] = {0};
-		int		ret			 = 1024;
-
-		while (ret == 1024)
+		std::string outtext;
+		std::ifstream readfile (".tempcgiout");
+		while (getline(readfile, outtext))
 		{
-			ret = read(recvpipe[0], buffer, 1024);
-			buffer[ret] = '\0';
-			retstr += buffer;
+			retstr += outtext;
 		}
+		readfile.close();
+		remove(".tempcgiout");
+		remove(".tempcgi");
 	}
-	close(sendpipe[0]);
 
 	for (size_t i = 0; env[i]; i++)
 		delete[] env[i];

@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:35:18 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/04 17:44:46 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/05 21:19:43 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ Answer	fork_request(Request &request, std::vector<conf> Vconf)
 		retval.SetStatus(HTTP_ERR_414);
 		return (retval);
 	}
-
 	//Get the config that matches the socket this request came from
 	current_conf = strict_scan(Vconf, request);
 	if (current_conf == Vconf.end())
@@ -68,6 +67,11 @@ Answer	fork_request(Request &request, std::vector<conf> Vconf)
 			retval.SetStatus(HTTP_ERR_500);
 			return (retval);
 		}
+	}
+	if (request._Body.size() > current_conf->get_MaxSize())
+	{
+		retval.SetStatus(HTTP_ERR_413);
+		return (retval);
 	}
 	current_location = locationForRequest(request, current_conf);
 
