@@ -6,14 +6,13 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 19:45:24 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/02 02:36:47 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/03 19:32:28 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ANSWER_HPP
- #define ANSWER_HPP
+# define ANSWER_HPP
 #include <string>
-#include "webserv.hpp"
 
 class Answer
 {

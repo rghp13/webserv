@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+         #
+#    By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 11:39:56 by dimitriscr        #+#    #+#              #
-#    Updated: 2022/10/02 20:49:46 by rponsonn         ###   ########.fr        #
+#    Updated: 2022/10/03 18:27:52 by dimitriscr       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

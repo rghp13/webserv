@@ -6,11 +6,11 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/03 03:15:16 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/06 19:37:19 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/Connection.hpp"
+#include "../include/webserv.hpp"
 
 Connection::Connection()
 {
@@ -90,34 +90,51 @@ std::string	Connection::GetNewestClientRequest( void )
 {
 	//read from the connection to get client request
 	int			readret;
-	char		buffer[1025] = {0};
-	std::string	retstr;
-	time_t		start = time(NULL);
+	char		buffer[RECV_SIZE] = {0};
+	std::string	temp;
 
-	readret = 1024;
-	retstr = "";
-	while (readret > 0 || (!this->IsRequestFull(retstr) && difftime(time(NULL), start) < 10.0f))
+	readret = read(_FD, buffer, RECV_SIZE);
+	if (readret <= 0 )
 	{
-		readret = read(_FD, buffer, 1024);
-		if (readret > 0)
-		{
-			buffer[readret] = '\0';
-			retstr.append(buffer);
-			start = time(NULL);
-		}
-	}
-	retstr = dechunk(retstr);
-	if (retstr.find("Connection: close") != std::string::npos)
 		_KeepAlive = false;
-	return (retstr);
+		return ("");
+	}
+	_LastActivity = time(NULL);
+	buffer[readret] = '\0';
+	_Requesthold.append(buffer);
+	if (this->IsRequestFull(_Requesthold))
+	{
+		if (_Requesthold.find("Connection: close") != std::string::npos)
+			_KeepAlive = false;
+		temp = dechunk(_Requesthold);
+		_Requesthold = "";
+		return (temp);
+	}
+	return ("");
 }
 
-bool		Connection::SendAnswer(std::string answerstr)
+void		Connection::setAnswer(std::string answerstr)
 {
-	//send an answer to the client, return success status and update _LastActivity
-	send(_FD, answerstr.c_str(), answerstr.length(), 0);
+	_answerhold = answerstr;
+}
+
+bool		Connection::hasAnswerToSend( void ) const
+{
+	if (_answerhold.size() > 0)
+		return (true);
+	return (false);
+}
+
+void		Connection::SendAnswer( void )
+{
+	int nb;
+
+	nb = send(_FD, _answerhold.c_str(), _answerhold.size(), 0);
+	if (nb > 0)
+		_answerhold = _answerhold.substr(nb);
+	else
+		_KeepAlive = false;
 	_LastActivity = time(NULL);
-	return (true);
 }
 
 Connection::~Connection()

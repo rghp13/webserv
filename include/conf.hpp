@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   conf.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:21:40 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/02 00:59:20 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/10/03 19:05:32 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONF_HPP
 # define CONF_HPP
-#include <string>
-#include <vector>
-#include <algorithm>
-#include <sstream>
-#include "webserv.hpp"
 //if passed request is for a folder instead of a file return index.html
 //reworking conf
 //server is keyword to create new conf

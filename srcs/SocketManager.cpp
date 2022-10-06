@@ -6,11 +6,11 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/03 03:26:26 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/06 19:40:00 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/SocketManager.hpp"
+#include "../include/webserv.hpp"
 
 SocketManager::SocketManager()
 {
@@ -55,13 +55,13 @@ void	SocketManager::fillPollList( void )
 	for (unsigned long i = 0; i < _SocketList.size(); i++)
 	{
 		_PollList[i].fd = _SocketList.at(i)->getFD();
-		_PollList[i].events = POLLIN;
+		_PollList[i].events = POLLIN | POLLOUT | POLLHUP;
 		_PollList[i].revents = 0;
 	}
 	for (unsigned long i = 0; i < _ActiveConnectionList.size(); i++)
 	{
 		_PollList[i + _SocketList.size()].fd = _ActiveConnectionList.at(i)->GetConnectionFD();
-		_PollList[i + _SocketList.size()].events = POLLIN;
+		_PollList[i + _SocketList.size()].events = POLLIN | POLLOUT | POLLHUP;
 		_PollList[i + _SocketList.size()].revents = 0;
 	}
 }
@@ -70,7 +70,7 @@ void	SocketManager::createNewConnections( void )
 {
 	for (unsigned long i = 0; i < _SocketList.size(); i++)
 	{
-		if (_PollList[i].revents == POLLIN)
+		if ((_PollList[i].revents&POLLIN) == POLLIN)
 		{
 			for (unsigned long j = 0; j < _SocketList.size(); j++)
 			{
@@ -88,10 +88,10 @@ void	SocketManager::handleRequests(std::vector<conf> Vconf)
 {
 	Answer		tempanswer;
 	std::string	request;
-	//for each socket that has data, read, pass to rponson's code and send answers
+	//for each connection that has data, read, pass to rponson's code and send answers
 	for (int i = _SocketList.size(); i < _PollListSize; i++)
 	{
-		if (_PollList[i].revents == POLLIN)
+		if ((_PollList[i].revents&POLLIN) == POLLIN)
 		{
 			for (unsigned long j = 0; j < _ActiveConnectionList.size(); j++)
 			{
@@ -101,21 +101,38 @@ void	SocketManager::handleRequests(std::vector<conf> Vconf)
 					if (request.size() != 0)
 					{
 						if (DEBUG_LVL > 2)
-							std::cout << request << std::endl;
+							std::cout << request.substr(0, request.find("\r\n\r\n")) << std::endl;
 						Request	temprequest(_ActiveConnectionList[j]->GetPort(), _ActiveConnectionList[j]->GetHost(), request);
 						tempanswer = fork_request(temprequest, Vconf);
 						if (DEBUG_LVL > 1)
 							print_answer_debug(tempanswer);
-						_ActiveConnectionList[j]->SendAnswer(tempanswer.MakeString());
+						_ActiveConnectionList[j]->setAnswer(tempanswer.MakeString());
 					}
-					// else
-					// 	_ActiveConnectionList[j]->SetKeepAlive(false);
 					break;
 				}
 			}
 		}
 	}
 	
+}
+
+void	SocketManager::sendAnswers( void )
+{
+	for (int i = _SocketList.size(); i < _PollListSize; i++)
+	{
+		if ((_PollList[i].revents&POLLOUT) == POLLOUT)
+		{
+			for (unsigned long j = 0; j < _ActiveConnectionList.size(); j++)
+			{
+				if (_ActiveConnectionList[j]->GetConnectionFD() == _PollList[i].fd)
+				{
+					if (_ActiveConnectionList[j]->hasAnswerToSend())
+						_ActiveConnectionList[j]->SendAnswer();
+					break;
+				}
+			}
+		}
+	}
 }
 
 void	SocketManager::cleanConnections( void )
@@ -131,7 +148,8 @@ void	SocketManager::cleanConnections( void )
 				{
 					Answer	temp;
 					temp.SetStatus(HTTP_ERR_408);
-					_ActiveConnectionList[j]->SendAnswer(temp.MakeString());
+					_ActiveConnectionList[j]->setAnswer(temp.MakeString());
+					_ActiveConnectionList[j]->SendAnswer();
 					delete _ActiveConnectionList[j];
 					_ActiveConnectionList.erase(_ActiveConnectionList.begin() + j);
 				}
@@ -152,6 +170,8 @@ int		SocketManager::cycle(int timeout, std::vector<conf> Vconf)
 		this->createNewConnections();
 		//	-handle connections that can be read from (ignoring the ones created previously to give clients time to send requests)
 		this->handleRequests(Vconf);
+		// -handle sending to connections that can send and have an available answer
+		this->sendAnswers();
 	}
 	//	-close connections older than their timeout and cleanup
 	this->cleanConnections();

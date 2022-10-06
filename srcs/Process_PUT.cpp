@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 01:52:15 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/03 03:10:54 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/06 04:15:17 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ Answer process_put(Request &src, std::vector<conf>::iterator iter, location loca
 		return (retval); //file already exists and cant be written to
 	}
 	//file exists and can be witten to
-	std::cout << "Appended " << path << std::endl;
 	file.open(path.c_str(), std::ofstream::trunc);
 	file << src._Body;
 	file.close();

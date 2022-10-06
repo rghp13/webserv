@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Process_POST.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 18:25:28 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/03 15:33:39 by rponsonn         ###   ########.fr       */
+/*   Updated: 2022/10/06 01:33:42 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,20 @@ Answer process_post(Request &src, std::vector<conf>::iterator iter, location loc
 {
 	std::string content_type;
 
+	if (src._Path.substr(src._Path.size() - location._cgi.first.size(), location._cgi.first.size()) == location._cgi.first)
+	{
+		//run cgi
+		Answer		ret;
+		std::string	temp;
+		CGIManager	cgi(src, *iter, location);
+		temp = cgi.runCGI();
+		if (temp == "Error Status 500")
+			return (Answer(500));
+		ret._Body = temp.substr(temp.find("\r\r") + 2);
+		//ret._Body += HTTPNL;
+		ret.SetBodyLen();
+		return (ret);
+	}
 	if (!src.key_exists("Content-Length:"))
 		return (Answer(411));//length required
 	else

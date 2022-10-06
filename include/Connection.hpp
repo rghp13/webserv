@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   Connection.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:29:55 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/09/08 16:55:55 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/10/06 04:23:10 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONNECTION_HPP
- #define CONNECTION_HPP
-#include "../include/webserv.hpp"
+# define CONNECTION_HPP
 
 class Connection
 {
@@ -22,6 +21,8 @@ private:
 	std::string	_host;
 	bool		_KeepAlive;
 	time_t		_LastActivity;
+	std::string	_Requesthold;
+	std::string	_answerhold;
 public:
 	Connection();
 	Connection(int NewFD, t_socket_info sockinfo);
@@ -34,7 +35,9 @@ public:
 	bool		SetKeepAlive( bool newval );
 	bool		IsRequestFull( std::string request ) const;
 	std::string	GetNewestClientRequest( void );
-	bool		SendAnswer(std::string answerstr);
+	void		setAnswer(std::string answerstr);
+	bool		hasAnswerToSend( void ) const;
+	void		SendAnswer( void );
 	~Connection();
 
 };
