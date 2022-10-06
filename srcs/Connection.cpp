@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/06 01:15:47 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/06 04:36:30 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ std::string	Connection::GetNewestClientRequest( void )
 		_KeepAlive = false;
 		return ("");
 	}
-	std::cout << "Received " << readret << " bytes" << std::endl;
 	_LastActivity = time(NULL);
 	buffer[readret] = '\0';
 	_Requesthold.append(buffer);
@@ -125,37 +124,36 @@ std::string	Connection::GetNewestClientRequest( void )
 			_KeepAlive = false;
 		temp = dechunk(_Requesthold);
 		_Requesthold = "";
-		std::cout << "returned" << std::endl;
 		return (temp);
 	}
 	return ("");
 }
 
-bool		Connection::SendAnswer(std::string answerstr)
+void		Connection::setAnswer(std::string answerstr)
 {
-	//send an answer to the client, return success status and update _LastActivity
-	// send(_FD, answerstr.c_str(), answerstr.length(), 0);
-	ssize_t nb = 0;
-    size_t nleft = answerstr.length();
-    ssize_t tbytes = 0;
-    while (nleft > 0)
-    {
-		nb = send(_FD, answerstr.c_str(), nleft, 0);
-		if (nb > 0)
-		{
-			std::cout << "." << std::endl;
-        	tbytes += nb;
-        	answerstr = answerstr.substr(nb);
-        	nleft  -= nb;
-		}
-    }
-	std::cout << nleft << std::endl;
+	_answerhold = answerstr;
+}
+
+bool		Connection::hasAnswerToSend( void ) const
+{
+	if (_answerhold.size() != 0)
+		return (true);
+	return (false);
+}
+
+void		Connection::SendAnswer( void )
+{
+	int nb;
+
+	nb = send(_FD, _answerhold.c_str(), _answerhold.size(), 0);
+	if (nb > 0)
+		_answerhold = _answerhold.substr(nb);
+	else
+		_KeepAlive = false;
 	_LastActivity = time(NULL);
-	return (true);
 }
 
 Connection::~Connection()
 {
 	close (_FD);
-	std::cout << "closed a socket" << std::endl;
 }

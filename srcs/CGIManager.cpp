@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:11:06 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/05 23:30:05 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/06 04:15:20 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void    CGIManager::initEnv()
 	_env["QUERY_STRING"] = _request._Query; //see here
 	if (_env["SCRIPT_NAME"].substr(0, 2) == "./")
 		_env["SCRIPT_NAME"].replace(0, 1, getcwd(&buffer[0], 256));
-	std::cout << _env["PATH_INFO"] << std::endl;
 }
 
 char    **CGIManager::charArray( void ) const

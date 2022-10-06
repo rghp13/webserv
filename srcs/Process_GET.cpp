@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/05 16:45:44 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/06 04:15:18 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ Answer	process_get(Request &src, std::vector<conf>::iterator iter, location loca
 	std::string					buffer;
 
 	(void)iter; //we'll need it for CGI
-	path = get_ressource_location(location, src._Path);
-	std::cout << "Getting Ressource: " << path << std::endl;
+	path = get_ressource_location(location, src._Path);;
 	// if (path.substr(path.size() - location._cgi.first.size(), location._cgi.first.size()) == location._cgi.first)
 	// {
 	// 	//run cgi

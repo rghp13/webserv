@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/03 19:10:01 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/06 04:40:10 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ void	SocketManager::fillPollList( void )
 	for (unsigned long i = 0; i < _SocketList.size(); i++)
 	{
 		_PollList[i].fd = _SocketList.at(i)->getFD();
-		_PollList[i].events = POLLIN;
+		_PollList[i].events = POLLIN | POLLOUT | POLLHUP;
 		_PollList[i].revents = 0;
 	}
 	for (unsigned long i = 0; i < _ActiveConnectionList.size(); i++)
 	{
 		_PollList[i + _SocketList.size()].fd = _ActiveConnectionList.at(i)->GetConnectionFD();
-		_PollList[i + _SocketList.size()].events = POLLIN;
+		_PollList[i + _SocketList.size()].events = POLLIN | POLLOUT | POLLHUP;
 		_PollList[i + _SocketList.size()].revents = 0;
 	}
 }
@@ -106,10 +106,8 @@ void	SocketManager::handleRequests(std::vector<conf> Vconf)
 						tempanswer = fork_request(temprequest, Vconf);
 						if (DEBUG_LVL > 1)
 							print_answer_debug(tempanswer);
-						_ActiveConnectionList[j]->SendAnswer(tempanswer.MakeString());
+						_ActiveConnectionList[j]->setAnswer(tempanswer.MakeString());
 					}
-					// else
-					// 	_ActiveConnectionList[j]->SetKeepAlive(false);
 					break;
 				}
 			}
@@ -131,7 +129,8 @@ void	SocketManager::cleanConnections( void )
 				{
 					Answer	temp;
 					temp.SetStatus(HTTP_ERR_408);
-					_ActiveConnectionList[j]->SendAnswer(temp.MakeString());
+					_ActiveConnectionList[j]->setAnswer(temp.MakeString());
+					_ActiveConnectionList[j]->SendAnswer();
 					delete _ActiveConnectionList[j];
 					_ActiveConnectionList.erase(_ActiveConnectionList.begin() + j);
 				}
@@ -152,6 +151,7 @@ int		SocketManager::cycle(int timeout, std::vector<conf> Vconf)
 		this->createNewConnections();
 		//	-handle connections that can be read from (ignoring the ones created previously to give clients time to send requests)
 		this->handleRequests(Vconf);
+		// -handle sending to connections that can send and have an available answer
 	}
 	//	-close connections older than their timeout and cleanup
 	this->cleanConnections();
