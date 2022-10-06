@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:11:06 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/06 04:15:20 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/06 22:26:48 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void    CGIManager::initEnv()
 	_env["QUERY_STRING"] = _request._Query; //see here
 	if (_env["SCRIPT_NAME"].substr(0, 2) == "./")
 		_env["SCRIPT_NAME"].replace(0, 1, getcwd(&buffer[0], 256));
+	// if (_request.key_exists("X-Secret-Header-For-Test:"))
+	// 	_env["X-Secret-Header-For-Test"] = _request.get_keyval("X-Secret-Header-For-Test:").value;
 }
 
 char    **CGIManager::charArray( void ) const

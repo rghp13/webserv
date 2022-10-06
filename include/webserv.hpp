@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/05 21:20:07 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/06 19:40:12 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 #define PUT 0b1000
 #define HEAD 0b10000
 #define PORT 80
-#define DEBUG_LVL 2 //0 - No debug, 1 - Show Config Debug, 2 - Show Answers, 3 - Show Requests
+#define DEBUG_LVL 3 //0 - No debug, 1 - Show Config Debug, 2 - Show Answers, 3 - Show Requests
 #define RECV_SIZE 262144
 #define SERVER_VERS "Webserv/0.8.7"
 #define HTTP_VERS "HTTP/1.1"

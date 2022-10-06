@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/06 04:36:30 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/06 19:37:19 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,22 +93,6 @@ std::string	Connection::GetNewestClientRequest( void )
 	char		buffer[RECV_SIZE] = {0};
 	std::string	temp;
 
-	// readret = RECV_SIZE;
-	// retstr = "";
-	// while (readret > 0 || (!this->IsRequestFull(retstr) && difftime(time(NULL), start) < 10.0f))
-	// {
-	// 	readret = read(_FD, buffer, RECV_SIZE);
-	// 	if (readret > 0)
-	// 	{
-	// 		buffer[readret] = '\0';
-	// 		retstr.append(buffer);
-	// 		start = time(NULL);
-	// 	}
-	// }
-	// retstr = dechunk(retstr);
-	// if (retstr.find("Connection: close") != std::string::npos)
-	// 	_KeepAlive = false;
-	// return (retstr);
 	readret = read(_FD, buffer, RECV_SIZE);
 	if (readret <= 0 )
 	{
@@ -136,7 +120,7 @@ void		Connection::setAnswer(std::string answerstr)
 
 bool		Connection::hasAnswerToSend( void ) const
 {
-	if (_answerhold.size() != 0)
+	if (_answerhold.size() > 0)
 		return (true);
 	return (false);
 }
