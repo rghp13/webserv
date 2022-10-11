@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 15:43:03 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/05 22:54:13 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/11 16:12:06 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,4 +184,28 @@ bool	is_ressource_directory(std::string path)
 		return (false);
 	}
 	return (false);
+}
+
+Answer	GenerateErrorBody(int errorCode, std::string errorSatus, std::vector<conf>::iterator conf)
+{
+	Answer	retAnswer;
+	std::ifstream				file;
+	std::string					path;
+	std::string					buffer;
+
+
+	for (size_t i = 0; i < conf->get_Default_error().size(); i++)
+	{
+		if (conf->get_Default_error().at(i).first == errorCode)
+		{
+			path = conf->get_Default_error().at(i).second;
+			file.open(path.c_str());
+			while (std::getline(file, buffer))
+				retAnswer._Body += buffer;
+			file.close();
+		}
+	}
+	retAnswer._StatusCode = errorCode;
+	retAnswer._StatusMessage = errorSatus;
+	
 }

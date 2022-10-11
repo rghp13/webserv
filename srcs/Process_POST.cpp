@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Process_POST.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 18:25:28 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/06 01:33:42 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/11 15:51:58 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ Answer process_post(Request &src, std::vector<conf>::iterator iter, location loc
 	}
 	if (!src.key_exists("Content-Length:"))
 		return (Answer(411));//length required
+		//return(GenerateErrorAnswer(HTTP_ERR_411, iter));
 	else
 	{
 		std::string len = src.get_keyval("Content-Length:").value;
