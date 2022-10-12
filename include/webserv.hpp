@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/06 19:40:12 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/12 18:51:10 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <algorithm>
 #include <stdlib.h>
 
+#include <csignal>
 #include <stdlib.h>//apparently exit requires stdlib.h
 #include <unistd.h> //read, write, close, etc...
 #include <dirent.h> //get list of files in directory
@@ -63,6 +64,7 @@
 #define HTTP_ERR_404 404, "Not Found"
 #define HTTP_ERR_405 405, "Method Not Allowed"
 #define	HTTP_ERR_408 408, "Request Timeout"
+#define HTTP_ERR_411 411, "Length Required"
 #define	HTTP_ERR_413 413, "Payload Too Large"
 #define HTTP_ERR_414 414, "URI Too Long"
 #define HTTP_ERR_415 415, "Unsupported Media Type"
@@ -152,7 +154,7 @@ Answer	process_delete(Request &src, std::vector<conf>::iterator iter, location l
 Answer process_put(Request &src, std::vector<conf>::iterator iter, location location);
 //Process_post.cpp
 Answer	process_post(Request &src, std::vector<conf>::iterator iter, location location);
-Answer	plain_post(Request &src, location location);
+Answer	plain_post(Request &src, location location, std::vector<conf>::iterator iter);
 std::string	newfilename(location location);
 //Utils.cpp
 bool	isdir(std::string input);
@@ -166,4 +168,9 @@ location	get_root_loc(std::vector<conf>::iterator config);
 std::string	get_ressource_location(location loc, std::string reqpath);
 bool	is_ressource_directory(std::string path);
 ssize_t write_to_CGI(int fd, const char *buffer, size_t nbytes);
+Answer	GenerateErrorBody(int errorCode, std::string errorSatus, std::vector<conf>::iterator conf);
+//signal.cpp
+void	status_changer(int mode, int *status_var);
+void	signal_handler(int signal);
+
 #endif

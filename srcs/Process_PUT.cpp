@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 01:52:15 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/06 04:15:17 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/12 18:43:01 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ Answer process_put(Request &src, std::vector<conf>::iterator iter, location loca
 	path += src._Path.substr(size);
 	if (is_ressource_directory(path))
 	{
-		retval.SetStatus(HTTP_ERR_404);
+		retval = GenerateErrorBody(HTTP_ERR_404, iter);
 		return (retval);//fail, the proper response turns out to be 404
 	}
 	if (access(path.c_str(), F_OK))
@@ -38,13 +38,13 @@ Answer process_put(Request &src, std::vector<conf>::iterator iter, location loca
 		file.open(path.c_str());
 		file << src._Body;
 		file.close();
-		retval.SetStatus(HTTP_ERR_201);
+		retval = GenerateErrorBody(HTTP_ERR_201, iter);
 		return (retval);
 	}
 	//file does exist
 	if (access(path.c_str(), W_OK))
 	{
-		retval.SetStatus(HTTP_ERR_404);
+		retval = GenerateErrorBody(HTTP_ERR_404, iter);
 		return (retval); //file already exists and cant be written to
 	}
 	//file exists and can be witten to

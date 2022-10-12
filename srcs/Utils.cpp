@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 15:43:03 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/05 22:54:13 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/12 18:17:46 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,4 +184,29 @@ bool	is_ressource_directory(std::string path)
 		return (false);
 	}
 	return (false);
+}
+
+Answer	GenerateErrorBody(int errorCode, std::string errorSatus, std::vector<conf>::iterator conf)
+{
+	Answer	retAnswer;
+	std::ifstream				file;
+	std::string					path;
+	std::string					buffer;
+
+	retAnswer._StatusCode = errorCode;
+	retAnswer._StatusMessage = errorSatus;
+	retAnswer.GenerateErrorBody();
+	for (size_t i = 0; i < conf->get_Default_error().size(); i++)
+	{
+		if (conf->get_Default_error().at(i).first == errorCode)
+		{
+			retAnswer._Body = "";
+			path = conf->get_Default_error().at(i).second;
+			file.open(path.c_str());
+			while (std::getline(file, buffer))
+				retAnswer._Body += buffer;
+			file.close();
+		}
+	}
+	return (retAnswer);
 }

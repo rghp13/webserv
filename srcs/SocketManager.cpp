@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/06 19:40:00 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/12 18:42:17 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	SocketManager::cleanConnections( void )
 		{
 			if (_ActiveConnectionList[j]->GetConnectionFD() == _PollList[i].fd)
 			{
-				if (_ActiveConnectionList[j]->ShouldDestroy() || (_PollList[i].revents&POLLERR) == POLLERR || (_PollList[i].revents&POLLHUP) == POLLHUP || _ActiveConnectionList.size() > 5)
+				if (_ActiveConnectionList[j]->ShouldDestroy() || (_PollList[i].revents&POLLERR) == POLLERR || (_PollList[i].revents&POLLHUP) == POLLHUP)// || _ActiveConnectionList.size() > 5)
 				{
 					Answer	temp;
 					temp.SetStatus(HTTP_ERR_408);

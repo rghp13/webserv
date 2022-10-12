@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/01 18:42:53 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/12 18:53:28 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 int main(int argc, char **argv)
 {
-//	int							status = 0;		//is 0 while the program should run. Giving it a non-zero value will stop the loop
+	int							status = 0;		//is 0 while the program should run. Giving it a non-zero value will stop the loop
 	std::vector<t_socket_info>	socketInitInfo; //array used to create the sockets on the correct port and host
 	std::vector<Socket*>		socketList; 	//array storing pointers to memory allocated socket classes
 	std::ifstream				argfile;		//conf file i'll be parsing from
-	std::vector<conf> Vconf;
+	std::vector<conf> 			Vconf;
 
 	//initialization:
+	//signal setup
+	status_changer(0, &status);
+	std::signal(SIGINT, signal_handler);
 	// -check config file
 	if (boot_check(argc, argv, argfile))
 		return (1);
@@ -39,7 +42,7 @@ int main(int argc, char **argv)
 
 	SocketManager	Manager(socketInitInfo);
 
-	while (1)
+	while (!status)
 	{
 		Manager.cycle(10000, Vconf);
 	}

@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 18:25:28 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/06 01:33:42 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/12 18:52:53 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,27 @@ Answer process_post(Request &src, std::vector<conf>::iterator iter, location loc
 		CGIManager	cgi(src, *iter, location);
 		temp = cgi.runCGI();
 		if (temp == "Error Status 500")
-			return (Answer(500));
+			return (GenerateErrorBody(HTTP_ERR_500, iter));
 		ret._Body = temp.substr(temp.find("\r\r") + 2);
 		//ret._Body += HTTPNL;
 		ret.SetBodyLen();
 		return (ret);
 	}
 	if (!src.key_exists("Content-Length:"))
-		return (Answer(411));//length required
+		return (GenerateErrorBody(HTTP_ERR_411, iter));//length required
+		//return(GenerateErrorAnswer(HTTP_ERR_411, iter));
 	else
 	{
 		std::string len = src.get_keyval("Content-Length:").value;
 		if (iter->get_MaxSize() < static_cast<unsigned long int>(std::atol(len.c_str())))
-			return (Answer(413));
+			return (GenerateErrorBody(HTTP_ERR_413, iter));
 	}
 	if (src.key_exists("Content-Type:"))
 	{
 		content_type = src.get_keyval("Content-Type:").value;
 	}
 	if (content_type == "text/plain")
-		return (plain_post(src, location));
+		return (plain_post(src, location, iter));
 	/*else if (content_type == "application/x-www-form-urlencoded")
 		;//form_post(src, iter, location);
 	else if (content_type == "multipart/form-data")
@@ -70,10 +71,10 @@ Answer process_post(Request &src, std::vector<conf>::iterator iter, location loc
 	else
 	{
 		std::cerr << "content-type mismatch" << std::endl;
-		return(Answer(415));
+		return(GenerateErrorBody(HTTP_ERR_415, iter));
 	}
 }
-Answer	plain_post(Request &src, location location)
+Answer	plain_post(Request &src, location location, std::vector<conf>::iterator iter)
 {
 	//do nothing special, just dump it into a file;
 	std::string filename;
@@ -83,12 +84,12 @@ Answer	plain_post(Request &src, location location)
 	filename = newfilename(location);
 	file.open(filename.c_str());
 	if (file.fail())
-		return (Answer(500));
+		return (GenerateErrorBody(HTTP_ERR_500, iter));
 	file << src._Body;
 	if (file.fail())
-		return (Answer(500));
+		return (GenerateErrorBody(HTTP_ERR_500, iter));
 	file.close();
-	return (Answer(201));
+	return (GenerateErrorBody(HTTP_ERR_201, iter));
 	
 }
 std::string	newfilename(location location)//creates semi-random filename
