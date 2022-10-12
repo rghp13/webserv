@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 15:43:03 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/11 16:12:06 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:17:46 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,11 +193,14 @@ Answer	GenerateErrorBody(int errorCode, std::string errorSatus, std::vector<conf
 	std::string					path;
 	std::string					buffer;
 
-
+	retAnswer._StatusCode = errorCode;
+	retAnswer._StatusMessage = errorSatus;
+	retAnswer.GenerateErrorBody();
 	for (size_t i = 0; i < conf->get_Default_error().size(); i++)
 	{
 		if (conf->get_Default_error().at(i).first == errorCode)
 		{
+			retAnswer._Body = "";
 			path = conf->get_Default_error().at(i).second;
 			file.open(path.c_str());
 			while (std::getline(file, buffer))
@@ -205,7 +208,5 @@ Answer	GenerateErrorBody(int errorCode, std::string errorSatus, std::vector<conf
 			file.close();
 		}
 	}
-	retAnswer._StatusCode = errorCode;
-	retAnswer._StatusMessage = errorSatus;
-	
+	return (retAnswer);
 }

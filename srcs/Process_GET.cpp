@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 14:46:31 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/06 04:15:18 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/12 18:37:25 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,25 +72,25 @@ Answer	process_get(Request &src, std::vector<conf>::iterator iter, location loca
 			return (ret);
 		}
 		if (access(path.c_str(), F_OK))
-			return (Answer(404));
+			return (GenerateErrorBody(HTTP_ERR_404, iter));
 		if (access(path.c_str(), R_OK))//testing if folder prior to index.html can 
-			return (Answer(403));
+			return (GenerateErrorBody(HTTP_ERR_403, iter));
 		if (location._index.size() > 0)
 			path += location._index;
 		else
 			path += "index.html";
 		if (access(path.c_str(), F_OK))
-			return (Answer(404));
+			return (GenerateErrorBody(HTTP_ERR_404, iter));
 		if (access(path.c_str(), R_OK))
-			return (Answer(403));
+			return (GenerateErrorBody(HTTP_ERR_404, iter));
 	}
 	else
 	{
 		src.htmlize();
 		if (access(path.c_str(), F_OK))
-			return (Answer(404));
+			return (GenerateErrorBody(HTTP_ERR_404, iter));
 		if (access(path.c_str(), R_OK))
-			return (Answer(403));//probably triggers if permission issue
+			return (GenerateErrorBody(HTTP_ERR_403, iter));//probably triggers if permission issue
 	}
 	file.open(path.c_str());
 	while (std::getline(file, buffer))

@@ -6,7 +6,7 @@
 /*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:35:18 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/05 21:19:43 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/12 18:28:17 by dimitriscr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,6 @@ Answer	fork_request(Request &request, std::vector<conf> Vconf)
 	location					current_location;
 	std::vector<conf>::iterator	current_conf;
 
-	if (request._malformed) //Malformed Request
-	{
-		retval.SetStatus(HTTP_ERR_400);
-		return (retval);
-	}
-	if (request._Version != HTTP_VERS) //Incorrect HTTP Version
-	{
-		retval.SetStatus(HTTP_ERR_505);
-		return (retval);
-	}
-	if (request._Path.size() > 4096) //URI is too long
-	{
-		retval.SetStatus(HTTP_ERR_414);
-		return (retval);
-	}
 	//Get the config that matches the socket this request came from
 	current_conf = strict_scan(Vconf, request);
 	if (current_conf == Vconf.end())
@@ -68,9 +53,25 @@ Answer	fork_request(Request &request, std::vector<conf> Vconf)
 			return (retval);
 		}
 	}
+
+	if (request._malformed) //Malformed Request
+	{
+		retval = GenerateErrorBody(HTTP_ERR_400, current_conf);
+		return (retval);
+	}
+	if (request._Version != HTTP_VERS) //Incorrect HTTP Version
+	{
+		retval = GenerateErrorBody(HTTP_ERR_505, current_conf);
+		return (retval);
+	}
+	if (request._Path.size() > 4096) //URI is too long
+	{
+		retval = GenerateErrorBody(HTTP_ERR_414, current_conf);
+		return (retval);
+	}
 	if (request._Body.size() > current_conf->get_MaxSize())
 	{
-		retval.SetStatus(HTTP_ERR_413);
+		retval = GenerateErrorBody(HTTP_ERR_413, current_conf);
 		return (retval);
 	}
 	current_location = locationForRequest(request, current_conf);
@@ -106,7 +107,7 @@ Answer	fork_request(Request &request, std::vector<conf> Vconf)
 		//commit GET processing
 		if ((current_location._methods&GET) != GET)
 		{
-			retval.SetStatus(HTTP_ERR_405);
+			retval = GenerateErrorBody(HTTP_ERR_405, current_conf);
 			return (retval);
 		}
 		retval = process_get(request, current_conf, current_location);
@@ -117,7 +118,7 @@ Answer	fork_request(Request &request, std::vector<conf> Vconf)
 		//commit HEAD processing
 		if ((current_location._methods&HEAD) != HEAD)
 		{
-			retval.SetStatus(HTTP_ERR_405);
+			retval = GenerateErrorBody(HTTP_ERR_405, current_conf);
 			retval._Body = "";
 			return (retval);
 		}
@@ -130,7 +131,7 @@ Answer	fork_request(Request &request, std::vector<conf> Vconf)
 		//commit POST processing
 		if ((current_location._methods&POST) != POST)
 		{
-			retval.SetStatus(HTTP_ERR_405);
+			retval = GenerateErrorBody(HTTP_ERR_405, current_conf);
 			return (retval);
 		}
 		retval = process_post(request, current_conf, current_location);
@@ -141,7 +142,7 @@ Answer	fork_request(Request &request, std::vector<conf> Vconf)
 		//commit DELETE processing
 		if ((current_location._methods&DELETE) != DELETE)
 		{
-			retval.SetStatus(HTTP_ERR_405);
+			retval = GenerateErrorBody(HTTP_ERR_405, current_conf);
 			return (retval);
 		}
 		retval = process_delete(request, current_conf, current_location);
@@ -152,12 +153,12 @@ Answer	fork_request(Request &request, std::vector<conf> Vconf)
 		//commit PUT processing
 		if ((current_location._methods&PUT) != PUT)
 		{
-			retval.SetStatus(HTTP_ERR_405);
+			retval = GenerateErrorBody(HTTP_ERR_405, current_conf);
 			return (retval);
 		}
 		retval = process_put(request, current_conf, current_location);
 		return (retval);
 	}
-	retval.SetStatus(HTTP_ERR_501);
+	retval = GenerateErrorBody(HTTP_ERR_501, current_conf);
 	return (retval);
 }

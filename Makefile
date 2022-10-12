@@ -6,7 +6,7 @@
 #    By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 11:39:56 by dimitriscr        #+#    #+#              #
-#    Updated: 2022/10/03 18:27:52 by dimitriscr       ###   ########.fr        #
+#    Updated: 2022/10/12 18:53:55 by dimitriscr       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,8 @@ SRC_NAME				=		Answer.cpp \
 								Request.cpp \
 								Socket.cpp \
 								SocketManager.cpp \
-								CGIManager.cpp
+								CGIManager.cpp \
+								Signal.cpp
 
 NAME					=		webserv
 OBJ_NAME				=		$(SRC_NAME:.cpp=.o)
