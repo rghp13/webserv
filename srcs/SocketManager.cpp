@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/13 15:52:21 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:58:59 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	SocketManager::sendAnswers( void )
 {
 	for (int i = _SocketList.size(); i < _PollListSize; i++)
 	{
-		if ((_PollList[i].revents&POLLOUT) == POLLOUT)
+		if ((_PollList[i].revents&POLLOUT) == POLLOUT && (_PollList[i].revents&POLLERR) != POLLERR && (_PollList[i].revents&POLLHUP) != POLLHUP)
 		{
 			for (unsigned long j = 0; j < _ActiveConnectionList.size(); j++)
 			{
