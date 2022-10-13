@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Connection.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 15:55:23 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/06 19:37:19 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/13 15:34:16 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ bool	Connection::IsRequestFull( std::string request) const
 		return (false);
 	if (double_end_line_pos == std::string::npos)
 		return (false);
-	if (request.find("Content-Length") != std::string::npos && request.find("\r\n", double_end_line_pos + 4) == std::string::npos)
+	if (request.find("Content-Length") != std::string::npos && (request.find("\r\n", double_end_line_pos + 4) == std::string::npos && (int)request.substr(double_end_line_pos + 4).size() != atoi((request.substr(request.find("Content-Length") + 16).c_str()))))
 		return (false);
 	return (true);
 }
