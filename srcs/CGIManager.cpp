@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CGIManager.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:11:06 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/06 22:26:48 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/13 15:44:39 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void    CGIManager::initEnv()
 	_env["HTTP_HOST"] = "localhost";
 	_env["HTTP_USER-AGENT"] = "Go-http-client/1.1";
 	_env["REMOTE_ADDR"] = "127.0.0.1";
-	_env["CONTENT_LENGTH"] = _request._Body.size();
+	_env["CONTENT_LENGTH"] = SSTR(_request._Body.size());
 	_env["SERVER_NAME"] = _config.get_ServerName().at(0);
 	_env["SERVER_SOFTWARE"] = SERVER_VERS;
 	_env["SERVER_PROTOCOL"] = HTTP_VERS;
