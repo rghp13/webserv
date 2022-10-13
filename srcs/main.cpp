@@ -6,7 +6,7 @@
 /*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/13 15:59:03 by dscriabi         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:00:30 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 	//signal setup
 	status_changer(0, &status);
 	std::signal(SIGINT, signal_handler);
-	//std::signal(SIGPIPE, signal_handler);
+	std::signal(SIGPIPE, NULL);
 	// -check config file
 	if (boot_check(argc, argv, argfile))
 		return (1);
