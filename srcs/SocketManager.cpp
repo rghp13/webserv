@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SocketManager.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:12:52 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/12 18:42:17 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/13 15:52:21 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,13 @@ void	SocketManager::cleanConnections( void )
 			{
 				if (_ActiveConnectionList[j]->ShouldDestroy() || (_PollList[i].revents&POLLERR) == POLLERR || (_PollList[i].revents&POLLHUP) == POLLHUP)// || _ActiveConnectionList.size() > 5)
 				{
-					Answer	temp;
-					temp.SetStatus(HTTP_ERR_408);
-					_ActiveConnectionList[j]->setAnswer(temp.MakeString());
-					_ActiveConnectionList[j]->SendAnswer();
+					if ((_PollList[i].revents&POLLERR) != POLLERR && (_PollList[i].revents&POLLHUP) != POLLHUP)
+					{
+						Answer	temp;
+						temp.SetStatus(HTTP_ERR_408);
+						_ActiveConnectionList[j]->setAnswer(temp.MakeString());
+						_ActiveConnectionList[j]->SendAnswer();
+					}
 					delete _ActiveConnectionList[j];
 					_ActiveConnectionList.erase(_ActiveConnectionList.begin() + j);
 				}
