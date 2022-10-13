@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Process_Fork.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:35:18 by dscriabi          #+#    #+#             */
-/*   Updated: 2022/10/12 18:28:17 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/13 16:12:49 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ Answer	fork_request(Request &request, std::vector<conf> Vconf)
 	{
 		int	code = current_location._redirection.first;
 		t_header_argument	redirect;
-		if (code > 299 && code < 400)
+		if (code > 300 && code < 400)
 		{
 			if (code == 301)
 				retval.SetStatus(HTTP_ERR_301);
