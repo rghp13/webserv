@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   webserv.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:41:19 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/12 18:51:10 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/13 16:49:18 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	reset_socket_poll_list(struct pollfd *socketPoll, int sockNumber);
 bool	connection_loop(std::vector<Socket*> socketList, struct pollfd *socketPoll, int sockNumber);
 int		fill_socket_vector(std::vector<t_socket_info> &socketInitInfo, std::vector<conf> &Vconf);
 bool	check_duplicate_socket(std::vector<t_socket_info> &socketInitInfo);
-std::string	generateDirectoryPage(std::string dirPath, std::string docroot);
+std::string	generateDirectoryPage(std::string dirPath);
 Answer	fork_request(Request &request, std::vector<conf> Vconf);
 //Process_get.cpp
 Answer	process_get(Request &src, std::vector<conf>::iterator iter, location location);

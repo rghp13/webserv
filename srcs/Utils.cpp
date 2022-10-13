@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 15:43:03 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/12 18:17:46 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/13 16:48:39 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ bool	isdir(std::string input)
 	return (false);
 }
 
-std::string	generateDirectoryPage(std::string dirPath, std::string docroot)
+std::string	generateDirectoryPage(std::string dirPath)
 {
 	DIR	*dir;
 	struct dirent	*file;
 	std::string		retstr;
 	
-	dir = opendir((docroot + dirPath).c_str());
+	dir = opendir((dirPath).c_str());
 	if (dir == NULL)
 		return ("");
 	retstr = "<html><head>\n<title>Index of /";
