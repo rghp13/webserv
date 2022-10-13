@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: dscriabi <dscriabi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 11:40:51 by dimitriscr        #+#    #+#             */
-/*   Updated: 2022/10/12 18:53:28 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/13 15:55:50 by dscriabi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int main(int argc, char **argv)
 	//signal setup
 	status_changer(0, &status);
 	std::signal(SIGINT, signal_handler);
+	std::signal(SIGPIPE, signal_handler);
 	// -check config file
 	if (boot_check(argc, argv, argfile))
 		return (1);
