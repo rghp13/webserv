@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dimitriscr <dimitriscr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: rponsonn <rponsonn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:22:25 by rponsonn          #+#    #+#             */
-/*   Updated: 2022/10/03 19:09:09 by dimitriscr       ###   ########.fr       */
+/*   Updated: 2022/10/11 19:28:47 by rponsonn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	conf::set_default_error(std::string &line, bool test)
 		if (!std::getline(ss, token, ' '))
 			return (1);
 		tmp.second = token;
-		if (tmp.second.empty() || !(tmp.first >= 100 && tmp.first <= 599))
+		if (tmp.second.empty() || !(tmp.first >= 100 && tmp.first <= 599) || access(tmp.second.c_str(), R_OK))
 			return (1);
 		else
 			_DefaultError.push_back(tmp);
